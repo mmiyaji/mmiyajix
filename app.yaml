@@ -1,0 +1,59 @@
+application: m-codes
+version: 2
+runtime: python
+api_version: 1
+
+handlers:
+- url: /css
+  static_dir: static/css
+
+- url: /static
+  static_dir: static
+- url: /js
+  static_dir: static/js
+  
+- url: /img
+  static_dir: static/img
+
+- url: /history
+  static_dir: bin-debug/history
+
+- url: /swfobject.js
+  static_files: bin-debug/swfobject.js
+  upload: bin-debug/swfobject.js
+
+- url: /playerProductInstall.swf
+  static_files: bin-debug/playerProductInstall.swf
+  upload: bin-debug/playerProductInstall.swf
+
+- url: /framework_4.1.0.16076.swf
+  static_files: bin-debug/framework_4.1.0.16076.swf
+  upload: bin-debug/framework_4.1.0.16076.swf
+
+- url: /textLayout_1.1.0.604.swf
+  static_files: bin-debug/textLayout_1.1.0.604.swf
+  upload: bin-debug/textLayout_1.1.0.604.swf
+
+- url: /osmf_flex.4.0.0.13495.swf
+  static_files: bin-debug/osmf_flex.4.0.0.13495.swf
+  upload: bin-debug/osmf_flex.4.0.0.13495.swf
+
+- url: /rpc_4.1.0.16076.swf
+  static_files: bin-debug/rpc_4.1.0.16076.swf
+  upload: bin-debug/rpc_4.1.0.16076.swf
+
+- url: /spark_4.1.0.16076.swf
+  static_files: bin-debug/spark_4.1.0.16076.swf
+  upload: bin-debug/spark_4.1.0.16076.swf
+
+- url: /sparkskins_4.1.0.16076.swf
+  static_files: bin-debug/sparkskins_4.1.0.16076.swf
+  upload: bin-debug/sparkskins_4.1.0.16076.swf
+
+
+- url: /Clusteringer.swf
+  static_files: bin-debug/Clusteringer.swf
+  upload: bin-debug/Clusteringer.swf
+
+- url: .*
+  script: main.py
