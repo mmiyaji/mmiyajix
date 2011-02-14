@@ -1,28 +1,23 @@
 import datetime 
 import sys
 import urllib2
+import simplejson
+from app_settings import *
 
-class UtcTzinfo(datetime.tzinfo):
-    def utcoffset(self, dt):
-        return datetime.timedelta(0)
-
-    def dst(self, dt):
-        return datetime.timedelta(0)
-
-    def tzname(self, dt):
-        return 'UTC'
-
-    def olsen_name(self):
-        return 'UTC'
-
-class JstTzinfo(datetime.tzinfo):
-    def utcoffset(self,dt):
-        return datetime.timedelta(hours=9)
-    def dst(self,dt):
-        return datetime.timedelta(hours=0)
-    def tzname(self,dt):
-        return "JST"
-
+class Googl():
+	def shorten(slef,longUrl):
+		if isinstance(longUrl, unicode):
+			longUrl = longUrl.encode('utf-8')
+	   
+		if API_KEY is None:
+			data = '{longUrl:"%s"}' % (longUrl)
+		else:
+			data = '{longUrl:"%s", key:"%s"}' % (longUrl, API_KEY)
+		req = urllib2.Request(API_URL, data)
+		req.add_header('Content-Type', 'application/json')
+	
+		result = urllib2.urlopen(req).read()
+		return simplejson.loads(result).get('id')
 
 class TinyURL:
 	def get_tiny_url(self, url):
@@ -38,24 +33,9 @@ class TinyURL:
 			sys.stderr.write('Unexpected error: %s\n' % (sys.exc_info()[1]))
 		return tiny_url
 
-
-
-   
 def jst_date(value):
     if not value:
         value = datetime.datetime.now()
 
     value = value.replace(tzinfo=UtcTzinfo()).astimezone(JstTzinfo())
     return value
-    
-    
-def getPhotolist(client,username):
-	photolist=[]
-	photos=None 
-	albums = client.GetUserFeed(user=username)
-	for album in albums.entry:
-		photos = client.GetFeed( '/data/feed/api/user/%s/albumid/%s?kind=photo' % ( username, album.gphoto_id.text))
-		for photo in photos.entry:
-			photolist.append( photo.media.thumbnail[2].url )
-		
-	return photolist

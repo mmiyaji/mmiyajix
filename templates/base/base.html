@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="content-language" content="ja" />
+<link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../static/css/base.css" />
+<title>{{app.title}}</title>
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="header_back">
+		<div id="header_content">
+			<span id="title_bar">
+				<ul>
+					<li><a>Home</a></li>
+					<li><a>Search</a></li>
+					<li><a>Contact</a></li>
+					<li><a>RSS</a></li>
+					<li><a href="{{url}}">{% if user %}Logout【{{user.nickname}}】{% else %}Login{% endif %}</a></li>
+					<li><form class="search_box" action="search" method="get" accept-charset="utf-8"><input type="text" />
+						<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
+					</form></li>
+				</ul>
+			</span>
+			<h1>{{title}}</h1>
+		</div>
+	</div>
+	<div id="content_wrapper">
+		{% block main %}
+		{% endblock main %}
+		<br style="clear:both" />
+	</div>
+	<p id="footer">{{now.year}} Copyright &copy; {{app.title}}, All rights reserved.</p>
+</div>	
+</body>
+</html>

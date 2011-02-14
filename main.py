@@ -27,7 +27,7 @@ from google.appengine.api import mail
 from google.appengine.ext.webapp import template
 from model import *
 from utility import *
-from user_settings import *
+from app_settings import *
 
 class AbstractRequestHandler(webapp.RequestHandler):
 	def __init__(self):
@@ -93,30 +93,31 @@ class AbstractRequestHandler(webapp.RequestHandler):
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
-		# 
-		# projects = Projects.get_list()
-		# histories = Histories.get_list()
-		# # all_tags = []
-		# # for project in projects:
-		# # 	protag = ProjectTag.all().filter('project = ',project).fetch(FETCH_SPAN)
-		# # 	tags = []
-		# # 	for pt in protag:
-		# # 		tags.append(pt.tag)
-		# # 	all_tags.append(tags)
-		# 
-		# all_tags = Tags.get_list()
-		# 
-		template_values = {
-									# 'projects': projects,
-									# 'histories': histories,
-									# 'all_tags': all_tags,
-									# # 'all_tags': all_tags,
-									# 'appuser':self.appuser,
-									# 'current_user':self.user,
-									'title':"m-codes",
-									'logout_url': users.create_logout_url(self.request.uri),
-									}	
-		path = os.path.join(os.path.dirname(__file__), './templates/index.html')
+		now = datetime.datetime.now() + datetime.timedelta(hours=9)
+		user = users.get_current_user()
+		url = None
+		template_values = None
+		if user:
+			url = users.create_logout_url(self.request.uri)
+		else:
+			url = users.create_login_url(self.request.uri)
+		application = Application.get_app()
+		if application:
+			template_values = {
+					'app':application,
+					'now':now,
+					'user':user,
+					'url': url,
+				}
+			path = os.path.join(os.path.dirname(__file__), './templates/index.html')
+		else:
+			template_values = {
+					'title':'application',
+					'now':now,
+					'user':user,
+					'url': url,
+				}
+			path = os.path.join(os.path.dirname(__file__), './templates/base/index.html')
 		self.response.out.write(template.render(path, template_values))	
 		
 application = webapp.WSGIApplication(

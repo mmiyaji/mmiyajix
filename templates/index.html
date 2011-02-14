@@ -5,7 +5,7 @@
 <meta http-equiv="content-language" content="ja" />
 <link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon" />
 <link rel="stylesheet" type="text/css" href="../static/css/base.css" />
-<title>{{title}}</title>
+<title>{{app.title}}</title>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
 					<li><a>Search</a></li>
 					<li><a>Contact</a></li>
 					<li><a>RSS</a></li>
-					<li>{% if user %}<a>Logout</a>【{{user.name}}】{% else %}<a>Login</a>{% endif %}</li>
+					<li><a href="{{url}}">{% if user %}Logout【{{user.nickname}}】{% else %}Login{% endif %}</a></li>
 					<li><form class="search_box" action="search" method="get" accept-charset="utf-8"><input type="text" />
 						<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
 					</form></li>
@@ -34,7 +34,7 @@
 				<div class="section_content" id="content_profile">
 					<img src="http://m-server.appspot.com/download/picture-48_1.png?fid=aghtLXNlcnZlcnIQCxIIUG9zdERhdGEYrcMBDA" width="55"/>
 					<div id="profile">
-						<p><strong>mmiyaji</strong></p>
+						<h2>mmiyaji</h2>
 						なんちゃって情報系大学院生
 						<a class="more">... more</a>
 					</div>
@@ -155,9 +155,7 @@
 		</div>
 		<br style="clear:both" />
 	</div>
-	<p id="footer">
-		{{year}} &copy; {{title}}.
-	</p>
+	<p id="footer">{{now.year}} Copyright &copy; {{app.title}}, All rights reserved.</p>
 </div>	
 </body>
 </html>
