@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="content-language" content="ja" />
+<link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="../static/css/base.css" />
+<title>{{title}}</title>
+</head>
+
+<body>
+<div id="wrapper">
+	<div id="header_back">
+		<div id="header_content">
+			<span id="title_bar">
+				<ul>
+					<li><a>Home</a></li>
+					<li><a>Search</a></li>
+					<li><a>Contact</a></li>
+					<li><a>RSS</a></li>
+					<li><a href="{{url}}">{% if user %}Logout【{{user.nickname}}】{% else %}Login{% endif %}</a></li>
+					<li><form class="search_box" action="search" method="get" accept-charset="utf-8"><input type="text" />
+						<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
+					</form></li>
+				</ul>
+			</span>
+			<h1>{{title}}</h1>
+		</div>
+	</div>
+	<div id="content_wrapper">
+		<div id="content_left">
+			<div class="section">
+				<h3>Profile</h3>
+				<div class="section_content" id="content_profile">
+					<img src="http://m-server.appspot.com/download/picture-48_1.png?fid=aghtLXNlcnZlcnIQCxIIUG9zdERhdGEYrcMBDA" width="55"/>
+					<div id="profile">
+						<h2>mmiyaji</h2>
+						なんちゃって情報系大学院生
+						<a class="more">... more</a>
+					</div>
+				</div>
+			</div>
+			<!--<div class="section">
+				<h3>Search</h3>
+				<div class="section_content" id="content_search">
+					<form action="search" method="get" accept-charset="utf-8"><input type="text" />
+						<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
+					</form>
+				</div>
+			</div>
+			-->
+			<div class="section">
+				<h3>Contents</h3>
+				<div class="section_content" id="content_tree">
+					<ul>
+						<li>Toybox - 作成物など</li>
+						<ul>
+							<li>
+								<a href="http://m-server.appspot.com/" target="_blank">M-Server</a> - 自作アップローダ
+							</li>
+							<li><a href="http://zoomtodo.appspot.com/" target="_blank">ZoomToDo</a> - ToDo管理サイト</li>
+							<li><a href="http://is.doshisha.ac.jp/isreport/" target="_blank">IS Report System</a><br /> - 研究報告レポートCMS</li>
+							<li><a href="http://flash-flush.appspot.com/" target="_blank">Flash Flush</a></li>
+						</ul>
+						<li>Diary - 日記帳</li>
+						<ul>
+							<li><a href="./diary/?year=2009">2009</a></li>
+							<li><a href="./diary/?year=2010">2010</a></li>
+							<li><a href="./diary/?year=2011">2011</a></li>
+						</ul>
+						<li>Memorandum - 主に自分用</li>
+						<li>Link - 自分関連のサイトたち</li>
+						<ul>
+							<li><a href="http://ruhenheim-erum.blogspot.com/" target="_blank">Ruhenheim</a> - 研究メモ用Blog</li>
+							<li><a href="http://about.me/mmiyaji" target="_blank">About.me</a></li>
+							<li><a href="http://twitter.com/#!/mmiyaji" target="_blank">Twitter</a></li>
+							<li><a href="http://is.doshisha.ac.jp/isreport/contents?author=%E5%AE%AE%E5%9C%B0%20%E6%AD%A3%E5%A4%A7" target="_blank">IS Report</a> - 公開研究レポート集</li>
+							<ul>
+								<li>クラスタリング</li>
+								<ul>
+									<li>クラスタリング概要</li>
+								</ul>
+								<li>Web</li>
+								<ul>
+									<li>フレームワーク勉強会</li>
+								</ul>
+								<li>その他</li>
+								<ul>
+									<li>Windows7とAzure</li>
+								</ul>
+							</ul>
+							
+						</ul>
+					</ul>
+				</div>
+			</div>
+			<div class="section">
+				<h3>Tags</h3>
+				<div class="section_content" id="content_tag">
+					<ul>
+						<li><span class="level1"><a>Login</a></span></li>
+						<li><span class="level1"><a>Login</a></span></li>
+						<li><span class="level2"><a>Login</a></span></li>
+						<li><span class="level4"><a>Login</a></span></li>
+						<li><a>Login</a></li>
+						<li><a>Login</a></li>
+						<li><span class="level3"><a>Login</a></span></li>
+						<li><a>Login</a></li>
+						<li><span class="level1"><a>Login</a></span></li>
+						<li><a>Login</a></li>
+					</ul>
+					{# <br style="clear:both" /> #}
+					<a class="more">... more</a>
+				</div>
+			</div>
+		</div>
+		<div id="content_right">
+			<div class="section">
+				<h3>About this site</h3>
+			   	<div class="section_content">
+				<p>ここは宮地 正大のページです．本ページでは主に私の研究に関する成果物をまとめています．
+					<br />
+					クラスタリングなどのデータマイニング，組み合わせ最適化，画像処理などを中心に研究をしており，
+					趣味としてWeb系のアプリケーション開発を行っています．</p>
+				<br />
+				<ul>
+					<li>所属: 同志社大学生命医科学研究科 <a href="http://is.doshisha.ac.jp/index.html" target="_blank">医療情報システム研究室</a> M0</li>
+					<li>研究テーマ:　マイクロアレイデータのための知的なクラスタリング，公共空間における人物位置および方向情報の取得</li>
+					<li>主な使用プログラミング言語: Python, C++, Java, Actionscript, Javascript</li>
+				</ul>
+				</div>
+			</div>
+			<div class="section">
+				<h3>Recent News</h3>
+			   	<div class="section_content">
+					<div class="recent_content">
+						<span class="date">2011/02/14</span>
+						<h3>Diary</h3>
+						<p>なんと<a class="more">... Read full text</a></p>
+					</div>
+					<div class="recent_content">
+						<span class="date">2011/02/13</span>
+						<h3>サイト仮オープン<span class="tag">【 <a>tag</a> 】</span></h3>
+						<p>勢いで自己紹介用のサイトを作ってみた．自サーバで運用したくないので，GoogleAppengineを活用している．自身の勉強のため，便利なプラグイン系は使わないで必要な機能は全部自分で実装するのがモットー(JQuery本体は例外ね，もりもり使うよ)．<a class="more">... Read full text</a>
+						</p>
+					</div>
+					<a class="more">... more</a>
+				</div>
+			</div>
+			<div class="section">
+				<h3>Category</h3>
+			   	<div class="section_content">
+				</div>
+			</div>
+		</div>
+		<br style="clear:both" />
+	</div>
+	<p id="footer">{{now.year}} Copyright &copy; {{app.title}}, All rights reserved.</p>
+</div>	
+</body>
+</html>

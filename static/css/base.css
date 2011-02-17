@@ -138,6 +138,31 @@ body{
 #content_wrapper .section #content_tag >ul>li span{
 	float:left;
 }
+#content_wrapper .section .section_content .center_content{
+	border-bottom:1px solid #ddd;
+}
+#content_wrapper .section .section_content .center_content ol{
+	padding-left:30px;
+}
+#content_wrapper .section .section_content .center_content ol li{
+	padding:20px;
+}
+div.pad{
+	margin:15px;
+	padding:15px;
+	border:3px solid #ddd;
+}
+div.padder{
+	padding:20px;
+}
+span.strong{
+	font-size: 20px;
+	display:block;
+}
+dl.roll dt{
+	float:left;
+	margin-right:30px;
+}
 .more{
 	clear:both;
 	float:right;
@@ -171,7 +196,7 @@ body{
 #content_wrapper #content_left .section{
 /*	height:600px;*/
 }
-input{
+input,textarea,select{
 	background: -moz-linear-gradient(center top, #efeff8 0%,#fff 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #efeff8),color-stop(1, #fff));
 	border:1px solid #6699FF;
@@ -205,6 +230,19 @@ form.search_box input[type="image"]{
 	margin: 0px;
 	padding: 0px;
 	border:none;
+}
+.center_content form label{
+/*	margin:10px;*/
+}
+.center_content form input[type="text"],.center_content form textarea,.center_content form select{
+	margin-left:30px;
+	margin-bottom:20px;
+	line-height:20px;
+	width:300px;
+}
+.center_content form input[type="submit"]{
+	margin:0px 20px;
+	padding:5px 10px;
 }
 /*===============================
 *	Additional page styles:

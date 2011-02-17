@@ -16,18 +16,53 @@
 # limitations under the License.
 #
 
-import os,urllib,random,datetime
+import os,urllib,random,datetime,logging
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
 from google.appengine.ext.webapp.util import run_wsgi_app
 import wsgiref.handlers
 from google.appengine.api import mail
-
+from base64 import b64decode
 from google.appengine.ext.webapp import template
 from model import *
 from utility import *
 from app_settings import *
+
+logging.basicConfig(level=logging.DEBUG)
+
+class BasicAuthentication(webapp.RequestHandler):
+	def __init__(self):
+		logging.getLogger().setLevel(logging.DEBUG)
+	def get(self):
+		if self.__basicAuth():
+			self._get()
+		else:
+			code = 401
+			self.error(code)
+			self.response.out.write(self.response.http_status_message(code))
+	def post(self):
+		if self.__basicAuth():
+			self._post()
+		else:
+			code = 401
+			self.error(code)
+			self.response.out.write(self.response.http_status_message(code))
+	def __basicAuth(self):
+		auth_header = self.request.headers.get('Authorization')
+		if auth_header:
+			try:
+				(scheme, base64) = auth_header.split(' ')
+				if scheme != 'Basic':
+					return False
+				(username, password) = b64decode(base64).split(':')
+				if username == BASE_USER and password == BASE_PASS:
+					return True
+			except (ValueError, TypeError), err:
+				logging.warn(type(err))
+				return False
+		self.response.set_status(401)
+		self.response.headers['WWW-Authenticate'] = 'Basic realm="mmiyajix"'
 
 class AbstractRequestHandler(webapp.RequestHandler):
 	def __init__(self):
@@ -110,18 +145,73 @@ class MainPage(webapp.RequestHandler):
 					'url': url,
 				}
 			path = os.path.join(os.path.dirname(__file__), './templates/index.html')
+			self.response.out.write(template.render(path, template_values))	
 		else:
-			template_values = {
-					'title':'application',
-					'now':now,
-					'user':user,
-					'url': url,
-				}
-			path = os.path.join(os.path.dirname(__file__), './templates/base/index.html')
+			self.redirect('/initialize')
+
+class InitPage(webapp.RequestHandler):
+	def get(self):
+		now = datetime.datetime.now() + datetime.timedelta(hours=9)
+		user = users.get_current_user()
+		url = None
+		template_values = None
+		if user:
+			url = users.create_logout_url(self.request.uri)
+		else:
+			url = users.create_login_url(self.request.uri)
+		template_values = {
+				'title':'mmiyajix',
+				'now':now,
+				'user':user,
+				'url': url,
+			}
+		path = os.path.join(os.path.dirname(__file__), './templates/base/first.html')
 		self.response.out.write(template.render(path, template_values))	
 		
+class RegistrationPage(BasicAuthentication):
+	def _get(self):
+		now = datetime.datetime.now() + datetime.timedelta(hours=9)
+		user = users.get_current_user()
+		url = None
+		template_values = None
+		if user:
+			url = users.create_logout_url(self.request.uri)
+		else:
+			url = users.create_login_url(self.request.uri)
+		template_values = {
+				'title':'mmiyajix',
+				'now':now,
+				'user':user,
+				'url': url,
+			}
+		path = os.path.join(os.path.dirname(__file__), './templates/base/registration.html')
+		self.response.out.write(template.render(path, template_values))
+
+class CreateAppPage(webapp.RequestHandler):
+	def get(self):
+		now = datetime.datetime.now() + datetime.timedelta(hours=9)
+		user = users.get_current_user()
+		url = None
+		template_values = None
+		if user:
+			url = users.create_logout_url(self.request.uri)
+		else:
+			url = users.create_login_url(self.request.uri)
+		template_values = {
+				'title':'mmiyajix',
+				'now':now,
+				'user':user,
+				'url': url,
+			}
+		path = os.path.join(os.path.dirname(__file__), './templates/base/registration.html')
+		self.response.out.write(template.render(path, template_values))
+		
 application = webapp.WSGIApplication(
-	[('/', MainPage),
+	[
+	('/', MainPage),
+	('/registration', RegistrationPage),
+	('/initialize', InitPage),
+	('/create_app', CreateAppPage),
 	],debug=True)
 
 def main():

@@ -1,0 +1,35 @@
+{# {% if appuser.isadmin %} #}
+<div class="section">
+	<h3>ユーザ管理</h3>
+   	<div class="section_content">
+		<div class="section_content">
+			<div class="center_content padder">
+				<h3>【Admin Only】</h3>
+				{% for u in users %}
+				<p>{{u.nickname}}</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{# {% endif %} #}
+<div class="section">
+	<h3>Registration</h3>
+   	<div class="section_content">
+		<div class="center_content padder">
+			<form action="registration" method="post" accept-charset="utf-8">
+				<label><h3>ユーザ名</h3><input type="text" value="" /></label>
+				<label><h3>グループ</h3>
+					<select name="group">
+					<option value="0">Admin</option>
+					<option value="1">Developper</option>
+					<option value="2">Writer</option>
+					<option value="3" selected="selected">User</option>
+				</select></label>
+				<label><h3>アイコンURL</h3><input type="text" value="" /></label>
+				<label><h3>自己紹介</h3><textarea></textarea></label>
+				<p><input type="submit" value="作成"></p>
+			</form>
+		</div>
+	</div>
+</div>
