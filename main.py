@@ -31,23 +31,42 @@ from app_settings import *
 
 logging.basicConfig(level=logging.DEBUG)
 
+# Basic認証 ユーザ作成時などに読み込む
 class BasicAuthentication(webapp.RequestHandler):
 	def __init__(self):
 		logging.getLogger().setLevel(logging.DEBUG)
+		self.url = None
+		self.user = None
+		self.appuser = None
+		self.now = datetime.datetime.now() + datetime.timedelta(hours=9)
+		
 	def get(self):
-		if self.__basicAuth():
-			self._get()
+		self.user = users.get_current_user()
+		if not self.user:
+			self.redirect(users.create_login_url(self.request.uri))
 		else:
-			code = 401
-			self.error(code)
-			self.response.out.write(self.response.http_status_message(code))
+			if self.__basicAuth():
+				self.appuser = ApplicationUser.get_by_user(self.user)
+				self.url = users.create_logout_url(self.request.uri)
+				self._get()
+			else:
+				code = 401
+				self.error(code)
+				self.response.out.write(self.response.http_status_message(code))
 	def post(self):
-		if self.__basicAuth():
-			self._post()
+		self.user = users.get_current_user()
+		if not self.user:
+			self.redirect(users.create_login_url(self.request.uri))
 		else:
-			code = 401
-			self.error(code)
-			self.response.out.write(self.response.http_status_message(code))
+			if self.__basicAuth():
+				self.appuser = ApplicationUser.get_by_user(self.user)
+				self.url = users.create_logout_url(self.request.uri)
+				self._post()
+			else:
+				code = 401
+				self.error(code)
+				self.response.out.write(self.response.http_status_message(code))
+
 	def __basicAuth(self):
 		auth_header = self.request.headers.get('Authorization')
 		if auth_header:
@@ -66,9 +85,11 @@ class BasicAuthentication(webapp.RequestHandler):
 
 class AbstractRequestHandler(webapp.RequestHandler):
 	def __init__(self):
+		logging.getLogger().setLevel(logging.DEBUG)
 		self.user = None
 		self.appuser = None
-		
+		self.url = None
+		self.now = datetime.datetime.now() + datetime.timedelta(hours=9)
 	def auth(self):
 		self.user = users.get_current_user()
 		if not self.user:
@@ -76,7 +97,7 @@ class AbstractRequestHandler(webapp.RequestHandler):
 			self.redirect(url)
 			return False
 		else:
-			self.appuser = ApplicationUser.find_by_user(self.user)
+			self.appuser = ApplicationUser.get_by_user(self.user)
 			if not ApplicationUser.auth(self.user):
 				self.redirect('/registration')
 				return False
@@ -94,8 +115,8 @@ class AbstractRequestHandler(webapp.RequestHandler):
 	def app_auth(self):
 		if self.google_auth():
 			if not self.appuser:
-				self.appuser = ApplicationUser.find_by_user(self.user)
-			if not ApplicationUser.auth(self.user):
+				self.appuser = ApplicationUser.get_by_user(self.user)
+			if not self.appuser:
 				return False
 			else:
 				return True
@@ -109,22 +130,26 @@ class AbstractRequestHandler(webapp.RequestHandler):
 			return False
 			
 	def get(self):
-		if not self.google_auth():
-			url = users.create_login_url(self.request.uri)
-			self.redirect(url)
-		elif not self.app_auth():
-			self.redirect('/registration')
-		else:
-			self._get()
+		# if not self.google_auth():
+		# 	self.redirect(self.url)
+		# elif not self.app_auth():
+		# 	self.redirect('/registration')
+		# else:
+		self.url = users.create_login_url(self.request.uri)
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		self._get()
 	
 	def post(self):
-		if not self.google_auth():
-			url = users.create_login_url(self.request.uri)
-			self.redirect(url)
-		elif not self.app_auth():
-			self.redirect('/registration')
-		else:
-			self._post()
+		# if not self.google_auth():
+		# 	self.redirect(self.url)
+		# elif not self.app_auth():
+		# 	self.redirect('/registration')
+		# else:
+		self.url = users.create_login_url(self.request.uri)
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		self._post()
 
 class MainPage(webapp.RequestHandler):
 	def get(self):
@@ -149,44 +174,45 @@ class MainPage(webapp.RequestHandler):
 		else:
 			self.redirect('/initialize')
 
-class InitPage(webapp.RequestHandler):
-	def get(self):
-		now = datetime.datetime.now() + datetime.timedelta(hours=9)
-		user = users.get_current_user()
-		url = None
+class InitPage(AbstractRequestHandler):
+	def _get(self):
 		template_values = None
-		if user:
-			url = users.create_logout_url(self.request.uri)
-		else:
-			url = users.create_login_url(self.request.uri)
 		template_values = {
 				'title':'mmiyajix',
-				'now':now,
-				'user':user,
-				'url': url,
+				'now':self.now,
+				'user':self.user,
+				'appuser':self.appuser,
+				'url': self.url,
 			}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/first.html')
 		self.response.out.write(template.render(path, template_values))	
 		
 class RegistrationPage(BasicAuthentication):
 	def _get(self):
-		now = datetime.datetime.now() + datetime.timedelta(hours=9)
-		user = users.get_current_user()
-		url = None
 		template_values = None
-		if user:
-			url = users.create_logout_url(self.request.uri)
-		else:
-			url = users.create_login_url(self.request.uri)
 		template_values = {
 				'title':'mmiyajix',
-				'now':now,
-				'user':user,
-				'url': url,
+				'now':self.now,
+				'user':self.user,
+				'users':ApplicationUser.get_users(),
+				'appuser':self.appuser,
+				'url': self.url,
 			}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/registration.html')
 		self.response.out.write(template.render(path, template_values))
-
+	def _post(self):
+		if self.request.get("nickname"):
+			appuser = ApplicationUser()
+			appuser.user = self.user
+			appuser.nickname = self.request.get("nickname")
+			appuser.role = self.request.get("group")
+			appuser.img_url = self.request.get("img_url")
+			appuser.description = self.request.get("description")
+			appuser.fullname = self.request.get("description")
+			appuser.email_addr = self.request.get("email_addr")
+			appuser.put()
+		self.redirect("/")
+	
 class CreateAppPage(webapp.RequestHandler):
 	def get(self):
 		now = datetime.datetime.now() + datetime.timedelta(hours=9)

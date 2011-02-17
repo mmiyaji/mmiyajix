@@ -6,7 +6,7 @@
 				<li><a>Search</a></li>
 				<li><a>Contact</a></li>
 				<li><a>RSS</a></li>
-				<li><a href="{{url}}">{% if user %}Logout【{{user.nickname}}】{% else %}Login{% endif %}</a></li>
+				<li>{% if user %}{% if appuser %}<a href="{{url}}">Logout【{{appuser.nickname}}】{% else %}<a href="{{url}}">Logout【{{user.nickname}}】{% endif %}{% else %}<a href="/registration">Login{% endif %}</a></li>
 				<li><form class="search_box" action="search" method="get" accept-charset="utf-8"><input type="text" />
 					<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
 				</form></li>

@@ -7,15 +7,23 @@ from app_settings import *
 
 class ApplicationUser(db.Model):
 	user = db.UserProperty()
-	role = db.StringProperty(choices=set(["admin", "user", "developper"]))
+	role = db.StringProperty(choices=set(["admin","developper","writer", "user"]))
 	nickname = db.StringProperty(default="")
 	email_addr = db.StringProperty(default="")
 	fullname = db.StringProperty(default="")
 	img_url = db.StringProperty(default="")
-	introduction = db.TextProperty(default="")
+	description = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now_add=True)
-
+	
+	@staticmethod
+	def get_by_user(user):
+		return ApplicationUser.all().filter("user = ",user).get()
+	
+	@staticmethod
+	def get_users():
+		return ApplicationUser.all()
+	
 class Revision(db.Model):
 	revision = db.IntegerProperty(default=0)
 	create_appuser = db.ReferenceProperty(ApplicationUser,
