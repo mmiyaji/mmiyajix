@@ -1,0 +1,47 @@
+{% if appuser.admin_auth %}
+<div class="section">
+	<h3>ユーザ管理</h3>
+   	<div class="section_content">
+		<div class="section_content">
+			<div class="center_content padder">
+				<h3>【Admin Only】</h3>
+				{% for u in applications %}
+				<p>{{u.title}}</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endif %}
+<div class="section">
+	<h3>Application Setting</h3>
+   	<div class="section_content">
+		<div class="center_content padder">
+			<form action="initialize_app" method="post" accept-charset="utf-8">
+				<label><h3>サイト管理者</h3><p>{{user.email}}</p></label>
+				<label><h3>タイトル</h3><input name="title" type="text" value="{{application.title}}" /></label>
+				<label><h3>バージョン</h3>
+					<select name="revision">
+					<option value="1" selected="selected">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select></label>
+				<label><h3>アイコンURL</h3><input name="img_url" type="text" value="{{application.img_url}}" /></label>
+				<label><h3>サイト紹介</h3><textarea name="description">{{application.description}}</textarea></label>
+				{% if application %}
+				<input type="hidden" name="application" value="application.key.id" />
+				<p><input type="submit" value="保存"></p>
+				{% else %}
+				<p><input type="submit" value="作成"></p>
+				{% endif %}
+			</form>
+		</div>
+	</div>
+</div>

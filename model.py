@@ -16,6 +16,11 @@ class ApplicationUser(db.Model):
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now_add=True)
 	
+	def admin_auth(self):
+		if self.role == "admin":
+			return True
+		else:
+			return False
 	@staticmethod
 	def get_by_user(user):
 		return ApplicationUser.all().filter("user = ",user).get()
@@ -24,55 +29,62 @@ class ApplicationUser(db.Model):
 	def get_users():
 		return ApplicationUser.all()
 	
-class Revision(db.Model):
-	revision = db.IntegerProperty(default=0)
-	create_appuser = db.ReferenceProperty(ApplicationUser,
-									collection_name='commiter')
-	create_at = db.DateTimeProperty(auto_now_add=True)
-	updated_at = db.DateTimeProperty(auto_now_add=True)
-	
-	@staticmethod
-	def get_rev(rev=0):
-		revision = Revision.all().filter("revision = ",rev).get()
-		return revision
-	@staticmethod
-	def create_revision(rev=0,appuser=None):
-		revision = Revision()
-		revision.revision = rev
-		revision.create_appuser = appuser
-		revision.put()
-		return revision
+# class Revision(db.Model):
+# 	revision = db.IntegerProperty(default=0)
+# 	create_appuser = db.ReferenceProperty(ApplicationUser,
+# 									collection_name='commiter')
+# 	create_at = db.DateTimeProperty(auto_now_add=True)
+# 	updated_at = db.DateTimeProperty(auto_now_add=True)
+# 	
+# 	@staticmethod
+# 	def get_rev(rev=0):
+# 		revision = Revision.all().filter("revision = ",rev).get()
+# 		return revision
+# 	@staticmethod
+# 	def create_revision(rev=0,appuser=None):
+# 		revision = Revision()
+# 		revision.revision = rev
+# 		revision.create_appuser = appuser
+# 		revision.put()
+# 		return revision
 	
 class Application(db.Model):
 	title = db.StringProperty(default="")
 	description = db.TextProperty(default="")
-	revision = db.ReferenceProperty(Revision,
-									collection_name='current_version')
+	revision = db.IntegerProperty(default=0)
 	img_url = db.StringProperty(default="")
 	create_appuser = db.ReferenceProperty(ApplicationUser,
 									collection_name='created_user')
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now_add=True)
+	isdefault = db.BooleanProperty(default=True)
 	
 	@staticmethod
-	def create_app(title="",rev=1,description="",appuser=None,img_url=""):
-		app = Application()
-		app.title = title
-		app.description = description
-		app.create_appuser = appuser
-		app.img_url = img_url
-		
-		revision = Revision.get_rev(rev)
-		if not revision:
-			revision = Revision.create_revision(rev,appuser)
-		app.revision = revision
-		app.put()
+	def create_app(title="",rev=0,description="",appuser=None,img_url=""):
+		app = None
+		if Application.all().filter("rev = ",rev).count() < 1:
+			app = Application()
+			app.title = title
+			app.description = description
+			app.create_appuser = appuser
+			app.img_url = img_url
+			app.revision = rev
+			apps = Application.all().filter('isdefault = ',True)
+			for i in apps:
+				i.isdefault = False
+			app.isdefault = True
+			app.put()
 		return app
-	
+	@staticmethod
+	def get_by_revision(rev):
+		return Application.all().filter('revision = ',rev).get()
 	@staticmethod
 	def get_app():
-		return Application.all().order('-create_at').get()
-
+		return Application.all().filter('isdefault = ',True).order('-create_at').get()
+	@staticmethod
+	def get_apps():
+		return Application.all().order('-revision')
+	
 class Tags(db.Model):
 	appuser =  db.ReferenceProperty(ApplicationUser,
 									collection_name='created')

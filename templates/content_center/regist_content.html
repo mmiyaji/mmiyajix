@@ -1,4 +1,5 @@
 {% if appuser.admin_auth %}
+{% if users %}
 <div class="section">
 	<h3>ユーザ管理</h3>
    	<div class="section_content">
@@ -11,7 +12,8 @@
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
+{% endif %}
 {% endif %}
 <div class="section">
 	<h3>Registration</h3>
@@ -24,15 +26,14 @@
 				<label><h3>連絡先</h3><input name="email_addr" type="text" value="{% if appuser %}{{appuser.email_addr}}{% else %}{{user.email}}{% endif %}" /></label>
 				<label><h3>グループ</h3>
 					<select name="group">
-					<option value="admin">Admin</option>
+					<option value="admin" selected="selected">Admin</option>
 					<option value="developper">Developper</option>
 					<option value="writer">Writer</option>
-					<option value="user" selected="selected">User</option>
+					<option value="user">User</option>
 				</select></label>
 				<label><h3>アイコンURL</h3><input name="img_url" type="text" value="{{appuser.img_url}}" /></label>
 				<label><h3>自己紹介</h3><textarea name="description">{{appuser.description}}</textarea></label>
 				{% if appuser %}
-				<label><h3>本名</h3><input name="fullname" type="text" value="{{appuser.fullname}}" /></label>
 				<p><input type="submit" value="保存"></p>
 				{% else %}
 				<p><input type="submit" value="作成"></p>
