@@ -2,16 +2,23 @@
 	<div id="header_content">
 		<span id="title_bar">
 			<ul>
-				<li><a>Home</a></li>
+				<li><a href="/">Home</a></li>
 				<li><a>Search</a></li>
 				<li><a>Contact</a></li>
 				<li><a>RSS</a></li>
-				<li>{% if user %}{% if appuser %}<a href="{{url}}">Logout【{{appuser.nickname}}】{% else %}<a href="{{url}}">Logout【{{user.nickname}}】{% endif %}{% else %}<a href="/registration">Login{% endif %}</a></li>
+				{% if user %}{% if appuser %}
+				<li><a href="initialize">Manage</a></li>
+				<li><a href="{{url}}">Logout【{{appuser.nickname}}】</a></li>
+				{% else %}
+				<li><a href="{{url}}">Logout【{{user.nickname}}】</a></li>
+				{% endif %}{% else %}
+				<a href="/registration">Login</a></li>
+				{% endif %}
 				<li><form class="search_box" action="search" method="get" accept-charset="utf-8"><input type="text" />
 					<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
 				</form></li>
 			</ul>
 		</span>
-		<h1>{{title}}</h1>
+		<h1><a href="/">{{title}}</a></h1>
 	</div>
 </div>

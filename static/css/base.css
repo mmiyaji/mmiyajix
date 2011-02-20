@@ -197,9 +197,10 @@ dl.roll dt{
 /*	height:600px;*/
 }
 input,textarea,select{
-	background: -moz-linear-gradient(center top, #efeff8 0%,#fff 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #efeff8),color-stop(1, #fff));
-	border:1px solid #6699FF;
+/*	background: -moz-linear-gradient(center top, #efeff8 0%,#fff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #efeff8),color-stop(1, #fff));*/
+	background-color:#fff;
+	border:2px solid #ccc;
 	/*font-size:0.8em;*/
 	padding:3px;
 }
@@ -255,13 +256,21 @@ form.search_box input[type="image"]{
 	font-size:11px;
 	padding-bottom:20px;
 }
-
+.edits{
+	float:right;
+}
 a, a:visited {
 	color: #4EA0E2;
 	outline: none;
 	text-decoration: underline;
 }
-
 a:hover{
 	text-decoration:none;
+}
+h1 a, h1 a:visited {
+	text-decoration:none;
+	color:#fff;
+}
+h1 a:hover{
+	text-decoration: underline;
 }

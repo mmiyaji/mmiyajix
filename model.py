@@ -21,6 +21,11 @@ class ApplicationUser(db.Model):
 			return True
 		else:
 			return False
+	def modify_auth(self):
+		if self.role == "admin" or self.role == "developper":
+			return True
+		else:
+			return False
 	@staticmethod
 	def get_by_user(user):
 		return ApplicationUser.all().filter("user = ",user).get()
