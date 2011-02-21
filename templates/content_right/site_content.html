@@ -2,7 +2,7 @@
 	<h3>About this site{% if appuser.modify_auth %}<a class="edits" href="/" title="edit profile"><img src="/static/img/edit.png"/></a>{% endif %}</h3>
    	<div class="section_content">
 	{% if application.description %}
-	{{application.description|safe}}
+	{{application.description}}
 	{% else %}
 	<p>ここは宮地 正大のページです．本ページでは主に私の研究に関する成果物をまとめています．
 		<br />

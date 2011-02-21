@@ -131,6 +131,32 @@ class BasicAuthentication(AbstractRequestHandler):
 		self.response.headers['WWW-Authenticate'] = 'Basic realm="mmiyajix"'
 
 # 
+class ModifyRequestHandler(AbstractRequestHandler):
+	def get(self):
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		if self.appuser and self.appuser.modify_auth():
+			self.url = users.create_login_url(self.request.uri)
+			self.application = Application.get_app()
+			self._get()
+		else:
+			code = 401
+			self.error(code)
+			self.response.out.write(self.response.http_status_message(code))
+	
+	def post(self):
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		if self.appuser and self.appuser.modify_auth():
+			self.url = users.create_login_url(self.request.uri)
+			self.application = Application.get_app()
+			self._post()
+		else:
+			code = 401
+			self.error(code)
+			self.response.out.write(self.response.http_status_message(code))
+
+# 
 class NormalRequestHandler(AbstractRequestHandler):
 	def get(self):
 		self.url = users.create_login_url(self.request.uri)
@@ -167,7 +193,6 @@ class InitPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
 		template_values = {
-				'title':'mmiyajix',
 				'now':self.now,
 				'user':self.user,
 				'appuser':self.appuser,
@@ -176,12 +201,23 @@ class InitPage(NormalRequestHandler):
 			}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/first.html')
 		self.response.out.write(template.render(path, template_values))	
+class ManagePage(ModifyRequestHandler):
+	def _get(self):
+		template_values = None
+		template_values = {
+				'now':self.now,
+				'user':self.user,
+				'appuser':self.appuser,
+				'application':self.application,
+				'url': self.url,
+			}
+		path = os.path.join(os.path.dirname(__file__), './templates/base/manage.html')
+		self.response.out.write(template.render(path, template_values))	
 		
 class RegistrationPage(BasicAuthentication):
 	def _get(self):
 		template_values = None
 		template_values = {
-				'title':'mmiyajix',
 				'now':self.now,
 				'user':self.user,
 				'users':ApplicationUser.get_users(),
@@ -214,7 +250,6 @@ class CreateAppPage(BasicAuthentication):
 		if self.appuser:
 			template_values = None
 			template_values = {
-				'title':'mmiyajix',
 				'now':self.now,
 				'user':self.user,
 				'appuser':self.appuser,
@@ -246,6 +281,7 @@ class CreateAppPage(BasicAuthentication):
 application = webapp.WSGIApplication(
 	[
 	('/', MainPage),
+	('/manage', ManagePage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),
 	('/initialize_app', CreateAppPage),
