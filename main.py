@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-import os,urllib,random,datetime,logging
+import os,urllib,random,datetime,logging,re
 from google.appengine.api import users
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import util
@@ -92,14 +92,18 @@ class BasicAuthentication(AbstractRequestHandler):
 		if not self.user:
 			self.redirect(users.create_login_url(self.request.uri))
 		else:
-			if self.__basicAuth():
-				self.appuser = ApplicationUser.get_by_user(self.user)
+			self.appuser = ApplicationUser.get_by_user(self.user)
+			if self.appuser:
 				self.url = users.create_logout_url(self.request.uri)
 				self._get()
 			else:
-				code = 401
-				self.error(code)
-				self.response.out.write(self.response.http_status_message(code))
+				if self.__basicAuth():
+					self.url = users.create_logout_url(self.request.uri)
+					self._get()
+				else:
+					code = 401
+					self.error(code)
+					self.response.out.write(self.response.http_status_message(code))
 	def post(self):
 		self.user = users.get_current_user()
 		if not self.user:
@@ -182,6 +186,7 @@ class MainPage(NormalRequestHandler):
 					'user':self.user,
 					'appuser':self.appuser,
 					'application':self.application,
+					'recents':Entry.get_recent(10),
 					'url': self.url,
 				}
 			path = os.path.join(os.path.dirname(__file__), './templates/base/index.html')
@@ -212,6 +217,43 @@ class ManagePage(ModifyRequestHandler):
 				'url': self.url,
 			}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/manage.html')
+		self.response.out.write(template.render(path, template_values))	
+
+class EditPage(ModifyRequestHandler):
+	def _get(self):
+		template_values = None
+		template_values = {
+				'now':self.now,
+				'user':self.user,
+				'appuser':self.appuser,
+				'application':self.application,
+				'url': self.url,
+			}
+		path = os.path.join(os.path.dirname(__file__), './templates/base/edit.html')
+		self.response.out.write(template.render(path, template_values))	
+		
+	def _post(self):
+		if True:
+			if self.request.get("entry_id"):
+				entry = Entry.get_by_id(int(self.request.get("entry_id")))
+			else:
+				entry = Entry()
+			entry.appuser = self.appuser
+			entry.title = self.request.get("title")
+			content = self.request.get("content")
+			p = re.compile(r'<.*?>')
+			content = p.sub('', content)
+			if len(content)>500:
+				content = content[0:500]
+			entry.content = content
+			entry.full_content = self.request.get("content")
+			entry.save()
+		self.redirect("/")
+	
+class EditorPage(webapp.RequestHandler):
+	def get(self):
+		template_values = None
+		path = os.path.join(os.path.dirname(__file__), './templates/base/editor_frame.html')
 		self.response.out.write(template.render(path, template_values))	
 		
 class RegistrationPage(BasicAuthentication):
@@ -282,6 +324,8 @@ application = webapp.WSGIApplication(
 	[
 	('/', MainPage),
 	('/manage', ManagePage),
+	('/edit', EditPage),
+	('/editor', EditorPage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),
 	('/initialize_app', CreateAppPage),

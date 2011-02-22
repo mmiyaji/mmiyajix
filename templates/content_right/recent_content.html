@@ -1,6 +1,16 @@
 <div class="section">
 	<h3>Recent News</h3>
    	<div class="section_content">
+		{% for entry in recents %}
+		<div class="recent_content">
+			<span class="date">{{entry.show_date}}</span>
+			<h3><span>{{entry.title}}</span></h3>
+			<div class="padder">
+			{{entry.full_content}}
+			<p><a class="more">... Read full text</a></p>
+			</div>
+		</div>
+		{% endfor %}
 		<div class="recent_content">
 			<span class="date">2011/02/14</span>
 			<h3>Diary</h3>

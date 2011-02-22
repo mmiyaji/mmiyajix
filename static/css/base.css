@@ -125,17 +125,22 @@ body{
 #content_wrapper .section .section_content .recent_content p{
 	margin-left:20px;
 }
+#content_wrapper .section .section_content .recent_content h3 span{
+	border-bottom:1px solid #55f;
+	padding:2px 8px;
+	margin-top:10px;
+}
 #content_wrapper .section #content_tree{
 /*	margin-left:20px;*/
 }
-#content_wrapper .section #content_tree >ul,#content_wrapper .section #content_manage >ul,#content_wrapper .section #content_tag >ul{
+#content_wrapper .section #content_tree > ul,#content_wrapper .section #content_manage >ul,#content_wrapper .section #content_tag >ul{
 	list-style:none;
 }
-#content_wrapper .section #content_tag >ul>li{
+#content_wrapper .section #content_tag > ul > li{
 	float:left;
 	margin:0 5px 10px 5px;
 }
-#content_wrapper .section #content_tag >ul>li span{
+#content_wrapper .section #content_tag > ul > li span{
 	float:left;
 }
 #content_wrapper .section .section_content .center_content{
@@ -182,26 +187,20 @@ dl.roll dt{
 #content_wrapper #content_left .section >ul li{
 	margin:5px auto;
 }
-#content_wrapper #content_left .section >ul>li{
+#content_wrapper #content_left .section > ul > li{
 	font-weight:bold;
-/*	color:navy;*/
 	margin-top:20px;
 	border-bottom:1px solid #ddd;
-/*	margin:10px auto;*/
 }
-#content_wrapper #content_left .section ul > ul{
-	margin-left:30px;
+#content_wrapper #content_left .section ul > li > ul{
+	margin-left:20px;
 }
 
 #content_wrapper #content_left .section{
-/*	height:600px;*/
 }
 input,textarea,select{
-/*	background: -moz-linear-gradient(center top, #efeff8 0%,#fff 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #efeff8),color-stop(1, #fff));*/
 	background-color:#fff;
 	border:2px solid #ccc;
-	/*font-size:0.8em;*/
 	padding:3px;
 }
 #content_wrapper #content_search input[type="text"]{
@@ -217,11 +216,9 @@ input,textarea,select{
 }
 form.search_box input{
 	background: #ddd;
-/*	background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #efeff8),color-stop(1, #fff));*/
 	border:1px solid #ddd;
 }
 form.search_box input[type="text"]{
-/*	color:#fff;*/
 	float:left;
 	height:16px;
 	width:100px;
@@ -231,9 +228,6 @@ form.search_box input[type="image"]{
 	margin: 0px;
 	padding: 0px;
 	border:none;
-}
-.center_content form label{
-/*	margin:10px;*/
 }
 .center_content form input[type="text"],.center_content form textarea,.center_content form select{
 	margin-left:30px;
@@ -249,6 +243,16 @@ form.search_box input[type="image"]{
 	margin:0px 20px;
 	padding:5px 10px;
 }
+.center_content div.editor_field{
+	
+}
+.center_content div.editor_field iframe{
+	border:2px solid #ccc;
+	margin-left:30px;
+	width:800px;
+	min-height:400px;
+}
+
 /*===============================
 *	Additional page styles:
 ================================*/
@@ -263,6 +267,10 @@ form.search_box input[type="image"]{
 .edits{
 	float:right;
 }
+.edits img{
+	border:none;
+}
+
 a, a:visited {
 	color: #4EA0E2;
 	outline: none;

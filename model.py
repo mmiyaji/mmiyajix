@@ -6,7 +6,7 @@ from time import gmtime, strftime
 from app_settings import *
 
 class ApplicationUser(db.Model):
-	user = db.UserProperty()
+	user = db.UserProperty(auto_current_user_add=True)
 	role = db.StringProperty(choices=set(["admin","developper","writer", "user"]))
 	nickname = db.StringProperty(default="")
 	email_addr = db.StringProperty(default="")
@@ -14,7 +14,7 @@ class ApplicationUser(db.Model):
 	img_url = db.StringProperty(default="")
 	description = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
-	updated_at = db.DateTimeProperty(auto_now_add=True)
+	updated_at = db.DateTimeProperty(auto_now=True)
 	
 	def admin_auth(self):
 		if self.role == "admin":
@@ -61,7 +61,7 @@ class Application(db.Model):
 	create_appuser = db.ReferenceProperty(ApplicationUser,
 									collection_name='created_user')
 	create_at = db.DateTimeProperty(auto_now_add=True)
-	updated_at = db.DateTimeProperty(auto_now_add=True)
+	updated_at = db.DateTimeProperty(auto_now=True)
 	isdefault = db.BooleanProperty(default=True)
 	
 	@staticmethod
@@ -96,7 +96,7 @@ class Tags(db.Model):
 	title = db.StringProperty(default="")
 	description = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
-	updated_at = db.DateTimeProperty(auto_now_add=True)
+	updated_at = db.DateTimeProperty(auto_now=True)
 
 class Entry(db.Model):
 	appuser =  db.ReferenceProperty(ApplicationUser,
@@ -105,9 +105,19 @@ class Entry(db.Model):
 	content = db.StringProperty(multiline=True)
 	full_content = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
-	updated_at = db.DateTimeProperty(auto_now_add=True)
+	updated_at = db.DateTimeProperty(auto_now=True)
 	tags = db.ListProperty(db.Key)
 	def put(self):
 		db.Model.put(self)
 		# self.appuser.status_updated_date = datetime.datetime.now()
 		# self.appuser.put()
+		
+	def show_date(self):
+		date = self.date
+		date = date + datetime.timedelta(hours=9)
+		return date.strftime("%Y-%m-%d %H:%M")
+	
+	@staticmethod
+	def get_recent(span=3):
+		return Entry.all().order('-create_at').fetch(span)
+	

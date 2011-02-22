@@ -36,7 +36,7 @@
 				<label><h3>アイコンURL</h3><input name="img_url" type="text" value="{{application.img_url}}" /></label>
 				<label><h3>サイト紹介</h3><textarea name="description">{{application.description}}</textarea></label>
 				{% if application %}
-				<input type="hidden" name="application" value="application.key.id" />
+				<input type="hidden" name="application" value="{{application.key.id}}" />
 				<p><input type="submit" value="保存"></p>
 				{% else %}
 				<p><input type="submit" value="作成"></p>

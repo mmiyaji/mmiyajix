@@ -1,0 +1,31 @@
+{% if appuser.modify_auth %}
+<div class="section">
+	<h3>サイト管理</h3>
+   	<div class="section_content">
+		<div class="section_content">
+			<div class="center_content padder">
+				<form action="edit" method="post" accept-charset="utf-8">
+					<label><h3>タイトル</h3><input name="title" type="text" value="" /></label>
+					<label>
+						<h3>本文</h3>
+						<div class="editor_field">
+							<iframe id="editable_frame" src="/editor" frameborder="0"></iframe>
+						</div>
+					</label>
+					<label><h3>記事執筆者</h3><p>{{appuser.nickname}} : {{appuser.email_addr}}</p></label>
+					<input type="hidden" id="editable_frame_input" name="content" value="" />
+					<a onclick="get_editable()">get</a>
+					{% if false %}
+					<input type="hidden" name="application" value="{{application.key.id}}" />
+					<p><input type="submit" value="保存" /></p>
+					{% else %}
+					<p><input type="submit" value="作成" /></p>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/js/mmiyajix.js"></script>
+<script type="text/javascript" src="/js/editable.js"></script>
+{% endif %}
