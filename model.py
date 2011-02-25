@@ -4,6 +4,18 @@ from utility import *
 import datetime
 from time import gmtime, strftime
 from app_settings import *
+def to_dict(model_obj, attr_list, init_dict_func=None):
+	values = {}
+	init_dict_func(values)
+	for token in attr_list:
+		elems = token.split('.')
+		value = getattr(model_obj, elems[0])
+		for elem in elems[1:]:
+			value = getattr(value, elem)
+		values[elems[-1]] = value
+	if model_obj.is_saved():
+		values['key'] =  str(model_obj.key())
+	return values
 
 class ApplicationUser(db.Model):
 	user = db.UserProperty(auto_current_user_add=True)
@@ -120,4 +132,11 @@ class Entry(db.Model):
 	@staticmethod
 	def get_recent(span=3):
 		return Entry.all().order('-create_at').fetch(span)
+	@staticmethod
+	def get_entries(span=5,page=0):
+		result = Entry.all().order('-create_at')
+		if page!=0:
+			page = page*span - span
+		return result.fetch(span,page),result.count()
+		# return Entry.all().order('-create_at').fetch(span)
 	

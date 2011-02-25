@@ -61,7 +61,6 @@ body{
 #header_content #title_bar ul li>a:hover{
 	text-decoration:underline;
 }
-	
 #content_wrapper h1{
 	font-size: 16px;
 	font-weight: normal;
@@ -80,7 +79,6 @@ body{
 	line-height: 34px;
 	padding: 0 15px;
 }
-
 #content_wrapper .section{
 	background: url("../img/sprite.png") repeat-x 0 -121px #FAFAFA;
 	border: 1px solid #D1D3D5;
@@ -130,6 +128,9 @@ body{
 	padding:2px 8px;
 	margin-top:10px;
 }
+/*#content_wrapper .section .section_content .recent_content:hover{
+}*/
+
 #content_wrapper .section #content_tree{
 /*	margin-left:20px;*/
 }
@@ -238,6 +239,11 @@ form.search_box input[type="image"]{
 .center_content form textarea{
 	width:500px;
 	min-height:200px;
+	padding:10px;
+}
+.center_content form textarea.abstract{
+	width:780px;
+	min-height:80px;
 }
 .center_content form input[type="submit"]{
 	margin:0px 20px;
