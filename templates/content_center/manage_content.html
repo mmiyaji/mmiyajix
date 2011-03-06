@@ -6,7 +6,7 @@
 			{% if entries %}
 				<ul>
 				{% for entry in entries %}
-				<li>{{entry.title}}</li>
+				<li><a href="/edit?entry_id={{entry.key.id}}">{{entry.title}}</a></li>
 				{% endfor %}
 				</ul>
 				{{entry_count}}件

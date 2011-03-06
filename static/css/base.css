@@ -11,8 +11,9 @@ body{
 	min-height:500px;
 }
 #content_wrapper{
-	width:960px;
-	margin:0 auto;
+	min-width:960px;
+	width:100%;
+	margin:0 ;
 	padding-top:84px;
 	border-bottom:1px solid #ddd;
 }
@@ -21,13 +22,19 @@ body{
 	float:left;	
 }
 #content_right{
-	width:660px;
-	float:left;
+/*	min-width:660px;
+	width:100%;
+	float:left;*/
 }
 #header_content{
-	width:960px;
+	min-width:960px;
+	width:100%;
 	margin:0 auto;
 }
+#header_content > h1{
+	margin-left:30px;
+}
+
 #header_back{
 	width:100%;
 	min-width:960px;
@@ -67,14 +74,14 @@ body{
 	line-height: 44px;
 }
 #content_wrapper h2,
-#content_wrapper h3{
+#content_wrapper .section > h3{
 	color: #575B63;
 	font-size: 18px;
 	font-weight: normal;
 	line-height: 42px;
 	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
 }
-#content_wrapper h3{
+#content_wrapper .section > h3{
 	font-size: 15px;
 	line-height: 34px;
 	padding: 0 15px;
@@ -161,9 +168,18 @@ div.pad{
 div.padder{
 	padding:20px;
 }
+div.padder5{
+	padding:5px;
+}
+div.padder10{
+	padding:10px;
+}
 span.strong{
 	font-size: 20px;
 	display:block;
+}
+.hand{
+	cursor:hand;
 }
 dl.roll dt{
 	float:left;
@@ -262,8 +278,6 @@ form.search_box input[type="image"]{
 /*===============================
 *	Additional page styles:
 ================================*/
-
-
 #footer{
 	color:#777;
 	text-align:center;

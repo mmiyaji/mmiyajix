@@ -39,12 +39,16 @@ class ManagePage(ModifyRequestHandler):
 class EditPage(ModifyRequestHandler):
 	def _get(self):
 		template_values = None
+		entry = None
+		if self.request.get("entry_id"):
+			entry = Entry.get_by_id(int(self.request.get("entry_id")))
 		template_values = {
 				'now':self.now,
 				'user':self.user,
 				'appuser':self.appuser,
 				'application':self.application,
 				'url': self.url,
+				'entry':entry,
 			}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/edit.html')
 		self.response.out.write(template.render(path, template_values))	
@@ -53,7 +57,7 @@ class EditPage(ModifyRequestHandler):
 		if True:
 			if self.request.get("entry_id"):
 				entry = Entry.get_by_id(int(self.request.get("entry_id")))
-			else:
+			if not entry:
 				entry = Entry()
 			entry.appuser = self.appuser
 			entry.title = self.request.get("title")
@@ -72,6 +76,13 @@ class EditPage(ModifyRequestHandler):
 class EditorPage(webapp.RequestHandler):
 	def get(self):
 		template_values = None
+		entry = None
+		if self.request.get("entry_id"):
+			entry = Entry.get_by_id(int(self.request.get("entry_id")))
+			if entry:
+				template_values = {
+					'entry_full_content':entry.full_content,
+				}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/editor_frame.html')
 		self.response.out.write(template.render(path, template_values))	
 

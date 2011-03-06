@@ -37,7 +37,6 @@ class MainPage(NormalRequestHandler):
 		template_values = None
 		if self.application:
 			template_values = {
-					'title':'mmiyajix',
 					'now':self.now,
 					'user':self.user,
 					'appuser':self.appuser,
@@ -92,7 +91,34 @@ class RegistrationPage(BasicAuthentication):
 				appuser.save()
 			else:
 				appuser.put()
-		self.redirect("/")
+		if self.application:
+			self.redirect("/")
+		else:
+			self.redirect("/initialize_app")
+
+class EntryPage(NormalRequestHandler):
+	def _get(self):
+		template_values = None
+		entry = None
+		if self.application:
+			if self.request.get("entry_id"):
+				entry = Entry.get_by_id(int(self.request.get("entry_id")))
+			if entry:
+				template_values = {
+					'title':entry.title,
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'entry':entry,
+					'url': self.url,
+				}
+				path = os.path.join(os.path.dirname(__file__), './templates/base/entry.html')
+				self.response.out.write(template.render(path, template_values))
+			else:
+				self.redirect('/')
+		else:
+			self.redirect('/initialize')
 	
 application = webapp.WSGIApplication(
 	[
@@ -100,6 +126,7 @@ application = webapp.WSGIApplication(
 	('/manage', admin.ManagePage),
 	('/edit', admin.EditPage),
 	('/editor', admin.EditorPage),
+	('/entry', EntryPage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),
 	('/initialize_app', admin.CreateAppPage),

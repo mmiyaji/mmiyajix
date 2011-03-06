@@ -5,22 +5,22 @@
 		<div class="section_content">
 			<div class="center_content padder">
 				<form action="edit" method="post" accept-charset="utf-8" onsubmit="return get_editable();">
-					<label><h3>タイトル</h3><input name="title" type="text" value="" /></label>
+					<label><h3>タイトル</h3><input name="title" type="text" value="{% if entry %}{{entry.title}}{% endif %}" /></label>
 					<label>
 						<h3>要約 (*最大500文字)</h3>
-						<textarea name="content" class="abstract"></textarea>
+						<textarea name="content" class="abstract">{% if entry %}{{entry.content}}{% endif %}</textarea>
 					</label>
 					<label>
 						<h3>本文</h3>
 						<div class="editor_field">
-							<iframe id="editable_frame" src="/editor" frameborder="0"></iframe>
+							<iframe id="editable_frame" src="/editor{% if entry %}?entry_id={{entry.key.id}}{% endif %}" frameborder="0"></iframe>
 						</div>
 					</label>
-					<label><h3>記事執筆者</h3><p>{{appuser.nickname}} : {{appuser.email_addr}}</p></label>
+					<label><h3>記事執筆者</h3><p>{{appuser.nickname}} : {% if entry %}{{entry.appuser.email_addr}}{% else %}{{appuser.email_addr}}{% endif %}</p></label>
+					<label><h3>タグ</h3><input type="text" name="tags" value="{% if entry %}{{entry.tags}}{% endif %}" /></label>
 					<input type="hidden" id="editable_frame_input" name="full_content" value="" />
-					<a onclick="get_editable()">get</a>
-					{% if false %}
-					<input type="hidden" name="application" value="{{application.key.id}}" />
+					{% if entry %}
+					<input type="hidden" name="entry_id" value="{{entry.key.id}}" />
 					<p><input type="submit" value="保存" /></p>
 					{% else %}
 					<p><input type="submit" value="作成" /></p>

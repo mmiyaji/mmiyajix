@@ -5,9 +5,8 @@
 <meta http-equiv="Content-Language" content="ja">
 <link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="../static/css/base.css">
-<title>{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
+<title>{% if title %}{{title}} - {% endif %}{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
 </head>
-
 <body>
 <div id="wrapper">
 	{% include "title_content.html" %}

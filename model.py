@@ -125,9 +125,9 @@ class Entry(db.Model):
 		# self.appuser.put()
 		
 	def show_date(self):
-		date = self.date
+		date = self.create_at
 		date = date + datetime.timedelta(hours=9)
-		return date.strftime("%Y-%m-%d %H:%M")
+		return date.strftime("%Y/%m/%d %H:%M")
 	
 	@staticmethod
 	def get_recent(span=3):
