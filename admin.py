@@ -55,6 +55,7 @@ class EditPage(ModifyRequestHandler):
 		
 	def _post(self):
 		if True:
+			entry = None
 			if self.request.get("entry_id"):
 				entry = Entry.get_by_id(int(self.request.get("entry_id")))
 			if not entry:
@@ -62,6 +63,10 @@ class EditPage(ModifyRequestHandler):
 			entry.appuser = self.appuser
 			entry.title = self.request.get("title")
 			content = self.request.get("content")
+			if self.request.get("draft"):
+				entry.is_draft = True
+			else:
+				entry.is_draft = False
 			p = re.compile(r'<.*?>')
 			content = p.sub('', content)
 			if len(content)>500:

@@ -118,9 +118,10 @@ class Entry(db.Model):
 	full_content = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now=True)
+	is_draft = db.BooleanProperty(default=True)
 	tags = db.ListProperty(db.Key)
-	def put(self):
-		db.Model.put(self)
+	# def put(self):
+	# 	db.Model.put(self)
 		# self.appuser.status_updated_date = datetime.datetime.now()
 		# self.appuser.put()
 		
