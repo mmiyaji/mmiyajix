@@ -33,6 +33,16 @@
 					<option value="9">9</option>
 					<option value="10">10</option>
 				</select></label>
+				<div class="borders">
+				<label><h3>新規ユーザ作成の際の認証レベル</h3>
+					<select name="islock">
+						<option value="1" {% if application.islock %}selected="selected"{% endif %}>パスワード認証をかける</option>
+						<option value="2" {% if not application.islock %}selected="selected"{% endif %}>パスワード認証をかけない</option>
+						{# <option value="3">自分以外にユーザを作らない</option> #}
+					</select></label>
+				<label><h3>ID</h3><input name="user" type="text" value="{{application.user}}" /></label>
+				<label><h3>Password</h3><input name="passwd" type="password" value="{{application.passwd}}" /></label>
+				</div>
 				<label><h3>アイコンURL</h3><input name="img_url" type="text" value="{{application.img_url}}" /></label>
 				<label><h3>サイト紹介</h3><textarea name="description">{{application.description}}</textarea></label>
 				{% if application %}

@@ -1,16 +1,37 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="ja">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="Content-Language" content="ja">
-<link rel="shortcut icon" href="../static/img/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="../static/css/base.css">
+<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/css/base.css">
 <title>{% if title %}{{title}} - {% endif %}{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
 </head>
 <body>
 <div id="wrapper">
 	{% include "title_content.html" %}
 	<div id="content_wrapper">
+		{# <div class="color_palette"> #}
+		{# 	<div class="color_content"> #}
+		{# 		<table> #}
+		{# 			<tbody> #}
+		{# 				<tr> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 				</tr> #}
+		{# 				<tr> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 					<td><div class="palette" style="background-color: rgb(0, 0, 0); -webkit-user-select: none; "></div></td> #}
+		{# 				</tr> #}
+		{# 			</tbody> #}
+		{# 		</table> #}
+		{# 	</div> #}
+		{# </div> #}
 		{% block main %}
 		{% endblock main %}
 		<br style="clear:both" />
@@ -18,4 +39,7 @@
 	<p id="footer">{{now.year}} Copyright &copy; {% if application %}mmiyajix{% else %}{{application.title}}{% endif %} All rights reserved.</p>
 </div>
 </body>
+<script type="text/javascript" src="/js/jquery-min.js"></script>
+<script type="text/javascript" src="/js/mmiyajix.js"></script>
+<script type="text/javascript" src="/js/editable.js"></script>
 </html>

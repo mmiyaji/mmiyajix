@@ -1,11 +1,11 @@
-<div class="section">
-	<h3>Profile{% if appuser.modify_auth %}<a class="edits" href="/registration" title="edit profile"><img src="/static/img/edit.png"/></a>{% endif %}</h3>
+<div class="section" id="profile_content">
+	<h3>Profile{% if appuser.modify_auth %}<a class="edits"  onclick="start_editable('profile_description','profile_content','/ajax_post/profile');"  title="edit profile"><img src="/static/img/edit.png"/></a>{% endif %}</h3>
 	<div class="section_content" id="content_profile">
 		<img src="{% if application.create_appuser.img_url %}{{application.create_appuser.img_url}}{% else %}/static/img/noimage.png{% endif %}" width="53" />
 		<div id="profile">
 			<h2>{{application.create_appuser.nickname}}</h2>
-			{{application.create_appuser.description}}
-			<a class="more">... more</a>
+			<div id="profile_description">{{application.create_appuser.description}}</div>
 		</div>
+		<a class="more">... more</a>
 	</div>
 </div>

@@ -30,6 +30,7 @@ from utility import *
 from app_settings import *
 from url_handler import *
 import admin
+import logging
 
 logging.basicConfig(level=logging.DEBUG)
 class MainPage(NormalRequestHandler):
@@ -65,11 +66,17 @@ class InitPage(NormalRequestHandler):
 class RegistrationPage(BasicAuthentication):
 	def _get(self):
 		template_values = None
+		isadmin = False
+		if users.is_current_user_admin():
+			logging.debug("admin")
+			isadmin = True
 		template_values = {
 				'now':self.now,
+				'isadmin':isadmin,
 				'user':self.user,
 				'users':ApplicationUser.get_users(),
 				'appuser':self.appuser,
+				'application':self.application,
 				'url': self.url,
 			}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/registration.html')
@@ -87,10 +94,7 @@ class RegistrationPage(BasicAuthentication):
 			appuser.description = self.request.get("description")
 			appuser.fullname = self.request.get("fullname")
 			appuser.email_addr = self.request.get("email_addr")
-			if self.appuser:
-				appuser.save()
-			else:
-				appuser.put()
+			appuser.put()
 		if self.application:
 			self.redirect("/")
 		else:
@@ -126,6 +130,7 @@ application = webapp.WSGIApplication(
 	('/manage', admin.ManagePage),
 	('/edit', admin.EditPage),
 	('/editor', admin.EditorPage),
+	('/ajax_post/(.*)', admin.AjaxPostPage),
 	('/entry', EntryPage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),

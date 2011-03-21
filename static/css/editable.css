@@ -1,0 +1,123 @@
+
+html{
+	background-color:#FFF;
+	color:#777;
+}
+body{
+	font:14px "Hiragino Kaku Gothic Pro",Meiryo,"ヒラギノ角ゴ Pro W3", "メイリオ", Arial,"Helvetica Neue",sans-serif;
+	padding:10px;
+	margin-left:20px;
+}
+a, a:visited {
+	color: #4EA0E2;
+	outline: none;
+	text-decoration: underline;
+}
+a:hover{
+	text-decoration:none;
+}
+h1 a, h1 a:visited {
+	text-decoration:none;
+	color:#fff;
+}
+h1 a:hover{
+	text-decoration: underline;
+}
+li{
+	margin-left:25px;
+}
+blockquote{
+	margin:5px;
+	padding:20px;
+/*	padding-left:30px;*/
+	border:1px solid navy;
+}
+ol > ol{
+	margin-left:15px;
+}
+ul > ul{
+	margin-left:15px;
+}
+h1{
+	margin:2px;
+	border-left:8px solid navy;
+	border-bottom:1px solid navy;
+	padding-left:10px;
+	font-size:20px;
+	font-weight: bold;
+	line-height: 30px;
+}
+h2{
+	margin:2px;
+	border-left:8px solid #9C6;
+	border-bottom:1px solid #9C9;
+	padding-left:10px;
+	margin-left:8px;
+	font-size:16px;
+	font-weight: bold;
+	line-height: 25px;
+}
+h3{
+	margin:2px;
+	border-left:8px solid #C66;
+	border-bottom:1px solid #C99;
+	padding-left:10px;
+	margin-left:16px;
+	font-size:14px;
+	font-weight: bold;
+	line-height: 23px;
+}
+table{
+	margin:5px auto;
+}
+table td{
+	border:none;
+	text-align: center;
+}
+table.table_img td{
+	padding:0 5px;
+}
+table.table_nume td{
+	padding:5px 15px;
+}
+
+pre{
+	white-space: pre;           /* CSS 2.0 */
+	white-space: pre-wrap;      /* CSS 2.1 */
+	white-space: pre-line;      /* CSS 3.0 */
+	white-space: -pre-wrap;     /* Opera 4-6 */
+	white-space: -o-pre-wrap;   /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap;  /* HP Printers */
+	word-wrap: break-word;      /* IE 5+ */
+	color:black;
+	line-height: 1.7;
+}
+pre > code{
+	color:navy;
+}
+.code_content{
+	padding:10px;
+	background-color:#EFEFEF;
+	border:1px solid lightGrey;
+}
+.content_center{
+/*	text-align: center;*/
+}
+.content_dot,.content_dot td{
+	border:1px dotted gray;
+}
+.section_content{
+	border:1px dotted gray;
+	width:100%;
+	text-align: center;
+}
+.nume_content{
+	display:block;
+}
+.nume_content .nume_main,.nume_content .nume_num{
+	border:1px dotted gray;
+}
+.nume_content .nume_num{
+	margin-left:10px;
+}

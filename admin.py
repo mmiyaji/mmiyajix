@@ -76,7 +76,49 @@ class EditPage(ModifyRequestHandler):
 			entry.content = content
 			entry.full_content = self.request.get("full_content")
 			entry.save()
-		self.redirect("/")
+		self.redirect("/manage")
+
+class AjaxPostPage(AjaxRequestHandler):
+	def _post(self,post_type):
+		if post_type =="profile":
+			self.appuser.description = self.request.get("content")
+			self.appuser.save()
+			code = 200
+			self.response.out.write(self.response.http_status_message(code))
+		elif post_type =="site":
+			self.application.description = self.request.get("content")
+			logging.debug(self.application.description)
+			self.application.save()
+			code = 200
+			self.response.out.write(self.response.http_status_message(code))
+		else:
+			code = 401
+			self.error(code)
+			self.response.out.write(self.response.http_status_message(code))
+
+		# if True:
+		# 	entry = None
+		# 	if self.request.get("entry_id"):
+		# 		entry = Entry.get_by_id(int(self.request.get("entry_id")))
+		# 	if not entry:
+		# 		entry = Entry()
+		# 	entry.appuser = self.appuser
+		# 	entry.title = self.request.get("title")
+		# 	content = self.request.get("content")
+		# 	if self.request.get("draft"):
+		# 		entry.is_draft = True
+		# 	else:
+		# 		entry.is_draft = False
+		# 	p = re.compile(r'<.*?>')
+		# 	content = p.sub('', content)
+		# 	if len(content)>500:
+		# 		content = content[0:500]
+		# 	n = re.compile(r'\n')
+		# 	content = n.sub('<br />', content)
+		# 	entry.content = content
+		# 	entry.full_content = self.request.get("full_content")
+		# 	entry.save()
+		# self.redirect("/")
 	
 class EditorPage(webapp.RequestHandler):
 	def get(self):
@@ -114,13 +156,22 @@ class CreateAppPage(BasicAuthentication):
 				application = Application.get_by_id(int(self.request.get("application")))
 			else:
 				application = Application()
-			application.create_appuser = self.appuser
-			application.title = self.request.get("title")
-			application.revision = int(self.request.get("revision"))
-			application.img_url = self.request.get("img_url")
-			application.description = self.request.get("description")
-			if self.request.get("application"):
-				application.save()
+			# title="",rev=0,description="",appuser=None,img_url="",user="",passwd=""
+			islock = True
+			if self.request.get("islock")=="1":
+				islock = True
 			else:
-				application.put()
+				islock = False
+			application.create_app(title=self.request.get("title"),rev=int(self.request.get("revision")),
+					description=self.request.get("description"),appuser=self.appuser,img_url=self.request.get("img_url"),
+					user=self.request.get("user"),passwd=self.request.get("passwd"),islock=islock)
+			# application.create_appuser = self.appuser
+			# application.title = self.request.get("title")
+			# application.revision = int(self.request.get("revision"))
+			# application.img_url = self.request.get("img_url")
+			# application.description = self.request.get("description")
+			# if self.request.get("application"):
+			# 	application.save()
+			# else:
+			# 	application.put()
 		self.redirect("/")

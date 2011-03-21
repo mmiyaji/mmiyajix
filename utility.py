@@ -2,6 +2,7 @@ import datetime
 import sys
 import urllib2
 import simplejson
+import hashlib
 from app_settings import *
 
 class Googl():
@@ -32,6 +33,11 @@ class TinyURL:
 		except:
 			sys.stderr.write('Unexpected error: %s\n' % (sys.exc_info()[1]))
 		return tiny_url
+def get_now():
+	return datetime.datetime.now() + datetime.timedelta(hours=9)
+
+def create_hash(string):
+	return hashlib.md5(str(string)).hexdigest()
 
 def jst_date(value):
     if not value:

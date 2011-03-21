@@ -75,17 +75,22 @@ class Application(db.Model):
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now=True)
 	isdefault = db.BooleanProperty(default=True)
+	islock = db.BooleanProperty(default=True)
+	super_user = db.StringProperty(default="")
+	super_pass = db.StringProperty(default="")
 	
-	@staticmethod
-	def create_app(title="",rev=0,description="",appuser=None,img_url=""):
+	def create_app(self,title="",rev=0,description="",appuser=None,img_url="",user="",passwd="",islock=True):
 		app = None
 		if Application.all().filter("rev = ",rev).count() < 1:
-			app = Application()
+			app = self
 			app.title = title
 			app.description = description
 			app.create_appuser = appuser
 			app.img_url = img_url
 			app.revision = rev
+			app.super_user = create_hash(user)
+			app.super_pass = create_hash(passwd)
+			app.islock = islock
 			apps = Application.all().filter('isdefault = ',True)
 			for i in apps:
 				i.isdefault = False

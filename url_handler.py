@@ -24,7 +24,7 @@ class AbstractRequestHandler(webapp.RequestHandler):
 		self.appuser = None
 		self.application = None
 		self.url = None
-		self.now = datetime.datetime.now() + datetime.timedelta(hours=9)
+		self.now = get_now()
 	def auth(self):
 		self.user = users.get_current_user()
 		if not self.user:
@@ -72,7 +72,7 @@ class BasicAuthentication(AbstractRequestHandler):
 		self.user = None
 		self.appuser = None
 		self.application = Application.get_app()
-		self.now = datetime.datetime.now() + datetime.timedelta(hours=9)
+		self.now = get_now()
 		
 	def get(self):
 		self.user = users.get_current_user()
@@ -84,42 +84,63 @@ class BasicAuthentication(AbstractRequestHandler):
 				self.url = users.create_logout_url(self.request.uri)
 				self._get()
 			else:
-				if self.__basicAuth():
-					self.url = users.create_logout_url(self.request.uri)
+				self.url = users.create_logout_url(self.request.uri)
+				if users.is_current_user_admin():
 					self._get()
 				else:
-					code = 401
-					self.error(code)
-					self.response.out.write(self.response.http_status_message(code))
+					if self.__basicAuth():
+						self._get()
+					else:
+						code=401
+						self.error(code)
+						self.response.out.write(self.response.http_status_message(code))
 	def post(self):
 		self.user = users.get_current_user()
 		if not self.user:
 			self.redirect(users.create_login_url(self.request.uri))
 		else:
-			if self.__basicAuth():
-				self.appuser = ApplicationUser.get_by_user(self.user)
+			self.appuser = ApplicationUser.get_by_user(self.user)
+			if self.appuser:
 				self.url = users.create_logout_url(self.request.uri)
 				self._post()
 			else:
-				code = 401
-				self.error(code)
-				self.response.out.write(self.response.http_status_message(code))
+				self.url = users.create_logout_url(self.request.uri)
+				if users.is_current_user_admin():
+					self._post()
+				else:
+					if self.__basicAuth():
+						self.appuser = ApplicationUser.get_by_user(self.user)
+						self.url = users.create_logout_url(self.request.uri)
+						self._post()
+					else:
+						code = 401
+						self.error(code)
+						self.response.out.write(self.response.http_status_message(code))
 
 	def __basicAuth(self):
 		auth_header = self.request.headers.get('Authorization')
-		if auth_header:
-			try:
-				(scheme, base64) = auth_header.split(' ')
-				if scheme != 'Basic':
+		isbase = False
+		if self.application:
+			if self.application.islock:
+				isbase = True
+				base_user = self.application.super_user
+				base_pass = self.application.super_pass
+		if isbase:
+			if auth_header:
+				try:
+					(scheme, base64) = auth_header.split(' ')
+					if scheme != 'Basic':
+						return False
+					(username, password) = b64decode(base64).split(':')
+					if create_hash(username) == base_user and create_hash(password) == base_pass:
+						return True
+				except (ValueError, TypeError), err:
+					logging.warn(type(err))
 					return False
-				(username, password) = b64decode(base64).split(':')
-				if username == BASE_USER and password == BASE_PASS:
-					return True
-			except (ValueError, TypeError), err:
-				logging.warn(type(err))
-				return False
-		self.response.set_status(401)
-		self.response.headers['WWW-Authenticate'] = 'Basic realm="mmiyajix"'
+			self.response.set_status(401)
+			self.response.headers['WWW-Authenticate'] = 'Basic realm="'+self.application.title+'"'
+		else:
+			return True
 
 # 
 class ModifyRequestHandler(AbstractRequestHandler):
@@ -142,6 +163,32 @@ class ModifyRequestHandler(AbstractRequestHandler):
 			self.url = users.create_login_url(self.request.uri)
 			self.application = Application.get_app()
 			self._post()
+		else:
+			code = 401
+			self.error(code)
+			self.response.out.write(self.response.http_status_message(code))
+
+# 
+class AjaxRequestHandler(AbstractRequestHandler):
+	def get(self,status):
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		if self.appuser and self.appuser.modify_auth():
+			self.url = users.create_login_url(self.request.uri)
+			self.application = Application.get_app()
+			self._get(status)
+		else:
+			code = 401
+			self.error(code)
+			self.response.out.write(self.response.http_status_message(code))
+	
+	def post(self,status):
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		if self.appuser and self.appuser.modify_auth():
+			self.url = users.create_login_url(self.request.uri)
+			self.application = Application.get_app()
+			self._post(status)
 		else:
 			code = 401
 			self.error(code)

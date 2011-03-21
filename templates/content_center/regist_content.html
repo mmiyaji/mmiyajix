@@ -6,9 +6,11 @@
 		<div class="section_content">
 			<div class="center_content padder">
 				<h3>【Admin Only】</h3>
+				<ol>
 				{% for u in users %}
-				<p>{{u.nickname}}</p>
+				<li><p>{{u.nickname}} : {{u.user.nickname}} registed at {{u.create_at}}</p></li>
 				{% endfor %}
+				</ol>
 			</div>
 		</div>
 	</div>
@@ -26,10 +28,12 @@
 				<label><h3>連絡先</h3><input name="email_addr" type="text" value="{% if appuser %}{{appuser.email_addr}}{% else %}{{user.email}}{% endif %}" /></label>
 				<label><h3>グループ</h3>
 					<select name="group">
-					<option value="admin" selected="selected">Admin</option>
-					<option value="developper">Developper</option>
-					<option value="writer">Writer</option>
-					<option value="user">User</option>
+						{% if isadmin %}
+						<option value="admin" selected="selected">Admin</option>
+						{% endif %}
+						<option value="developper">Developper</option>
+						<option value="writer">Writer</option>
+						<option value="user">User</option>
 				</select></label>
 				<label><h3>アイコンURL</h3><input name="img_url" type="text" value="{{appuser.img_url}}" /></label>
 				<label><h3>自己紹介</h3><textarea name="description">{{appuser.description}}</textarea></label>
