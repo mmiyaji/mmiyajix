@@ -56,12 +56,14 @@ class EditPage(ModifyRequestHandler):
 	def _post(self):
 		if True:
 			entry = None
+			tags = None
 			if self.request.get("entry_id"):
 				entry = Entry.get_by_id(int(self.request.get("entry_id")))
 			if not entry:
 				entry = Entry()
 			entry.appuser = self.appuser
-			entry.title = self.request.get("title")
+			if self.request.get("title"):
+				entry.title = self.request.get("title")
 			content = self.request.get("content")
 			if self.request.get("draft"):
 				entry.is_draft = True
@@ -73,9 +75,13 @@ class EditPage(ModifyRequestHandler):
 				content = content[0:500]
 			n = re.compile(r'\n')
 			content = n.sub('<br />', content)
-			entry.content = content
+			if content:
+				entry.content = content
 			entry.full_content = self.request.get("full_content")
 			entry.save()
+			if self.request.get("tags"):
+				tags = self.request.get("tags").split(",")
+				entry.add_tags(tags)
 		self.redirect("/manage")
 
 class AjaxPostPage(AjaxRequestHandler):

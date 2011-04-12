@@ -29,6 +29,24 @@ function start_editable(id,tree_contents,save_addr){
 }
 function mode_edit(id){
 }
+function setsave(entry_id,frame_id){
+	var targetDoc;
+	var iframe = "editable_frame"; // インラインフレームのID属性を指定する。
+	var input = "editable_frame_input"; // インラインフレームのID属性を指定する。
+	//IE
+	if (document.all) {
+		targetDoc = document.frames(iframe).document;
+	//その他
+	} else {
+		targetDoc = document.getElementById(iframe).contentDocument;
+	}
+	// alert(targetDoc.body.innerHTML);
+	var data = {
+		full_content:targetDoc.body.innerHTML,
+		entry_id:entry_id,
+		};
+	post_data("/edit",data);
+}
 function setfunc(iframe,comm,ui,value){
 	var targetDoc;
 	var targetFrame;
@@ -57,6 +75,7 @@ function setfunc(iframe,comm,ui,value){
 	// 		targetDoc.execCommand(comm,false,null);
 	// 		break;
 	// }
+	targetFrame.focus();
 	targetDoc.execCommand(comm,ui,value);
 	targetFrame.focus();
 	// alert(comm+value);
@@ -74,6 +93,7 @@ function sethtml(iframe,comm,ui,value){
 		targetFrame = document.getElementById(iframe);
 		targetDoc = targetFrame.contentDocument;
 	}
+	targetFrame.focus();
 	// // alert(targetDoc.body.innerHTML);
 	// switch(comm){
 	// 	case "h1":
@@ -99,7 +119,11 @@ function sethtml(iframe,comm,ui,value){
 // 	
 // }
 function post_data(addr,data){
-	alert(data["content"]);
+	if(data["content"]){
+		alert(data["content"]);
+	}else if(data["full_content"]){
+		alert(data["full_content"]);
+	}
 	$.ajax({
 		type: "POST",
 		url: addr,

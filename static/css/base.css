@@ -510,4 +510,40 @@ h1 a:hover{
 	height:15px;
 	cursor:pointer;
 }
+.curtain{
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background-color:rgba(200,200,200,0.6);
+}
+.movable{
+	margin:100px auto;
+	width:400px;
+	height:120px;
+	border:4px solid navy;
+	background-color:white;
+	padding:5px;
+}
+.movable .movable_content{
+	margin:30px;
+}
+.movable .movable_content input[type="text"]{
+	width:270px;
+	line-height:20px;
+}
 
+.movable .movable_content input[type="submit"]{
+	margin:0px;
+	line-height:20px;
+}
+.movable .movable_content p{
+	color:#666;
+}
+.hide_button{
+/*	position:absolute;*/
+	float:right;
+	font-size:30px;
+	text-decoration:none;
+}

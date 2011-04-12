@@ -12,42 +12,41 @@
 					</label>
 					<label>
 						<h3>本文</h3>
-						<div class="editor_utility">
+						<div class="editor_utility" id="edits">
 							<ul>
 								{# <li><img class="editor_func" alt="save" src="../static/img/editor/save.png" onClick="setfunc('h3')" title="保存する" /></li> #}
-								<li><div class="utils edit_undo" onClick="setfunc('editable_frame','Undo',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_redo" onClick="setfunc('editable_frame','Redo',false,null)" title="保存する">&nbsp;</div></li>
+								<li><div class="utils edit_save" onClick="setsave('{{entry.key.id}}','editable_frame')" title="保存する">&nbsp;</div></li>
+								<li><div class="utils edit_undo" onClick="setfunc('editable_frame','Undo',false,null)" title="元に戻す">&nbsp;</div></li>
+								<li><div class="utils edit_redo" onClick="setfunc('editable_frame','Redo',false,null)" title="やり直し">&nbsp;</div></li>
 								<li><div class="utils edit_bold" onClick="setfunc('editable_frame','Bold',false,null)" title="bold">&nbsp;</div></li>
 								<li><div class="utils edit_ital" onClick="setfunc('editable_frame','Italic',false,null)" title="italic">&nbsp;</div></li>
 								<li><div class="utils edit_unde" onClick="setfunc('editable_frame','underline',false,null)" title="underline">&nbsp;</div></li>
-								<li><div class="utils edit_colo" onClick="setfunc('editable_frame','h3',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_back" onClick="setfunc('editable_frame','h3',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_imag" onClick="setfunc('editable_frame','h3',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_olis" onClick="setfunc('editable_frame','InsertOrderedList',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_ulis" onClick="setfunc('editable_frame','InsertUnorderedList',false,null)" title="保存する">&nbsp;</div></li>
+								<li><div class="utils edit_colo" onClick="setfunc('editable_frame','h3',false,null)" title="文字色">&nbsp;</div></li>
+								<li><div class="utils edit_back" onClick="setfunc('editable_frame','h3',false,null)" title="背景色">&nbsp;</div></li>
+								<li><div class="utils edit_imag" onClick="create_frame('wrapper','editable_frames');" title="Figure">&nbsp;</div></li>
+								<li><div class="utils edit_olis" onClick="setfunc('editable_frame','InsertOrderedList',false,null)" title="番号なしリスト">&nbsp;</div></li>
+								<li><div class="utils edit_ulis" onClick="setfunc('editable_frame','InsertUnorderedList',false,null)" title="番号ありリスト">&nbsp;</div></li>
 								<li><div class="utils edit_inde" onClick="setfunc('editable_frame','indent',false,null)" title="indent">&nbsp;</div></li>
 								<li><div class="utils edit_oude" onClick="setfunc('editable_frame','outdent',false,null)" title="outdent">&nbsp;</div></li>
 								<li><div class="utils edit_jusl" onClick="setfunc('editable_frame','justifyleft',false,null)" title="justifyleft">&nbsp;</div></li>
 								<li><div class="utils edit_jusc" onClick="setfunc('editable_frame','justifycenter',false,null)" title="justifycenter">&nbsp;</div></li>
 								<li><div class="utils edit_jusr" onClick="setfunc('editable_frame','justifyright',false,null)" title="justifyright">&nbsp;</div></li>
-								<li><div class="utils edit_quat" onClick="setfunc('editable_frame','FormatBlock',false,'<blockquote>')" title="保存する">&nbsp;</div></li>
+								<li><div class="utils edit_quat" onClick="setfunc('editable_frame','FormatBlock',false,'<blockquote>')" title="引用文">&nbsp;</div></li>
 								<li><div class="utils edit_remo" onClick="setfunc('editable_frame','removeformat',false,null)" title="RemoveFormat">&nbsp;</div></li>
-								<li><div class="utils edit_sups" onClick="setfunc('editable_frame','superscript',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_subs" onClick="setfunc('editable_frame','subscript',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_dele" onClick="setfunc('editable_frame','Strikethrough',false,null)" title="保存する">&nbsp;</div></li>
-								<li><div class="utils edit_save" onClick="setfunc('editable_frame','h3',false,null)" title="保存する">&nbsp;</div></li>
+								<li><div class="utils edit_sups" onClick="setfunc('editable_frame','superscript',false,null)" title="上付き文字">&nbsp;</div></li>
+								<li><div class="utils edit_subs" onClick="setfunc('editable_frame','subscript',false,null)" title="下付き文字">&nbsp;</div></li>
+								<li><div class="utils edit_dele" onClick="setfunc('editable_frame','Strikethrough',false,null)" title="取消線">&nbsp;</div></li>
 								<li><div class="utils edit_h1" onClick="setfunc('editable_frame','FormatBlock',false,'<h1>')" title="見出し1">&nbsp;</div></li>
 								<li><div class="utils edit_h2" onClick="setfunc('editable_frame','FormatBlock',false,'<h2>')" title="見出し2">&nbsp;</div></li>
 								<li><div class="utils edit_h3" onClick="setfunc('editable_frame','FormatBlock',false,'<h3>')" title="見出し3">&nbsp;</div></li>
 								<li><div class="utils edit_hr" onClick="setfunc('editable_frame','inserthorizontalrule',false,null)" title="hr">&nbsp;</div></li>
 								<li><div class="utils edit_code" onClick="setfunc('editable_frame','inserthtml',false,'<br /><div class=\'code_content\'><pre><code>code</code></pre></div><br />')" title="code">&nbsp;</div></li>
 								<li><div class="utils edit_pre" onClick="setfunc('editable_frame','FormatBlock',false,'<pre>')" title="pre">&nbsp;</div></li>
-								<li><div class="utils edit_hr" onClick="setfunc('editable_frame','FormatBlock',false,'<p>')" title="段落">&nbsp;</div></li>
-								<li><div class="utils edit_hr" onClick="setfunc('editable_frame','inserthtml',false,'<br /><div class=\'section_content\'><div class=\'nume_content\'>section_content<span class=\'nume_num\'>[1.1]</span></div></div>');setfunc('editable_frame','justifycenter',false,null);" title="段落">&nbsp;</div></li>
-								<li><div class="utils edit_hr" onClick="setfunc('editable_frame','inserthtml',false,'<p>')" title="段落">&nbsp;</div></li>
-								<li><div class="utils edit_hr" onClick="setfunc('editable_frame','inserthtml',false,'<br /><div class=\'section_content\'><div class=\'nume_content\'><span class=\'nume_main\'>section_content</span><span class=\'nume_num\'>[1.1]</span></div></div>');setfunc('editable_frame','justifycenter',false,null);" title="段落">&nbsp;</div></li>
-								<li><div class="utils edit_imag" onClick="setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_img\'><tr><td><img src=\'http://www.google.co.jp/images/srpr/nav_logo37.png\' /></td></tr><tr><td>Fig.1</td></tr></table></div>');" title="Figure">&nbsp;</div></li>
-								<li><div class="utils edit_nume" onClick="setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_nume\'><tr><td>Y=X<sup>2</sup>+1</td><td>[1.2]</td></tr></table></div>');" title="数式">&nbsp;</div></li>
+								{# <li><div class="utils edit_hr" onClick="setfunc('editable_frame','FormatBlock',false,'<p>')" title="段落">&nbsp;</div></li> #}
+								{# <li><div class="utils edit_hr" onClick="setfunc('editable_frame','inserthtml',false,'<br /><div class=\'section_content\'><div class=\'nume_content\'>section_content<span class=\'nume_num\'>[1.1]</span></div></div>');setfunc('editable_frame','justifycenter',false,null);" title="段落">&nbsp;</div></li> #}
+								{# <li><div class="utils edit_hr" onClick="setfunc('editable_frame','inserthtml',false,'<p>')" title="段落">&nbsp;</div></li> #}
+								{# <li><div class="utils edit_hr" onClick="setfunc('editable_frame','inserthtml',false,'<br /><div class=\'section_content\'><div class=\'nume_content\'><span class=\'nume_main\'>section_content</span><span class=\'nume_num\'>[1.1]</span></div></div>');setfunc('editable_frame','justifycenter',false,null);" title="段落">&nbsp;</div></li> #}
+								<li><div class="utils edit_nume" onClick="setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_nume\'><tr><td>Y=X<sup>2</sup>+1</td><td>[1.2]</td></tr></table></div><br />');" title="数式">&nbsp;</div></li>
 							</ul>
 						</div>
 						<div class="editor_field">

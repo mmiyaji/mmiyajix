@@ -114,7 +114,17 @@ class Tags(db.Model):
 	description = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now=True)
-
+	
+	@staticmethod
+	def find_by_name(name):
+		return Tags.all().filter('title = ',name).get()
+	# @staticmethod
+	# def add_by_name(name):
+	# 	tag = Tags.find_by_name(name):
+	# 	if not tag:
+	# 		tag = Tags()
+	# 		tag.appuser = 
+			
 class Entry(db.Model):
 	appuser =  db.ReferenceProperty(ApplicationUser,
 									collection_name='create_by')
@@ -134,7 +144,19 @@ class Entry(db.Model):
 		date = self.create_at
 		date = date + datetime.timedelta(hours=9)
 		return date.strftime("%Y/%m/%d %H:%M")
-	
+
+	def add_tags(self,tags):
+		if tags:
+			for name in tags:
+				tag = Tags.find_by_name(name)
+				if not tag:
+					tag = Tags()
+					tag.appuser = self.appuser
+					tag.title = name
+					tag.put()
+				# self.tags.
+				self.save()
+		
 	@staticmethod
 	def get_recent(span=3):
 		return Entry.all().order('-create_at').fetch(span)
