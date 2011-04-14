@@ -1,5 +1,10 @@
 <div id="content_left">
 	{% include "../content_left/profile_content.html" %}
 	{% include "../content_left/tree_content.html" %}
-	{% include "../content_left/tag_content.html" %}
+	{% if all_contents %}
+		{% include "../content_left/recent_content.html" %}
+	{% endif %}
+	{% if all_tags %}
+		{% include "../content_left/tag_content.html" %}
+	{% endif %}
 </div>

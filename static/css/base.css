@@ -145,7 +145,10 @@ ul > ul{
 #content_wrapper .section .recent_content li{
 	margin-left:25px;
 }
-
+#content_wrapper img{
+	max-width:100%;
+	border:none;
+}
 #content_right .section .section_content ul{
 /*	list-style:none;*/
 }
@@ -458,7 +461,8 @@ div.editor_utility ul li .edit_pre{
 .center_content div.editor_field iframe{
 	border:2px solid #ccc;
 	margin-left:30px;
-	width:800px;
+	min-width:800px;
+	width:95%;
 	min-height:400px;
 }
 div.borders{
@@ -546,4 +550,17 @@ h1 a:hover{
 	float:right;
 	font-size:30px;
 	text-decoration:none;
+}
+table{
+	margin:5px auto;
+}
+table td{
+	border:none;
+	text-align: center;
+}
+table.table_img td{
+	padding:0 5px;
+}
+table.table_nume td{
+	padding:5px 15px;
 }

@@ -57,6 +57,7 @@ class EditPage(ModifyRequestHandler):
 		if True:
 			entry = None
 			tags = None
+			types = ""
 			if self.request.get("entry_id"):
 				entry = Entry.get_by_id(int(self.request.get("entry_id")))
 			if not entry:
@@ -65,6 +66,9 @@ class EditPage(ModifyRequestHandler):
 			if self.request.get("title"):
 				entry.title = self.request.get("title")
 			content = self.request.get("content")
+			if self.request.get("types"):
+				types = self.request.get("types")
+				entry.types = types
 			if self.request.get("draft"):
 				entry.is_draft = True
 			else:
@@ -79,8 +83,12 @@ class EditPage(ModifyRequestHandler):
 				entry.content = content
 			entry.full_content = self.request.get("full_content")
 			entry.save()
+			entry.remove_tags()
 			if self.request.get("tags"):
-				tags = self.request.get("tags").split(",")
+				tag_request = self.request.get("tags")
+				tags = tag_request.split(",")
+				if not tags:
+					tags = tag_request
 				entry.add_tags(tags)
 		self.redirect("/manage")
 

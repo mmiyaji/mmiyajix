@@ -104,6 +104,10 @@ pre > code{
 .content_center{
 /*	text-align: center;*/
 }
+.content_center img{
+	max-width:100%;
+	border:none;
+}
 .content_dot,.content_dot td{
 	border:1px dotted gray;
 }

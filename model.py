@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from google.appengine.ext import db
 from utility import *
-import datetime
+import datetime,logging
 from time import gmtime, strftime
 from app_settings import *
 def to_dict(model_obj, attr_list, init_dict_func=None):
@@ -114,10 +114,23 @@ class Tags(db.Model):
 	description = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now=True)
+	level = db.IntegerProperty(default=3)
+	count = db.IntegerProperty(default=10)
 	
 	@staticmethod
 	def find_by_name(name):
 		return Tags.all().filter('title = ',name).get()
+
+	@staticmethod
+	def tag_pool():
+		try:
+			return Tags.all().order('-updated_at')
+		except:
+			return None
+	@property
+	def entries(self):
+		return Entry.all().filter('tags',self.key())
+
 	# @staticmethod
 	# def add_by_name(name):
 	# 	tag = Tags.find_by_name(name):
@@ -135,11 +148,12 @@ class Entry(db.Model):
 	updated_at = db.DateTimeProperty(auto_now=True)
 	is_draft = db.BooleanProperty(default=True)
 	tags = db.ListProperty(db.Key)
+	types = db.StringProperty(choices=set(["entry","diary","memo","file"]))
 	# def put(self):
 	# 	db.Model.put(self)
 		# self.appuser.status_updated_date = datetime.datetime.now()
 		# self.appuser.put()
-		
+	
 	def show_date(self):
 		date = self.create_at
 		date = date + datetime.timedelta(hours=9)
@@ -154,9 +168,35 @@ class Entry(db.Model):
 					tag.appuser = self.appuser
 					tag.title = name
 					tag.put()
-				# self.tags.
+				self.tags.append(tag.key())
 				self.save()
-		
+
+	def remove_tags(self):
+		self.tags = []
+		self.save()
+		# if self.key() in self.tags:
+		# 	tags.tags.remove(self.key())
+		# 	tags.put()
+
+	def all_tag(self):
+		tags = self.tags
+		result = []
+		tmp = None
+		for tag in tags:
+			tmp = db.get(tag)
+			if tmp and tmp.title:
+				result.append(tmp)
+		return result
+		# return Tags.all().filter('tags = ',self.key()).fetch(1000)
+		# result = []
+		# tmp = None
+		# for tag in tags:
+		# 	tmp = db.get(tag)
+		# 	# if tmp:
+		# 	result.append(tmp)
+		# return tags
+		# return Tags.all().filter('tags = ',self.key()).fetch(1000)
+
 	@staticmethod
 	def get_recent(span=3):
 		return Entry.all().order('-create_at').fetch(span)
@@ -167,4 +207,3 @@ class Entry(db.Model):
 			page = page*span - span
 		return result.fetch(span,page),result.count()
 		# return Entry.all().order('-create_at').fetch(span)
-	

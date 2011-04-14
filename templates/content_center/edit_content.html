@@ -5,10 +5,10 @@
 		<div class="section_content">
 			<div class="center_content padder">
 				<form action="edit" method="post" accept-charset="utf-8" onsubmit="return get_editable();">
-					<label><h3>タイトル</h3><input name="title" type="text" value="{% if entry %}{{entry.title}}{% endif %}" /></label>
+					<label><h3>タイトル</h3><input name="title" type="text" value="{% if entry %}{{entry.title|default:""}}{% endif %}" /></label>
 					<label>
 						<h3>要約 (*最大500文字)</h3>
-						<textarea name="content" class="abstract">{% if entry %}{{entry.content}}{% endif %}</textarea>
+						<textarea name="content" class="abstract">{% if entry %}{{entry.content|default:""}}{% endif %}</textarea>
 					</label>
 					<label>
 						<h3>本文</h3>
@@ -54,7 +54,14 @@
 						</div>
 					</label>
 					<label><h3>記事執筆者</h3><p>{{appuser.nickname}} : {% if entry %}{{entry.appuser.email_addr}}{% else %}{{appuser.email_addr}}{% endif %}</p></label>
-					<label><h3>タグ</h3><input type="text" name="tags" value="{% if entry %}{{entry.tags}}{% endif %}" /></label>
+					<label><h3>カテゴリー</h3>
+						<select name="types">
+							<option value="entry" {% ifequal entry.types 'entry' %}selected="selected"{% endifequal %}>Entry</option>
+							{# <option value="diary" {% ifequal entry.types 'diary' %}selected="selected"{% endifequal %}>Diary</option> #}
+							<option value="memo" {% ifequal entry.types 'memo' %}selected="selected"{% endifequal %}>Memorandum</option>
+							{# <option value="file" {% ifequal entry.types 'file' %}selected="selected"{% endifequal %}>Files</option> #}
+						</select>
+					<label><h3>タグ</h3><input type="text" name="tags" value="{% if entry %}{% for tag in entry.all_tag %}{{tag.title}},{% endfor %}{% endif %}" /></label>
 					<input type="hidden" id="editable_frame_input" name="full_content" value="" />
 					<input type="hidden" id="draft" name="draft" value="">
 					{% if entry %}

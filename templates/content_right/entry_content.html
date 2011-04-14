@@ -12,7 +12,7 @@
 			<span class="create_by">Posted by {{entry.appuser.nickname}}</span>
 			<span class="create_at"> at {{entry.show_date}}</span>
 			<br />
-			<span class="entry_tag">Tags: {{entry.tags}}</span>
+			<span class="entry_tag">Tags: {% if entry %}{% for tag in entry.all_tag %}<a>{{tag.title}}</a>, {% endfor %}{% endif %}</span>
 		</span>
 	</div>
 	</div>

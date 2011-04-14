@@ -44,6 +44,8 @@ class MainPage(NormalRequestHandler):
 					'application':self.application,
 					'recents':Entry.get_recent(10),
 					'url': self.url,
+					'all_tags':Tags.tag_pool(),
+					'all_contents':Entry.get_recent(span=100),
 				}
 			path = os.path.join(os.path.dirname(__file__), './templates/base/index.html')
 			self.response.out.write(template.render(path, template_values))	
@@ -116,6 +118,7 @@ class EntryPage(NormalRequestHandler):
 					'application':self.application,
 					'entry':entry,
 					'url': self.url,
+					'all_tags':Tags.tag_pool(),
 				}
 				path = os.path.join(os.path.dirname(__file__), './templates/base/entry.html')
 				self.response.out.write(template.render(path, template_values))
