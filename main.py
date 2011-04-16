@@ -119,11 +119,33 @@ class EntryPage(NormalRequestHandler):
 					'entry':entry,
 					'url': self.url,
 					'all_tags':Tags.tag_pool(),
+					'all_contents':Entry.get_recent(span=100),
 				}
 				path = os.path.join(os.path.dirname(__file__), './templates/base/entry.html')
 				self.response.out.write(template.render(path, template_values))
 			else:
 				self.redirect('/')
+		else:
+			self.redirect('/initialize')
+
+class EntriesPage(NormalRequestHandler):
+	def _get(self):
+		template_values = None
+		if self.application:
+			entries = Entry.all()
+			template_values = {
+					'title':'Entries',
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'entries':entries,
+					'url': self.url,
+					'all_tags':Tags.tag_pool(),
+					'all_contents':Entry.get_recent(span=100),
+			}
+			path = os.path.join(os.path.dirname(__file__), './templates/base/entries.html')
+			self.response.out.write(template.render(path, template_values))
 		else:
 			self.redirect('/initialize')
 	
@@ -135,6 +157,7 @@ application = webapp.WSGIApplication(
 	('/editor', admin.EditorPage),
 	('/ajax_post/(.*)', admin.AjaxPostPage),
 	('/entry', EntryPage),
+	('/entries', EntriesPage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),
 	('/initialize_app', admin.CreateAppPage),

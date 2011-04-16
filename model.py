@@ -122,9 +122,9 @@ class Tags(db.Model):
 		return Tags.all().filter('title = ',name).get()
 
 	@staticmethod
-	def tag_pool():
+	def tag_pool(span=20):
 		try:
-			return Tags.all().order('-updated_at')
+			return Tags.all().order('-updated_at').fetch(span)
 		except:
 			return None
 	@property

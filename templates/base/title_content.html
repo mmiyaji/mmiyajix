@@ -3,9 +3,9 @@
 		<div id="title_bar">
 			<ul>
 				<li><a href="/">Home</a></li>
-				<li><a>Search</a></li>
-				<li><a>Contact</a></li>
-				<li><a>RSS</a></li>
+				{# <li><a>Search</a></li> #}
+				{# <li><a>Contact</a></li> #}
+				{# <li><a>RSS</a></li> #}
 				{% if user %}{% if appuser %}
 				<li><a href="manage">Manage</a></li>
 				<li><a href="{{url}}">Logout【{{appuser.nickname}}】</a></li>
@@ -14,12 +14,12 @@
 				{% endif %}{% else %}
 				<li><a href="/registration">Login</a></li>
 				{% endif %}
-				<li>
-					<form class="search_box" action="search" method="get" accept-charset="utf-8" >
-						<input type="text" name="search_key" value="">
-						<input type="image" src="/img/search_btn.gif" alt="Search" name="search" id="searchBtn">
-					</form>
-				</li>
+				{# <li> #}
+				{# 	<form class="search_box" action="search" method="get" accept-charset="utf-8" > #}
+				{# 		<input type="text" name="search_key" value=""> #}
+				{# 		<input type="image" src="/img/search_btn.gif" alt="Search" name="search" id="searchBtn"> #}
+				{# 	</form> #}
+				{# </li> #}
 			</ul>
 		</div>
 		<h1><a href="/">{{application.title}}</a></h1>

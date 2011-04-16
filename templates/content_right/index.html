@@ -1,4 +1,6 @@
 <div id="content_right">
 	{% include "../content_right/site_content.html" %}
-	{% include "../content_right/recent_content.html" %}
+	{% if recents %}
+		{% include "../content_right/recent_content.html" %}
+	{% endif %}
 </div>
