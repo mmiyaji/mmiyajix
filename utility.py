@@ -36,6 +36,47 @@ class TinyURL:
 def get_now():
 	return datetime.datetime.now() + datetime.timedelta(hours=9)
 
+def get_page_list(page, count, search_span):
+	pages = dict()
+	page_max = (count / search_span)
+	if count%search_span!=0:
+		page_max +=1
+	pre_page = None
+	next_page = None
+	if page_max >= page+1:
+		next_page = page+1
+	if page!=0:
+		pre_page = page-1
+	pages['next_page'] = next_page
+	pages['now_page'] = page
+	pages['pre_page'] = pre_page
+	pages['max'] = count
+	page_list = []
+	if page_max>20:
+		page_list.append(1)
+		mins = page-8
+		maxs = page+9
+		if mins<2:
+			mins = 2
+			maxs = 18
+		# else:
+			# page_list.append("-")
+		if maxs>page_max:
+			maxs = page_max
+		for x in range(mins, maxs):
+			page_list.append(x)
+		# else:
+		# 	for x in range(mins, maxs):
+		# 		page_list.append(x)
+			# page_list.append("-")
+		page_list.append(page_max)
+	else:
+		for x in range(1, page_max+1):
+			page_list.append(x)
+		if len(page_list)==1:
+			page_list = None
+	return page_list,pages
+
 def create_hash(string):
 	return hashlib.md5(str(string)).hexdigest()
 

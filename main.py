@@ -131,8 +131,15 @@ class EntryPage(NormalRequestHandler):
 class EntriesPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
+		page = 0
 		if self.application:
-			entries = Entry.all()
+			if self.request.get("page"):
+				try:
+					page = int(self.request.get("page"))
+				except:
+					pass
+			entries,entry_count = Entry.get_entries(5,page)
+			page_list,pages = get_page_list(page, entry_count, 10)
 			template_values = {
 					'title':'Entries',
 					'now':self.now,
