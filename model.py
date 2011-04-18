@@ -158,6 +158,10 @@ class Entry(db.Model):
 		date = self.create_at
 		date = date + datetime.timedelta(hours=9)
 		return date.strftime("%Y/%m/%d %H:%M")
+	def show_day(self):
+		date = self.create_at
+		date = date + datetime.timedelta(hours=9)
+		return date.strftime("%Y/%m/%d")
 
 	def add_tags(self,tags):
 		if tags:

@@ -3,7 +3,7 @@
    	<div class="section_content" style="margin-left:30px">
 	<ul>
 		{% for content_pool in all_contents %}
-			<li><a href="/entry?entry_id={{content_pool.key.id}}">{{content_pool.title}}</a></li>
+			<li><a href="/entry?entry_id={{content_pool.key.id}}">{{content_pool.title}}</a> [{{content_pool.show_day}}]</li>
 		{% endfor %}
 	</ul>
 	</div>
