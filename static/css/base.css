@@ -28,6 +28,14 @@ pre{
 	color:black;
 	line-height: 1.7;
 }
+pre > code{
+	color:navy;
+}
+.code_content{
+	padding:10px;
+	background-color:#EFEFEF;
+	border:1px solid lightGrey;
+}
 ol > ol{
 	margin-left:15px;
 }

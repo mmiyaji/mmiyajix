@@ -115,7 +115,7 @@ class Tags(db.Model):
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now=True)
 	level = db.IntegerProperty(default=3)
-	count = db.IntegerProperty(default=10)
+	count = db.IntegerProperty(default=0)
 	
 	@staticmethod
 	def find_by_name(name):
@@ -172,15 +172,23 @@ class Entry(db.Model):
 					tag.appuser = self.appuser
 					tag.title = name
 					tag.put()
+				tag.count += 1
+				tag.save()
 				self.tags.append(tag.key())
 				self.save()
 
 	def remove_tags(self):
+		tmp = None
+		try:
+			if tag in self.tags:
+				tmp = db.get(tag)
+				tmp -=1
+				tmp.save()
+		except:
+			pass
 		self.tags = []
 		self.save()
-		# if self.key() in self.tags:
-		# 	tags.tags.remove(self.key())
-		# 	tags.put()
+
 
 	def all_tag(self):
 		tags = self.tags

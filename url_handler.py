@@ -132,7 +132,7 @@ class BasicAuthentication(AbstractRequestHandler):
 					if scheme != 'Basic':
 						return False
 					(username, password) = b64decode(base64).split(':')
-					if create_hash(username) == base_user and create_hash(password) == base_pass:
+					if username == base_user and create_hash(password) == base_pass:
 						return True
 				except (ValueError, TypeError), err:
 					logging.warn(type(err))

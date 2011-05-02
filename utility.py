@@ -1,24 +1,23 @@
 import datetime 
 import sys
 import urllib2
-import simplejson
-import hashlib
+import md5
 from app_settings import *
 
-class Googl():
-	def shorten(slef,longUrl):
-		if isinstance(longUrl, unicode):
-			longUrl = longUrl.encode('utf-8')
-	   
-		if API_KEY is None:
-			data = '{longUrl:"%s"}' % (longUrl)
-		else:
-			data = '{longUrl:"%s", key:"%s"}' % (longUrl, API_KEY)
-		req = urllib2.Request(API_URL, data)
-		req.add_header('Content-Type', 'application/json')
-	
-		result = urllib2.urlopen(req).read()
-		return simplejson.loads(result).get('id')
+# class Googl():
+# 	def shorten(slef,longUrl):
+# 		if isinstance(longUrl, unicode):
+# 			longUrl = longUrl.encode('utf-8')
+# 	   
+# 		if API_KEY is None:
+# 			data = '{longUrl:"%s"}' % (longUrl)
+# 		else:
+# 			data = '{longUrl:"%s", key:"%s"}' % (longUrl, API_KEY)
+# 		req = urllib2.Request(API_URL, data)
+# 		req.add_header('Content-Type', 'application/json')
+# 	
+# 		result = urllib2.urlopen(req).read()
+# 		return simplejson.loads(result).get('id')
 
 class TinyURL:
 	def get_tiny_url(self, url):
@@ -78,7 +77,7 @@ def get_page_list(page, count, search_span):
 	return page_list,pages
 
 def create_hash(string):
-	return hashlib.md5(str(string)).hexdigest()
+	return md5(str(string)).hexdigest()
 
 def jst_date(value):
     if not value:
