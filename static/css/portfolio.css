@@ -35,21 +35,9 @@ ul{
 }
 .profile{
 	background-color: transparent;
-	border-radius-topleft: 3px;
-	border-radius-topright: 3px;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-	border-bottom-left-radius: 3px;
-	border-bottom-right-radius: 3px;
-	-moz-border-radius-bottomleft: 3px;
-	-moz-border-radius-bottomright: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	-webkit-border-bottom-right-radius: 3px;
+	-webkit-border-radius: 10px;/* Safari、Google Chrome */
+	-moz-border-radius: 10px;/* Firefox */
 	border: 1px solid transparent;
-	border-top-left-radius: 3px 3px;
-	border-top-right-radius: 3px 3px;
 }
 #profile_box{
 	margin:40px;
@@ -67,4 +55,44 @@ ul{
 	padding:20px;
 	border-top:1px solid black;
 	border-bottom:1px solid white;
+}
+.social li{
+	margin:10px;
+	list-style:none;
+	float:left;
+}
+.social li img{
+	border: none;
+}
+#hovs{
+	margin:20px;
+	padding:30px;
+	border:6px solid white;
+	-webkit-border-radius: 10px;/* Safari、Google Chrome */
+	-moz-border-radius: 10px;/* Firefox */
+}
+#tool{
+	border-top:0;
+	border-bottom: solid 27px white;
+	border-left: solid 0px transparent;
+	border-right: solid 27px transparent;
+	position: relative;
+	width:0px;
+	top:65px;
+	left:65px;
+	z-index:2;
+}
+#toolin{
+	border-top:0;
+	border-bottom: solid 23px black;
+	border-left: solid 0px transparent;
+	border-right: solid 23px transparent;
+	width:0px;
+	position: relative;
+	top:50px;
+	left:70px;
+	z-index:3;
+}
+.clearfix{
+	clear:both;
 }

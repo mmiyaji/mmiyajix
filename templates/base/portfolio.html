@@ -21,22 +21,22 @@
 	<div id="portfolio_wrapper">
 		<div class="profile" id="profile_box">
 			<h1 class="name">{{owner.fullname}}</h1>
-			<h2 class="nickname">id：{{owner.nickname}}</h2>
+			<h2 class="nickname">{{owner.nickname}}'s Portfolio</h2>
 			<div class="section">
 				<h3>Personal</h3>
 				<ul>
 					<li>氏名：宮地 正大(みやじ まさひろ)</li>
 					<li>生年月日：1987年12月23日</li>
-					<li>所属：同志社大学工学研究科 情報工学専攻 知的システムデザイン研究室</li>
-					<li>研究分野：クラスタリング・データマイニング</li>
-					<li>使用言語：Python・C++・C#・AS3・Java・JS 勉強中</li>
+					<li>所属：同志社大学大学院 工学研究科 情報工学専攻 知的システムデザイン研究室</li>
+					<li>研究分野：クラスタリング・データマイニング・画像処理</li>
+					<li>使用言語：Python・C++・C#・AS3・Java・JS などを中心に勉強中</li>
 				</ul>
 			</div>
 			<div class="section">
 				<h3>Works</h3>
 				<ul>
 					<li><a href="http://zoomtodo.appspot.com" target="_blank">ZoomToDo</a>：貼り付ける位置によって大きさを自動調整する付箋紙アプリケーション</li>
-					<li><a href="http://m-server.appspot.com" target="_blank">M-Server</a>：GoogleAppEngine上で動く自分専用のアップローダ</li>
+					<li><a href="http://m-server.appspot.com" target="_blank">M-Server</a>：GoogleAppEngine上で動作する自分専用のアップローダ</li>
 					<li><a href="http://is.doshisha.ac.jp/isreport" target="_blank">IS Report System</a>：記事を電子書籍(Epub)形式で書き出し可能な研究レポート用CMS</li>
 					<li><a href="http://mmiyajix.appspot.com" target="_blank">mmiyajix</a>：GoogleAppEngine上で動作する簡易CMS</li>
 					<li><a href="http://istwit.appspot.com" target="_blank">IS Twit</a>：GoogleAppEngine上で動作するプライベートなTwitterもどき</li>
@@ -44,19 +44,51 @@
 			</div>
 			<div class="section">
 				<h3>Social Links</h3>
-				<ul>
-					<li><a href="http://zoomtodo.appspot.com" target="_blank">ZoomToDo</a>：貼り付ける位置によって大きさを自動調整する付箋紙アプリケーション</li>
-					<li><a href="http://m-server.appspot.com" target="_blank">M-Server</a>：GoogleAppEngine上で動く自分専用のアップローダ</li>
-					<li><a href="http://is.doshisha.ac.jp/isreport" target="_blank">IS Report System</a>：記事を電子書籍(Epub)形式で書き出し可能な研究レポート用CMS</li>
-					<li><a href="http://mmiyajix.appspot.com" target="_blank">mmiyajix</a>：GoogleAppEngine上で動作する簡易CMS</li>
-					<li><a href="http://istwit.appspot.com" target="_blank">IS Twit</a>：GoogleAppEngine上で動作するプライベートなTwitterもどき</li>
+				<ul class="social">
+					<li><a href="http://twitter.com/mmiyaji" target="_blank" ><img alt="Twitter - mmiyaji" src="/img/twitter.png" width="60" class="selected" /></a></li>
+					<li><a href="http://ruhenheim-erum.blogspot.com/" target="_blank" ><img alt="Blogger - mmiyaji' Blog (主に研究用メモ)" src="/img/blogger.png" width="60" /></a></li>
+					<li><a href="http://mmiyajix.appspot.com/" target="_blank" ><img alt="mmiyajix - mmiyaji's Blog (主に自分向けメモ)" src="/img/niko.png" width="60" /></a></li>
+					<li><a href="http://www.flickr.com/photos/mmiyaji" target="_blank" ><img alt="Flickr - mmiyaji's Photostream" src="/img/flickr.png" width="60" /></a></li>
+					<li><a href="https://github.com/mmiyaji/" target="_blank" ><img alt="mmiyaji's Profile - GitHub" src="/img/git.png" width="60" /></a></li>
+					<li><a href="http://www.delicious.com/mmiyaji/" target="_blank" ><img alt="Delicious - mmiyaji's Bookmarks" src="/img/delicious.png" width="60" /></a></li>
+					<li><a href="http://about.me/mmiyaji/" target="_blank" ><img alt="Masahiro MIYAJI on About.me" src="/img/aboutme.png" width="60" /></a></li>
 				</ul>
+				<div id="tool"></div>
+				<div id="toolin"></div>
+				<div class="clearfix hovs tooltips" id="hovs" >
+					Twitter - mmiyaji
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 </body>
 <script type="text/javascript" src="/js/jquery-min.js"></script>
-<script type="text/javascript" src="/js/mmiyajix.js"></script>
-<script type="text/javascript" src="/js/editable.js"></script>
+<script type="text/javascript">
+<!--
+jQuery.fn.sliders = function(yy){
+	this.css("left", yy + "px");
+	return this;
+}
+$(document).ready(function(){
+	$(".social img").hover(
+		function(){
+			$(".social img").each(function(){$(this).removeClass("selected");});
+			$(this).addClass("selected");
+			var i=0;
+		 	$(".social img").each(function(){
+				if ($(this).is(".selected")) {
+					return false;
+				} else {
+					i++;
+				}
+			});
+			$("#hovs").text($(this).attr("alt"));
+			$("#tool").sliders(65+80*i);
+			$("#toolin").sliders(70+80*i);
+		}
+	);
+})
+//-->
+</script>
 </html>
