@@ -1,7 +1,7 @@
 import datetime 
 import sys
 import urllib2
-import md5
+import md5,hashlib
 from app_settings import *
 
 # class Googl():
@@ -77,7 +77,7 @@ def get_page_list(page, count, search_span):
 	return page_list,pages
 
 def create_hash(string):
-	return md5(str(string)).hexdigest()
+	return hashlib.md5(str(string)).hexdigest()
 
 def jst_date(value):
     if not value:
