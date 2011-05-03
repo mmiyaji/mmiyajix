@@ -74,23 +74,23 @@ ul{
 #tool{
 	border-top:0;
 	border-bottom: solid 27px white;
-	border-left: solid 0px transparent;
+	border-left: solid 27px transparent;
 	border-right: solid 27px transparent;
 	position: relative;
 	width:0px;
-	top:65px;
-	left:65px;
+	top:62px;
+	left:40px;
 	z-index:2;
 }
 #toolin{
 	border-top:0;
 	border-bottom: solid 23px black;
-	border-left: solid 0px transparent;
+	border-left: solid 23px transparent;
 	border-right: solid 23px transparent;
 	width:0px;
 	position: relative;
-	top:50px;
-	left:70px;
+	top:47px;
+	left:44px;
 	z-index:3;
 }
 .clearfix{
