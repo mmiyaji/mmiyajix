@@ -1,4 +1,7 @@
-
+*{
+	margin:0;
+	padding:0;
+}
 html{
 	background-color:#FFF;
 	color:#444;
@@ -36,7 +39,7 @@ ol > ol{
 	margin-left:15px;
 }
 ul > ul{
-	margin-left:15px;
+	margin-left:45px;
 }
 h1{
 	margin:2px;
