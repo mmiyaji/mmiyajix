@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="/css/portfolio.css">
+<title>{% if title %}{{title}} - {% endif %}{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-9609071-5']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="portfolio_wrapper">
+		<div class="profile" id="profile_box">
+			<h1 class="name">{{owner.fullname}}</h1>
+			<h2 class="nickname">id：{{owner.nickname}}</h2>
+			<div class="section">
+				<h3>Personal</h3>
+				<ul>
+					<li>氏名：宮地 正大(みやじ まさひろ)</li>
+					<li>生年月日：1987年12月23日</li>
+					<li>所属：同志社大学工学研究科 情報工学専攻 知的システムデザイン研究室</li>
+					<li>研究分野：クラスタリング・データマイニング</li>
+					<li>使用言語：Python・C++・C#・AS3・Java・JS 勉強中</li>
+				</ul>
+			</div>
+			<div class="section">
+				<h3>Works</h3>
+				<ul>
+					<li><a href="http://zoomtodo.appspot.com" target="_blank">ZoomToDo</a>：貼り付ける位置によって大きさを自動調整する付箋紙アプリケーション</li>
+					<li><a href="http://m-server.appspot.com" target="_blank">M-Server</a>：GoogleAppEngine上で動く自分専用のアップローダ</li>
+					<li><a href="http://is.doshisha.ac.jp/isreport" target="_blank">IS Report System</a>：記事を電子書籍(Epub)形式で書き出し可能な研究レポート用CMS</li>
+					<li><a href="http://mmiyajix.appspot.com" target="_blank">mmiyajix</a>：GoogleAppEngine上で動作する簡易CMS</li>
+					<li><a href="http://istwit.appspot.com" target="_blank">IS Twit</a>：GoogleAppEngine上で動作するプライベートなTwitterもどき</li>
+				</ul>
+			</div>
+			<div class="section">
+				<h3>Social Links</h3>
+				<ul>
+					<li><a href="http://zoomtodo.appspot.com" target="_blank">ZoomToDo</a>：貼り付ける位置によって大きさを自動調整する付箋紙アプリケーション</li>
+					<li><a href="http://m-server.appspot.com" target="_blank">M-Server</a>：GoogleAppEngine上で動く自分専用のアップローダ</li>
+					<li><a href="http://is.doshisha.ac.jp/isreport" target="_blank">IS Report System</a>：記事を電子書籍(Epub)形式で書き出し可能な研究レポート用CMS</li>
+					<li><a href="http://mmiyajix.appspot.com" target="_blank">mmiyajix</a>：GoogleAppEngine上で動作する簡易CMS</li>
+					<li><a href="http://istwit.appspot.com" target="_blank">IS Twit</a>：GoogleAppEngine上で動作するプライベートなTwitterもどき</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<script type="text/javascript" src="/js/jquery-min.js"></script>
+<script type="text/javascript" src="/js/mmiyajix.js"></script>
+<script type="text/javascript" src="/js/editable.js"></script>
+</html>
