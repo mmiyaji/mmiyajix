@@ -43,14 +43,14 @@ function create_frame(frame_id){
 	var frame_tmp = "";
 	var windows;
 	$.ajax({
-		   type: "get",
-		   url: "/tmp/inner_img.html",
-		   success: function(text){
+		type: "get",
+		url: "/tmp/inner_img.html",
+		success: function(text){
 			frame_tmp = "<div class='movable'><a class='hide_button' href='#' onclick='hide_curtain()'>×</a>"+text+"</div>";
 			windows = $("#curtain");
 			windows.append(frame_tmp);
-		   }
-		 });
+		}
+	});
 	// var frames = $("#"+frame_id);
 	// frames.css("width", "400px");
 	// frames.css("hight", "300px");
@@ -60,8 +60,9 @@ function create_frame(frame_id){
 	// alert(pos.x+":"+pos.y);
 }
 function set_img(id){
-	var url = $("#"+id).val();
-	setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_img\'><tr><td><img src=\''+url+'\' alt=\'img\' /></td></tr><tr><td>Fig.1</td></tr></table></div><br />');
+	var url = $("#"+id+"_url").val();
+	var alt = $("#"+id+"_alt").val();
+	setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_img\'><tr><td><a href=\''+url+'\' target=\'_blank\' ><img src=\''+url+'\' alt=\''+alt+'\' /></a></td></tr><tr><td>'+alt+'</td></tr></table></div><br />');
 	hide_curtain();
 }
 
