@@ -25,13 +25,14 @@ logging.basicConfig(level=logging.DEBUG)
 class MainPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
+		span = FETCH_SPAN
 		if self.application:
 			template_values = {
 					'now':self.now,
 					'user':self.user,
 					'appuser':self.appuser,
 					'application':self.application,
-					'recents':Entry.get_recent(10,is_draft=False),
+					'recents':Entry.get_recent(span,is_draft=False),
 					'url': self.url,
 					'all_tags':Tags.tag_pool(),
 					'all_contents':Entry.get_recent(span=100),
@@ -195,15 +196,16 @@ class EntriesPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
 		page = 0
+		span = FETCH_SPAN
 		if self.application:
 			if self.request.get("page"):
 				try:
 					page = int(self.request.get("page"))
 				except:
 					pass
-			entries,entry_count = Entry.get_entries(5,page,is_draft=False)
+			entries,entry_count = Entry.get_entries(span,page,is_draft=False)
 			if entries:
-				page_list,pages = get_page_list(page, entry_count, 10)
+				page_list,pages = get_page_list(page, entry_count, span)
 				template_values = {
 					'title':'Entries',
 					'now':self.now,
