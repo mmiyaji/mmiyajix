@@ -4,7 +4,7 @@
 		<ul>
 			{% for tag_pool in all_tags %}
 			{% if tag_pool.title %}
-			<li><span class="level{{tag_pool.level}}"><a>{{tag_pool.title}}</a>{# ({{tag_pool.count}}) #}</span></li>
+			<li><span class="level{{tag_pool.level}}"><a>{{tag_pool.title}}</a>({{tag_pool.count}})</span></li>
 			{% endif %}
 			{% endfor %}
 			{# <li><span class="level1"><a>Login</a></span></li> #}

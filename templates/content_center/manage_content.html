@@ -7,7 +7,7 @@
 			<table class="manage_table" border="0" cellspacing="0" cellpadding="0"　align="left">
 				<tr><th>操作</th><th>タイトル</th><th>タグ</th><th>作成日時</th><th>作成者</th></tr>
 				{% for entry in entries %}
-				<tr><td><a href="/edit?entry_id={{entry.key.id}}" target="_blank">編集</a>　<a href="/entry?entry_id={{entry.key.id}}" target="_blank">表示</a>{%if entry.is_draft%}　[下書き]{%endif%}</td><td>{{entry.title}}</td><td>{% for tag in entry.all_tag %}{{tag.title}} {%endfor%}</td><td>{{entry.show_date}}</td><td>{{entry.appuser.nickname}}</td></tr>
+				<tr><td><a href="/edit?entry_id={{entry.key.id}}" >編集</a>　<a href="/entry?entry_id={{entry.key.id}}" target="_blank">表示</a>{%if entry.is_draft%}　<span class="red">[下書き]</span>{%endif%}</td><td>{{entry.title}}</td><td><span class="green">{% for tag in entry.all_tag %}{{tag.title}} {%endfor%}</span></td><td>{{entry.show_date}}</td><td>{{entry.appuser.nickname}}</td></tr>
 				{% endfor %}
 			</table>
 				{# <ol> #}

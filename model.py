@@ -122,6 +122,13 @@ class Tags(db.Model):
 	level = db.IntegerProperty(default=3)
 	count = db.IntegerProperty(default=0)
 	
+	def set_count(self):
+		self.count = int(self.get_count())+1
+		self.save()
+
+	def get_count(self):
+		return Entry.all().filter('is_draft = ',False).filter('tags = ',self.key()).count()	
+	
 	@staticmethod
 	def find_by_name(name):
 		return Tags.all().filter('title = ',name).get()
@@ -177,20 +184,20 @@ class Entry(db.Model):
 					tag.appuser = self.appuser
 					tag.title = name
 					tag.put()
-				tag.count += 1
+				tag.set_count()
 				tag.save()
 				self.tags.append(tag.key())
 				self.save()
 
 	def remove_tags(self):
-		tmp = None
-		try:
-			if tag in self.tags:
-				tmp = db.get(tag)
-				tmp -=1
-				tmp.save()
-		except:
-			pass
+		# tmp = None
+		# try:
+		# 	if tag in self.tags:
+		# 		tmp = db.get(tag)
+		# 		tmp -=1
+		# 		tmp.save()
+		# except:
+		# 	pass
 		self.tags = []
 		self.save()
 
@@ -213,7 +220,6 @@ class Entry(db.Model):
 		# 	result.append(tmp)
 		# return tags
 		# return Tags.all().filter('tags = ',self.key()).fetch(1000)
-
 	@staticmethod
 	def get_recent(span=3,get_all=False,is_draft=False):
 		query = Entry.all().order('-create_at')
