@@ -62,7 +62,11 @@ function create_frame(frame_id){
 function set_img(id){
 	var url = $("#"+id+"_url").val();
 	var alt = $("#"+id+"_alt").val();
-	setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_img\'><tr><td><a href=\''+url+'\' target=\'_blank\' ><img src=\''+url+'\' alt=\''+alt+'\' /></a></td></tr><tr><td>'+alt+'</td></tr></table></div><br />');
+	var ref = $("#"+id+"_ref").val();
+	if(ref==""){
+		ref=url;
+	}
+	setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_img\'><tr><td><a href=\''+ref+'\' target=\'_blank\' ><img src=\''+url+'\' alt=\''+alt+'\' /></a></td></tr><tr><td>'+alt+'</td></tr></table></div><br />');
 	hide_curtain();
 }
 
