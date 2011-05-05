@@ -83,7 +83,13 @@ table.table_img td{
 table.table_nume td{
 	padding:5px 15px;
 }
-
+table.table_img img{
+	padding:1px;
+	border:5px solid #DDD;
+}
+table.table_img a:hover img{
+	border:5px solid #999;
+}
 pre{
 	white-space: pre;           /* CSS 2.0 */
 	white-space: pre-wrap;      /* CSS 2.1 */
