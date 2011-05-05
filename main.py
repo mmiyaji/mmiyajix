@@ -120,7 +120,7 @@ class EntryPage(NormalRequestHandler):
 					'application':self.application,
 					'entry':entry,
 					'url': self.url,
-					'all_tags':Tags.tag_pool(),
+					'all_tags':Tags.tag_pool(span=1000),
 					'all_contents':Entry.get_recent(span=100),
 				}
 				path = os.path.join(os.path.dirname(__file__), './templates/base/entry.html')

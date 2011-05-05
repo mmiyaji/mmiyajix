@@ -27,6 +27,7 @@ class ManagePage(ModifyRequestHandler):
 			'users':ApplicationUser.get_users(),
 			'appuser':self.appuser,
 			'application':self.application,
+			'all_tags':Tags.tag_pool(),
 			'entries':entries,
 			'entry_count':entry_count,
 			'url': self.url,
