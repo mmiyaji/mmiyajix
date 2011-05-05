@@ -439,6 +439,10 @@ div.editor_utility ul li .edit_subs{
 div.editor_utility ul li .edit_dele{
 	background-position:-682px 0px;
 }
+div.editor_utility ul li .edit_link{
+	background-position:0px 0px;
+	background-image:url("/img/editor/links.png");
+}
 div.editor_utility ul li .edit_h1{
 	background-position:0px 0px;
 	background-image:url("/img/editor/h1.png");
@@ -462,6 +466,14 @@ div.editor_utility ul li .edit_code{
 div.editor_utility ul li .edit_pre{
 	background-position:0px 0px;
 	background-image:url("/img/editor/pre.png");
+}
+div.editor_utility ul li .edit_math{
+	background-position:0px 0px;
+	background-image:url("/img/editor/math.png");
+}
+div.editor_utility ul li .edit_save{
+	background-position:0px 0px;
+	background-image:url("/img/editor/saves.png");
 }
 
 /*end edit*/
@@ -566,6 +578,7 @@ h1 a:hover{
 	line-height:20px;
 }
 .movable .movable_content p{
+	margin-top:10px;
 	color:#666;
 }
 .hide_button{

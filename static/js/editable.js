@@ -38,13 +38,13 @@ function create_curtain(){
 	// 	hide_curtain();
 	// });
 }
-function create_frame(frame_id){
+function create_frame(frame_id,types){
 	create_curtain();
 	var frame_tmp = "";
 	var windows;
 	$.ajax({
 		type: "get",
-		url: "/tmp/inner_img.html",
+		url: "/tmp/inner_"+types+".html",
 		success: function(text){
 			frame_tmp = "<div class='movable'><a class='hide_button' href='#' onclick='hide_curtain()'>×</a>"+text+"</div>";
 			windows = $("#curtain");
@@ -69,7 +69,20 @@ function set_img(id){
 	setfunc('editable_frame','inserthtml',false,'<br /> <div class=\'content_center content_dot\'><table class=\'table_img\'><tr><td><a href=\''+ref+'\' target=\'_blank\' ><img src=\''+url+'\' alt=\''+alt+'\' /></a></td></tr><tr><td>'+alt+'</td></tr></table></div><br />');
 	hide_curtain();
 }
-
+function set_a(id){
+	var alt = $("#"+id+"_alt").val();
+	var ref = $("#"+id+"_ref").val();
+	var checked = $("#"+id+"_check").attr('checked');
+	var target = "";
+	if(checked){
+		target = "target='_blank'";
+	} 
+	if(alt==""){
+		alt="hoge";
+	}
+	setfunc('editable_frame','inserthtml',false,'<a href=\''+ref+'\' '+target+'>'+alt+'</a>');
+	hide_curtain();
+}
 function getElemPos(elem){
 var elemPos = new Object();
 elemPos.x = 0;
