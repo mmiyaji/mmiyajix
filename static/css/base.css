@@ -164,6 +164,7 @@ ul > ul{
 }
 #content_wrapper img{
 	max-width:100%;
+	width:100%;
 	border:none;
 }
 #content_right .section .section_content ul{
