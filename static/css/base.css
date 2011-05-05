@@ -185,9 +185,14 @@ ul > ul{
 #content_wrapper .section .section_content .recent_content p{
 	margin-left:20px;
 }
+#content_wrapper .section .section_content .recent_content div.recent_head{
+/*	border-left:10px solid #ddd;
+	border-bottom:1px solid #ddd;
+	padding:10px;*/
+}
 #content_wrapper .section .section_content .recent_content h3.recent_title{
 	border:none;
-	font-size:20px;
+	font-size:30px;
 }
 #content_wrapper .section .section_content .recent_content h3.recent_title > a{
 	border-bottom:1px solid #55f;
