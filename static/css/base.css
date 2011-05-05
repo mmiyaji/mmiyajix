@@ -31,11 +31,11 @@ pre{
 pre > code{
 	color:navy;
 }
-/*.code_content{
+.code_content{
 	padding:10px;
 	background-color:#EFEFEF;
 	border:1px solid lightGrey;
-}*/
+}
 ol > ol{
 	margin-left:15px;
 }

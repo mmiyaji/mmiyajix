@@ -90,7 +90,7 @@ function set_code(id){
 	if(alt){
 		target="title='"+alt+"'";
 	}
-	setfunc('editable_frame','inserthtml',false,'<br /><div class="code_content"><pre class="brush:'+types+';" '+target+'>code</pre></div><br />');
+	setfunc('editable_frame','inserthtml',false,'<br /><pre class="code brush:'+types+';" '+target+'>code</pre><br />');
 	hide_curtain();
 }
 function getElemPos(elem){

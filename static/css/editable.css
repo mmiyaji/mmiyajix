@@ -105,6 +105,9 @@ pre{
 pre > code{
 	color:navy;
 }
+pre.code{
+	border:1px solid lightGrey;
+}
 .code_content{
 	border:1px solid lightGrey;
 }
