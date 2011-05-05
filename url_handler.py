@@ -217,9 +217,10 @@ class NormalRequestHandler(AbstractRequestHandler):
 			self._post(status)
 		else:
 			self._post()
+
 # 
 class StatusRequestHandler(AbstractRequestHandler):
-	def get(self):
+	def get(self,status):
 		self.url = users.create_login_url(self.request.uri)
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
