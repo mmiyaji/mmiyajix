@@ -529,7 +529,6 @@ div.borders{
 .edits img:hover{
 	opacity:1.0;
 }
-
 a, a:visited {
 	color: #4EA0E2;
 	outline: none;
@@ -537,6 +536,7 @@ a, a:visited {
 }
 a:hover{
 	text-decoration:none;
+	color:blue;
 }
 h1 a, h1 a:visited {
 	text-decoration:none;
