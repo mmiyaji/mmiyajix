@@ -18,7 +18,7 @@
 					<li><a>Contact</a></li>
 					<li><a>RSS</a></li>
 					<li><a href="{{url}}">{% if user %}Logout【{{user.nickname}}】{% else %}Login{% endif %}</a></li>
-					<li><form class="search_box" action="search" method="get" accept-charset="utf-8"><input type="text" />
+					<li><form class="search_box" action="/search" method="get" accept-charset="utf-8"><input type="text" />
 						<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
 					</form></li>
 				</ul>
@@ -42,7 +42,7 @@
 			<!--<div class="section">
 				<h3>Search</h3>
 				<div class="section_content" id="content_search">
-					<form action="search" method="get" accept-charset="utf-8"><input type="text" />
+					<form action="/search" method="get" accept-charset="utf-8"><input type="text" />
 						<input type="image" src="/img/search_btn.gif" alt="Search" id="searchBtn" />
 					</form>
 				</div>

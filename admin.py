@@ -41,11 +41,11 @@ class ManagePage(ModifyRequestHandler):
 		# else:
 		# 	error_status(self,404,template_values)
 class EditPage(ModifyRequestHandler):
-	def _get(self):
+	def _get(self,ids):
 		template_values = None
 		entry = None
-		if self.request.get("entry_id"):
-			entry = Entry.get_by_id(int(self.request.get("entry_id")))
+		if ids:
+			entry = Entry.get_by_id(int(ids))
 		template_values = {
 				'now':self.now,
 				'user':self.user,
@@ -57,13 +57,13 @@ class EditPage(ModifyRequestHandler):
 		path = os.path.join(os.path.dirname(__file__), './templates/base/edit.html')
 		self.response.out.write(template.render(path, template_values))	
 		
-	def _post(self):
+	def _post(self,ids):
 		if True:
 			entry = None
 			tags = None
 			types = ""
-			if self.request.get("entry_id"):
-				entry = Entry.get_by_id(int(self.request.get("entry_id")))
+			if ids:
+				entry = Entry.get_by_id(int(ids))
 			if not entry:
 				entry = Entry()
 			entry.appuser = self.appuser
@@ -139,11 +139,11 @@ class AjaxPostPage(AjaxRequestHandler):
 		# self.redirect("/")
 	
 class EditorPage(webapp.RequestHandler):
-	def get(self):
+	def get(self,ids):
 		template_values = None
 		entry = None
-		if self.request.get("entry_id"):
-			entry = Entry.get_by_id(int(self.request.get("entry_id")))
+		if ids:
+			entry = Entry.get_by_id(int(ids))
 			if entry:
 				template_values = {
 					'entry_full_content':entry.full_content,

@@ -49,9 +49,8 @@ function setsave(entry_id,frame_id){
 	// alert(targetDoc.body.innerHTML);
 	var data = {
 		full_content:targetDoc.body.innerHTML,
-		entry_id:entry_id,
 		};
-	post_data("/edit",data);
+	post_data("/edit/"+entry_id,data);
 }
 function setfunc(iframe,comm,ui,value){
 	var targetDoc;

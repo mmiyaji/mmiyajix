@@ -137,13 +137,22 @@ class BasicAuthentication(AbstractRequestHandler):
 
 # 
 class ModifyRequestHandler(AbstractRequestHandler):
-	def get(self):
+	def get(self,status=None,ids=None,operate=None):
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.url = users.create_login_url(self.request.uri)
 		self.application = Application.get_app()
 		if self.appuser and self.appuser.modify_auth():
-			self._get()
+			if status:
+				if ids:
+					if operate:
+						self._get(status,ids,operate)
+					else:
+						self._get(status,ids)
+				else:
+					self._get(status)
+			else:
+				self._get()
 		else:
 			template_values = {
 				'now':self.now,
@@ -154,13 +163,22 @@ class ModifyRequestHandler(AbstractRequestHandler):
 				}
 			error_status(self,401,template_values)
 	
-	def post(self):
+	def post(self,status=None,ids=None,operate=None):
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.url = users.create_login_url(self.request.uri)
 		self.application = Application.get_app()
 		if self.appuser and self.appuser.modify_auth():
-			self._post()
+			if status:
+				if ids:
+					if operate:
+						self._post(status,ids,operate)
+					else:
+						self._post(status,ids)
+				else:
+					self._post(status)
+			else:
+				self._post()
 		else:
 			template_values = {
 				'now':self.now,
@@ -199,23 +217,35 @@ class AjaxRequestHandler(AbstractRequestHandler):
 
 # 
 class NormalRequestHandler(AbstractRequestHandler):
-	def get(self,status=None):
+	def get(self,status=None,ids=None,operate=None):
 		self.url = users.create_login_url(self.request.uri)
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.application = Application.get_app()
 		if status:
-			self._get(status)
+			if ids:
+				if operate:
+					self._get(status,ids,operate)
+				else:
+					self._get(status,ids)
+			else:
+				self._get(status)
 		else:
 			self._get()
 
-	def post(self,status=None):
+	def post(self,status=None,ids=None,operate=None):
 		self.url = users.create_login_url(self.request.uri)
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.application = Application.get_app()
 		if status:
-			self._post(status)
+			if ids:
+				if operate:
+					self._post(status,ids,operate)
+				else:
+					self._post(status,ids)
+			else:
+				self._post(status)
 		else:
 			self._post()
 

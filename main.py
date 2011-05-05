@@ -101,13 +101,13 @@ class RegistrationPage(BasicAuthentication):
 			self.redirect("/initialize_app")
 
 class EntryPage(NormalRequestHandler):
-	def _get(self):
+	def _get(self,ids):
 		template_values = None
 		entry = None
 		view = False
 		if self.application:
-			if self.request.get("entry_id"):
-				entry = Entry.get_by_id(int(self.request.get("entry_id")))
+			if ids:
+				entry = Entry.get_by_id(int(ids))
 			if self.request.get("view"):
 				view = True
 			if entry:
@@ -236,11 +236,11 @@ application = webapp.WSGIApplication(
 	('/', MainPage),
 	('/error/(.*)', ErrorPage),
 	('/manage', admin.ManagePage),
-	('/edit', admin.EditPage),
-	('/editor', admin.EditorPage),
+	('/edit/(.*)', admin.EditPage),
+	('/editor/(.*)', admin.EditorPage),
 	('/ajax_post/(.*)', admin.AjaxPostPage),
 	('/portfolio/(.*)', PortfolioPage),
-	('/entry', EntryPage),
+	('/entry/(.*)', EntryPage),
 	('/entries', EntriesPage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),
