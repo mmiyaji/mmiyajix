@@ -192,6 +192,7 @@ ul > ul{
 }
 #content_wrapper .section .section_content .recent_content h3.recent_title{
 	border:none;
+	line-height:36px;
 	font-size:30px;
 }
 #content_wrapper .section .section_content .recent_content h3.recent_title > a{
