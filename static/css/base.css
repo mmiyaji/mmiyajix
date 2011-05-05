@@ -258,9 +258,37 @@ ul > ul{
 #content_wrapper .section .section_content .center_content ol{
 	padding-left:30px;
 }
-#content_wrapper .section .section_content .center_content ol li{
-	padding:20px;
+#content_wrapper .section ul.paging li{
+	list-style:none;
+	float:left;
 }
+#content_wrapper .section ul.paging li a{
+	padding:5px;
+	display:block;
+}
+#content_wrapper .section ul.paging li a.now_page{
+	color:black;
+	text-decoration:none;
+}
+#content_wrapper .section table.manage_table{
+	border:1px solid #DDD;
+	width:100%;
+}
+#content_wrapper .section table.manage_table th{
+	text-align:left;
+	background-color:#eef;
+	padding:2px 10px;
+}
+#content_wrapper .section table.manage_table td{
+	text-align:left;
+	padding:2px 10px;
+}
+/*#content_wrapper .section table.manage_table td:odd{
+	background-color:#DDD;
+}*/
+/*#content_wrapper .section .section_content .center_content ol li{
+	padding:5px;
+}*/
 div.pad{
 	margin:15px;
 	padding:15px;
@@ -604,4 +632,7 @@ table.table_img td{
 }
 table.table_nume td{
 	padding:5px 15px;
+}
+.clearfix{
+	clear:both;
 }

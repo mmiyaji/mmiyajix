@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from google.appengine.ext import db
 from utility import *
-import datetime,logging
 from time import gmtime, strftime
 from app_settings import *
+
 def to_dict(model_obj, attr_list, init_dict_func=None):
 	values = {}
 	init_dict_func(values)
@@ -93,7 +93,7 @@ class Application(db.Model):
 			app.create_appuser = appuser
 			app.img_url = img_url
 			app.revision = rev
-			app.super_user = create_hash(user)
+			app.super_user = user
 			app.super_pass = create_hash(passwd)
 			app.islock = islock
 			apps = Application.all().filter('isdefault = ',True)
@@ -215,12 +215,17 @@ class Entry(db.Model):
 		# return Tags.all().filter('tags = ',self.key()).fetch(1000)
 
 	@staticmethod
-	def get_recent(span=3):
-		return Entry.all().order('-create_at').fetch(span)
+	def get_recent(span=3,get_all=False,is_draft=False):
+		query = Entry.all().order('-create_at')
+		if not get_all:
+			query.filter('is_draft = ',is_draft)
+		return query.fetch(span)
 	@staticmethod
-	def get_entries(span=5,page=0):
-		result = Entry.all().order('-create_at')
+	def get_entries(span=5,page=0,get_all=False,is_draft=False):
+		query = Entry.all().order('-create_at')
+		if not get_all:
+			query.filter('is_draft = ',is_draft)
 		if page!=0:
 			page = page*span - span
-		return result.fetch(span,page),result.count()
+		return query.fetch(span,page),query.count()
 		# return Entry.all().order('-create_at').fetch(span)

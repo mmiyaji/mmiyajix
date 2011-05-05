@@ -4,12 +4,42 @@
 		<div class="center_content padder">
 			<a href="edit">記事を書く</a>
 			{% if entries %}
-				<ol>
+			<table class="manage_table" border="0" cellspacing="0" cellpadding="0"　align="left">
+				<tr><th>操作</th><th>タイトル</th><th>タグ</th><th>作成日時</th><th>作成者</th></tr>
 				{% for entry in entries %}
-				<li><a href="/edit?entry_id={{entry.key.id}}">{{entry.title}}</a></li>
+				<tr><td><a href="/edit?entry_id={{entry.key.id}}" target="_blank">編集</a>　<a href="/entry?entry_id={{entry.key.id}}" target="_blank">表示</a>{%if entry.is_draft%}　[下書き]{%endif%}</td><td>{{entry.title}}</td><td>{% for tag in entry.all_tag %}<a>{{tag.title}}</a> {%endfor%}</td><td>{{entry.show_date}}</td><td>{{entry.appuser.nickname}}</td></tr>
 				{% endfor %}
-				</ol>
-				{{entry_count}}件
+			</table>
+				{# <ol> #}
+				{# {% for entry in entries %} #}
+				{# <li><a href="/edit?entry_id={{entry.key.id}}">{{entry.title}}</a>{% if entry.is_draft %}　[未公開]{% endif %}</li> #}
+				{# {% endfor %} #}
+				{# </ol> #}
+				<ul class="paging">
+				{% if pages.pre_page %}
+				<li>
+				<a href="/manage?page={{pages.pre_page}}" class="pager">&lt;&lt;Pre</a>
+				</li>
+				{% endif %}
+				{% for page in page_list %}
+				{% ifequal page pages.now_page %}
+				<li>
+				<a class="pager now_page">{{page}}</a>
+				</li>
+				{% else %}
+				<li>
+				<a href="/manage?page={{page}}" class="pager">{{page}}</a>
+				</li>
+				{% endifequal %}
+
+				{% endfor %}
+				{% if pages.next_page %}
+				<li>
+					<a href="/manage?page={{pages.next_page}}" class="pager">Next&gt;&gt;</a>
+				</li>
+				{% endif %}
+				</ul>
+				<div class="clearfix">{{entry_count}}件</div>
 			{% endif %}
 			{# <form action="initialize_app" method="post" accept-charset="utf-8"> #}
 			{# 	<label><h3>サイト管理者</h3><p>{{user.email}}</p></label> #}

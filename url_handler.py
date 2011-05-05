@@ -5,15 +5,8 @@ url_handler.py
 Created by Masahiro MIYAJI on 2011-02-23.
 Copyright (c) 2011 ISDL. All rights reserved.
 """
-import os,urllib,random,datetime,logging,re
-from google.appengine.api import users
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import util
-from google.appengine.ext.webapp.util import run_wsgi_app
-import wsgiref.handlers
-from base64 import b64decode
-from model import *
 from utility import *
+from model import *
 from app_settings import *
 
 logging.basicConfig(level=logging.DEBUG)
@@ -88,7 +81,7 @@ class BasicAuthentication(AbstractRequestHandler):
 				if users.is_current_user_admin():
 					self._get()
 				else:
-					if self.__basicAuth():
+					if self.basic_auth():
 						self._get()
 					else:
 						code=401
@@ -108,7 +101,7 @@ class BasicAuthentication(AbstractRequestHandler):
 				if users.is_current_user_admin():
 					self._post()
 				else:
-					if self.__basicAuth():
+					if self.basic_auth():
 						self.appuser = ApplicationUser.get_by_user(self.user)
 						self.url = users.create_logout_url(self.request.uri)
 						self._post()
@@ -117,7 +110,7 @@ class BasicAuthentication(AbstractRequestHandler):
 						self.error(code)
 						self.response.out.write(self.response.http_status_message(code))
 
-	def __basicAuth(self):
+	def basic_auth(self):
 		auth_header = self.request.headers.get('Authorization')
 		isbase = False
 		if self.application:
@@ -147,26 +140,36 @@ class ModifyRequestHandler(AbstractRequestHandler):
 	def get(self):
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
+		self.url = users.create_login_url(self.request.uri)
+		self.application = Application.get_app()
 		if self.appuser and self.appuser.modify_auth():
-			self.url = users.create_login_url(self.request.uri)
-			self.application = Application.get_app()
 			self._get()
 		else:
-			code = 401
-			self.error(code)
-			self.response.out.write(self.response.http_status_message(code))
+			template_values = {
+				'now':self.now,
+				'user':self.user,
+				'appuser':self.appuser,
+				'application':self.application,
+				'url': self.url,
+				}
+			error_status(self,401,template_values)
 	
 	def post(self):
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
+		self.url = users.create_login_url(self.request.uri)
+		self.application = Application.get_app()
 		if self.appuser and self.appuser.modify_auth():
-			self.url = users.create_login_url(self.request.uri)
-			self.application = Application.get_app()
 			self._post()
 		else:
-			code = 401
-			self.error(code)
-			self.response.out.write(self.response.http_status_message(code))
+			template_values = {
+				'now':self.now,
+				'user':self.user,
+				'appuser':self.appuser,
+				'application':self.application,
+				'url': self.url,
+				}
+			error_status(self,401,template_values)
 
 # 
 class AjaxRequestHandler(AbstractRequestHandler):
@@ -196,21 +199,27 @@ class AjaxRequestHandler(AbstractRequestHandler):
 
 # 
 class NormalRequestHandler(AbstractRequestHandler):
-	def get(self):
+	def get(self,status=None):
 		self.url = users.create_login_url(self.request.uri)
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.application = Application.get_app()
-		self._get()
-	def post(self):
+		if status:
+			self._get(status)
+		else:
+			self._get()
+	def post(self,status=None):
 		self.url = users.create_login_url(self.request.uri)
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.application = Application.get_app()
-		self._post()
+		if status:
+			self._post(status)
+		else:
+			self._post()
 # 
 class StatusRequestHandler(AbstractRequestHandler):
-	def get(self,status):
+	def get(self):
 		self.url = users.create_login_url(self.request.uri)
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)

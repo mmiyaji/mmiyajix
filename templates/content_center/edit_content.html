@@ -5,7 +5,7 @@
 		<div class="section_content">
 			<div class="center_content padder">
 				<form action="edit" method="post" accept-charset="utf-8" onsubmit="return get_editable();">
-					<label><h3>タイトル</h3><input name="title" type="text" value="{% if entry %}{{entry.title|default:""}}{% endif %}" /></label>
+					<label><h3>タイトル</h3><input name="title" type="text" id="entry_title" value="{% if entry %}{{entry.title|default:""}}{% endif %}" /></label>
 					<label>
 						<h3>要約 (*最大500文字)</h3>
 						<textarea name="content" class="abstract">{% if entry %}{{entry.content|default:""}}{% endif %}</textarea>
@@ -71,7 +71,7 @@
 					{% if entry %}
 					<input type="hidden" name="entry_id" value="{{entry.key.id}}" />
 					{% endif %}
-					<p><input type="submit" value="公開" /><input type="submit" value="下書き保存" /></p>
+					<p><input type="submit" value="公開" /><input type="submit" value="下書き保存" onClick="setdraft()" /></p>
 				</form>
 			</div>
 		</div>

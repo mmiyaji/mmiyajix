@@ -11,7 +11,13 @@ function get_editable(draft){
 	}
 	// alert(targetDoc.body.innerHTML);
 	document.getElementById(input).value = targetDoc.body.innerHTML;
-	return true;
+	console.log($("#entry_title").val());
+	if($("#entry_title").val()){
+		return true;
+	}else{
+		alert("タイトルを入力してください")
+		return false;
+	}
 }
 function start_editable(id,tree_contents,save_addr){
 	if($("#"+id).is(".editable")){
@@ -135,5 +141,6 @@ function post_data(addr,data){
 	 });
 }
 function setdraft(){
-	document.getElementById("draft").value = "True";
+	// console.log($("#draft").val("True"));
+	$("#draft").val("True");
 }

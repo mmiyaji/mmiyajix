@@ -109,7 +109,9 @@ pre.code{
 	border:1px solid lightGrey;
 }
 .code_content{
+	padding:10px;
 	border:1px solid lightGrey;
+	background-color:#EFEFEF;
 }
 .content_center{
 /*	text-align: center;*/

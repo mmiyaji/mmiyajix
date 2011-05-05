@@ -15,3 +15,9 @@ indexes:
   - name: isdefault
   - name: create_at
     direction: desc
+
+- kind: Entry
+  properties:
+  - name: is_draft
+  - name: create_at
+    direction: desc

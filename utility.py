@@ -1,7 +1,12 @@
-import datetime 
-import sys
-import urllib2
-import md5,hashlib
+import os,urllib,random,datetime,logging,re,urllib2,sys,md5,hashlib
+import wsgiref.handlers
+from google.appengine.api import users
+from google.appengine.ext import webapp
+from google.appengine.ext.webapp import util
+from google.appengine.ext.webapp.util import run_wsgi_app
+from google.appengine.api import mail
+from base64 import b64decode
+from google.appengine.ext.webapp import template
 from app_settings import *
 
 # class Googl():
@@ -20,7 +25,7 @@ from app_settings import *
 # 		return simplejson.loads(result).get('id')
 
 class TinyURL:
-	def get_tiny_url(self, url):
+	def get_tiny_url(self,url):
 		api_url = "http://tinyurl.com/api-create.php?url="
 		tiny_url = ''
 		try:
@@ -35,6 +40,17 @@ class TinyURL:
 def get_now():
 	return datetime.datetime.now() + datetime.timedelta(hours=9)
 
+def error_status(status,code=401,template_values=dict()):
+	status.error(code)
+	message="Sorry... "
+	if code==401:
+		message += "You are not authorize."
+	elif code==404:
+		message += "Forbidden Page."
+	template_values["error_message"]=message
+	path = os.path.join(os.path.dirname(__file__), './templates/base/error.html')
+	status.response.out.write(template.render(path, template_values))	
+	
 def get_page_list(page, count, search_span):
 	pages = dict()
 	page_max = (count / search_span)
@@ -80,8 +96,7 @@ def create_hash(string):
 	return hashlib.md5(str(string)).hexdigest()
 
 def jst_date(value):
-    if not value:
-        value = datetime.datetime.now()
-
-    value = value.replace(tzinfo=UtcTzinfo()).astimezone(JstTzinfo())
-    return value
+	if not value:
+		value = datetime.datetime.now()
+	value = value.replace(tzinfo=UtcTzinfo()).astimezone(JstTzinfo())
+	return value

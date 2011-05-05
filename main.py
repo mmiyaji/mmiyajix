@@ -16,22 +16,11 @@
 # limitations under the License.
 #
 
-import os,urllib,random,datetime,logging,re
-from google.appengine.api import users
-from google.appengine.ext import webapp
-from google.appengine.ext.webapp import util
-from google.appengine.ext.webapp.util import run_wsgi_app
-import wsgiref.handlers
-from google.appengine.api import mail
-from base64 import b64decode
-from google.appengine.ext.webapp import template
 from model import *
 from utility import *
 from app_settings import *
 from url_handler import *
 import admin
-import logging
-
 logging.basicConfig(level=logging.DEBUG)
 class MainPage(NormalRequestHandler):
 	def _get(self):
@@ -42,7 +31,7 @@ class MainPage(NormalRequestHandler):
 					'user':self.user,
 					'appuser':self.appuser,
 					'application':self.application,
-					'recents':Entry.get_recent(10),
+					'recents':Entry.get_recent(10,is_draft=False),
 					'url': self.url,
 					'all_tags':Tags.tag_pool(),
 					'all_contents':Entry.get_recent(span=100),
@@ -51,6 +40,14 @@ class MainPage(NormalRequestHandler):
 			self.response.out.write(template.render(path, template_values))	
 		else:
 			self.redirect('/initialize')
+
+class ErrorPage(webapp.RequestHandler):
+	def get(self,status=None):
+		code = 401
+		if status:
+			code = int(status)
+		self.error(code)
+		self.response.out.write(self.response.http_status_message(code))
 
 class InitPage(NormalRequestHandler):
 	def _get(self):
@@ -106,12 +103,16 @@ class EntryPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
 		entry = None
+		view = False
 		if self.application:
 			if self.request.get("entry_id"):
 				entry = Entry.get_by_id(int(self.request.get("entry_id")))
+			if self.request.get("view"):
+				view = True
 			if entry:
 				template_values = {
 					'title':entry.title,
+					'view':view,
 					'now':self.now,
 					'user':self.user,
 					'appuser':self.appuser,
@@ -124,11 +125,18 @@ class EntryPage(NormalRequestHandler):
 				path = os.path.join(os.path.dirname(__file__), './templates/base/entry.html')
 				self.response.out.write(template.render(path, template_values))
 			else:
-				self.redirect('/')
+				template_values = {
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'url': self.url,
+					}
+				error_status(self,404,template_values)
 		else:
 			self.redirect('/initialize')
 
-class PortfolioPage(StatusRequestHandler):
+class PortfolioPage(NormalRequestHandler):
 	def _get(self,name):
 		template_values = None
 		if self.application:
@@ -148,7 +156,14 @@ class PortfolioPage(StatusRequestHandler):
 				path = os.path.join(os.path.dirname(__file__), './templates/base/portfolio.html')
 				self.response.out.write(template.render(path, template_values))
 			else:
-				self.redirect('/')
+				template_values = {
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'url': self.url,
+					}
+				error_status(self,404,template_values)
 		else:
 			self.redirect('/initialize')
 
@@ -162,9 +177,10 @@ class EntriesPage(NormalRequestHandler):
 					page = int(self.request.get("page"))
 				except:
 					pass
-			entries,entry_count = Entry.get_entries(5,page)
-			page_list,pages = get_page_list(page, entry_count, 10)
-			template_values = {
+			entries,entry_count = Entry.get_entries(5,page,is_draft=False)
+			if entries:
+				page_list,pages = get_page_list(page, entry_count, 10)
+				template_values = {
 					'title':'Entries',
 					'now':self.now,
 					'user':self.user,
@@ -173,16 +189,26 @@ class EntriesPage(NormalRequestHandler):
 					'entries':entries,
 					'url': self.url,
 					'all_tags':Tags.tag_pool(),
-					'all_contents':Entry.get_recent(span=100),
-			}
-			path = os.path.join(os.path.dirname(__file__), './templates/base/entries.html')
-			self.response.out.write(template.render(path, template_values))
+					'all_contents':Entry.get_recent(span=100,is_draft=False),
+					}
+				path = os.path.join(os.path.dirname(__file__), './templates/base/entries.html')
+				self.response.out.write(template.render(path, template_values))
+			else:
+				template_values = {
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'url': self.url,
+					}
+				error_status(self,404,template_values)
 		else:
 			self.redirect('/initialize')
 	
 application = webapp.WSGIApplication(
 	[
 	('/', MainPage),
+	('/error/(.*)', ErrorPage),
 	('/manage', admin.ManagePage),
 	('/edit', admin.EditPage),
 	('/editor', admin.EditorPage),
