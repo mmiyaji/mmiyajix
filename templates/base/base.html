@@ -5,6 +5,8 @@
 <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="/css/base.css">
 <title>{% if title %}{{title}} - {% endif %}{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
+<link type="text/css" rel="stylesheet" href="/css/syntax/shCore.css"/> 
+<link type="text/css" rel="stylesheet" href="/css/syntax/shCoreDefault.css"/> 
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-9609071-5']);
@@ -51,5 +53,27 @@
 <script type="text/javascript" src="/js/jquery-min.js"></script>
 <script type="text/javascript" src="/js/mmiyajix.js"></script>
 <script type="text/javascript" src="/js/editable.js"></script>
+<script type="text/javascript" src="/js/syntax/shCore.js"></script> 
+<script type="text/javascript" src="/js/syntax/shBrushXml.js"></script> 
+<script type="text/javascript" src="/js/syntax/shAutoloader.js"></script>
+<script type="text/javascript">
+SyntaxHighlighter.autoloader(
+	'js jscript javascript /js/syntax/shBrushJScript.js',
+	'py python /js/syntax/shBrushPython.js',
+	'php /js/syntax/shBrushPhp.js',
+	"actionscript3 as3 /js/syntax/shBrushAS3.js",
+	"bash shell /js/syntax/shBrushBash.js",
+	"java /js/syntax/shBrushJava.js",
+	"cpp c /js/syntax/shBrushCpp.js",
+	"c# c-sharp csharp /js/syntax/shBrushCSharp.js",
+	"css /js/syntax/shBrushCss.js",
+	"perl pl /js/syntax/shBrushPerl.js",
+	"text plain /js/syntax/shBrushPlain.js",
+	"ruby rails ror rb /js/syntax/shBrushRuby.js",
+	"sql /js/syntax/shBrushSql.js",
+	"xml xhtml xslt html /js/syntax/shBrushXml.js"
+);
+SyntaxHighlighter.all();
+</script>
 </body>
 </html>

@@ -83,6 +83,16 @@ function set_a(id){
 	setfunc('editable_frame','inserthtml',false,'<a href=\''+ref+'\' '+target+'>'+alt+'</a>');
 	hide_curtain();
 }
+function set_code(id){
+	var alt = $("#"+id+"_alt").val();
+	var types = $("#"+id+"_type").val();
+	var target = "";
+	if(alt){
+		target="title='"+alt+"'";
+	}
+	setfunc('editable_frame','inserthtml',false,'<br /><div class="code_content"><pre class="brush:'+types+';" '+target+'>code</pre></div><br />');
+	hide_curtain();
+}
 function getElemPos(elem){
 var elemPos = new Object();
 elemPos.x = 0;
