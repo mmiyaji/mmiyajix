@@ -128,6 +128,30 @@ class EntryPage(NormalRequestHandler):
 		else:
 			self.redirect('/initialize')
 
+class PortfolioPage(StatusRequestHandler):
+	def _get(self,name):
+		template_values = None
+		if self.application:
+			owner = None
+			if name:
+				owner = ApplicationUser.get_by_nickname(name)
+			if owner:
+				template_values = {
+					'title':owner.fullname+"'s portfolio",
+					'now':self.now,
+					'owner':owner,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'url': self.url,
+				}
+				path = os.path.join(os.path.dirname(__file__), './templates/base/portfolio.html')
+				self.response.out.write(template.render(path, template_values))
+			else:
+				self.redirect('/')
+		else:
+			self.redirect('/initialize')
+
 class EntriesPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
@@ -163,6 +187,7 @@ application = webapp.WSGIApplication(
 	('/edit', admin.EditPage),
 	('/editor', admin.EditorPage),
 	('/ajax_post/(.*)', admin.AjaxPostPage),
+	('/portfolio/(.*)', PortfolioPage),
 	('/entry', EntryPage),
 	('/entries', EntriesPage),
 	('/registration', RegistrationPage),

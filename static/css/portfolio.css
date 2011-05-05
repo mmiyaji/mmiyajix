@@ -1,0 +1,70 @@
+*{
+	margin:0;
+	padding:0;
+}
+a{
+	color:blue;
+}
+body{
+	background-color: #000;	
+	color: white;
+	font:16px "Hiragino Kaku Gothic Pro",Meiryo,"ヒラギノ角ゴ Pro W3", "メイリオ", Arial,"Helvetica Neue",sans-serif;
+	background-image: url(https://lh3.googleusercontent.com/_9W1gHMAKHjU/Tb-WrwLoDtI/AAAAAAAAARI/Hp1n6f2ohjc/s1400/portfolio.jpg);
+	background-repeat: no-repeat;
+	height: 1050px;
+	background-position: 50% 50%;	
+}
+ul{
+	margin-left:25px;
+}
+#wrapper{
+	margin:0 auto;
+	max-width:1400px;
+	min-width:880px;
+}
+#portfolio_wrapper{
+/*	width:600px;*/
+	position:absolute;
+	top:300px;
+/*	margin:300px 20px;*/
+}
+
+.portfolio{
+	margin:300px auto;
+	width:800px;
+}
+.profile{
+	background-color: transparent;
+	border-radius-topleft: 3px;
+	border-radius-topright: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	border: 1px solid transparent;
+	border-top-left-radius: 3px 3px;
+	border-top-right-radius: 3px 3px;
+}
+#profile_box{
+	margin:40px;
+	padding:50px;
+	background:rgba(0, 0, 0, 0.7);
+}
+#profile_box h1.name{
+	font-size: 70px;
+}
+#profile_box h2.nickname{
+	margin:10px;
+	font-size: 30px;
+}
+.section{
+	padding:20px;
+	border-top:1px solid black;
+	border-bottom:1px solid white;
+}

@@ -202,10 +202,23 @@ class NormalRequestHandler(AbstractRequestHandler):
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.application = Application.get_app()
 		self._get()
-	
 	def post(self):
 		self.url = users.create_login_url(self.request.uri)
 		self.user = users.get_current_user()
 		self.appuser = ApplicationUser.get_by_user(self.user)
 		self.application = Application.get_app()
 		self._post()
+# 
+class StatusRequestHandler(AbstractRequestHandler):
+	def get(self,status):
+		self.url = users.create_login_url(self.request.uri)
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		self.application = Application.get_app()
+		self._get(status)
+	def post(self,status):
+		self.url = users.create_login_url(self.request.uri)
+		self.user = users.get_current_user()
+		self.appuser = ApplicationUser.get_by_user(self.user)
+		self.application = Application.get_app()
+		self._post(status)

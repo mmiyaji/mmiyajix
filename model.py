@@ -38,9 +38,14 @@ class ApplicationUser(db.Model):
 			return True
 		else:
 			return False
+
 	@staticmethod
 	def get_by_user(user):
 		return ApplicationUser.all().filter("user = ",user).get()
+
+	@staticmethod
+	def get_by_nickname(nickname):
+		return ApplicationUser.all().filter("nickname = ",nickname).get()
 	
 	@staticmethod
 	def get_users():
