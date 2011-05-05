@@ -5,6 +5,21 @@
 <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="/css/portfolio.css">
 <title>{% if title %}{{title}} - {% endif %}{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
+<!--[if IE ]>
+<style type="text/css">
+.profile{
+	background-color: black;
+	border: 1px solid black;
+}
+</style>
+<![endif]-->
+<!--[if lte IE 6 ]>
+<style type="text/css">
+#tool,#toolin{
+	visibility:hidden;
+}
+</style>
+<![endif]-->
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-9609071-5']);
