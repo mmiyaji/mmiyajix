@@ -154,7 +154,7 @@ ul > ul{
 	min-height:60px;
 }
 #topicpath{
-	width:100%	;
+/*	width:100%;*/
 	margin:0 15px;
 	padding:10px;
 	border-top:3px #ddd solid;
@@ -162,18 +162,17 @@ ul > ul{
 #topicpath ol{  
 /*    float:left;  */
 /*    margin:10px 0;*/
-/*	display:block;*/
-}  
+}
 #topicpath ol li {  
-    float:left;  
-    line-height:110%;  
-    list-style-type:none;  
-    margin-right:5px;  
-    padding-right:10px;  
-    background:url("/img/topicpath.gif") no-repeat right center;  
-}  
+	float:left;  
+	line-height:110%;  
+	list-style-type:none;  
+	margin-right:5px;  
+	padding-right:10px;  
+	background:url("/img/topicpath.gif") no-repeat right center;  
+} 
 #topicpath ol li.active{  
-    background:none;  
+	background:none;  
 }
 #content_wrapper .section .section_content{
 	margin:20px;
