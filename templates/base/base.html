@@ -22,6 +22,16 @@
 <div id="wrapper">
 	{% include "title_content.html" %}
 	<div id="content_wrapper">
+		{% if not pankuzu %}
+		<div id="topicpath">
+			<ol>
+				<li><a href="/">Home</a></li>
+				<li class="active"><a href="/">Home</a></li>
+			</ol>
+			<div class="clearfix"></div>
+		</div>
+		{# <h2 id="pankuzu"><a href="/">Home</a> &gt; <a href="/entry">Entry</a></h2> #}
+		{% endif %}
 		{# <div class="color_palette"> #}
 		{# 	<div class="color_content"> #}
 		{# 		<table> #}
@@ -44,11 +54,13 @@
 		{# 		</table> #}
 		{# 	</div> #}
 		{# </div> #}
+		{# <div class="clearfix"> #}
 		{% block main %}
 		{% endblock main %}
-		<br style="clear:both" />
+		{# </div> #}
+		{# <br style="clear:both" /> #}
 	</div>
-	<p id="footer">{{now.year}} Copyright &copy; {% if application %}mmiyajix{% else %}{{application.title}}{% endif %} All rights reserved.<br /><img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" /></p>
+	<p id="footer" class="clearfix">{{now.year}} Copyright &copy; {% if application %}mmiyajix{% else %}{{application.title}}{% endif %} All rights reserved.<br /><img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" /></p>
 </div>
 <script type="text/javascript" src="/js/jquery-min.js"></script>
 <script type="text/javascript" src="/js/mmiyajix.js"></script>
