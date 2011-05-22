@@ -41,7 +41,7 @@ class ManagePage(ModifyRequestHandler):
 		# else:
 		# 	error_status(self,404,template_values)
 class EditPage(ModifyRequestHandler):
-	def _get(self,ids):
+	def _get(self,ids=None):
 		template_values = None
 		entry = None
 		if ids:

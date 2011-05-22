@@ -22,13 +22,12 @@
 <div id="wrapper">
 	{% include "title_content.html" %}
 	<div id="content_wrapper">
-		{% if not pankuzu %}
+		{% if pankuzu %}
 		<div id="topicpath">
 			<ol>
 				<li><a href="/">Home</a></li>
 				<li class="active"><a href="/">Home</a></li>
 			</ol>
-			<div class="clearfix"></div>
 		</div>
 		{# <h2 id="pankuzu"><a href="/">Home</a> &gt; <a href="/entry">Entry</a></h2> #}
 		{% endif %}
