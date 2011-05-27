@@ -57,7 +57,7 @@ class EditPage(ModifyRequestHandler):
 		path = os.path.join(os.path.dirname(__file__), './templates/base/edit.html')
 		self.response.out.write(template.render(path, template_values))	
 		
-	def _post(self,ids):
+	def _post(self,ids=None):
 		if True:
 			entry = None
 			tags = None

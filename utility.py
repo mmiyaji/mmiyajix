@@ -8,6 +8,9 @@ from google.appengine.api import mail
 from base64 import b64decode
 from google.appengine.ext.webapp import template
 from app_settings import *
+FB_APP_ID="201904279853678"
+FB_API_KEY="7a493bd9213ddc2becce98930f6929ce"
+FB_SECRET="8ea45010257e0002b00e420880ab984d"
 
 # class Googl():
 # 	def shorten(slef,longUrl):
