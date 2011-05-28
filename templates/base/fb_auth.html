@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block main %}
-	<p>{{fb_url}}</p>
-	<p>{{fbt}}</p>
+<div class="section">
+	<h3>hoge</h3>
+		<div class="section_content">
+			{% if success_flg %}
+			<p>{{facebook_screen_name}}</p>
+			{% else %}
+			<p><a href="{{fb_url}}">{{fb_url}}</a></p>
+			<p>{{fbt}}</p>
+			{% endif %}
+		</div>
+</div>
 {% endblock main %}

@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<rss version="2.0">
+<channel>
+<title>{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
+<link>http://mmiyajix.appspot.com</link>
+<description>Information about {% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</description>
+<lastBuildDate>{{show_latest}}</lastBuildDate>
+<language>ja</language>
+	{% for item in items %}<item>
+		<title>{{item.title}}</title>	
+		<description>{{item.content|default:""}}</description>
+		<link>http://mmiyajix.appspot.com/entry/{{ item.key.id }}</link>
+		<pubDate>{{ item.show_pub_date }}</pubDate>
+		<contents type="html">{{ item.rss_content }}</contents>
+		<date>{{ item.show_pub_date }}</date>
+	</item>{% endfor %}
+</channel>
+</rss>

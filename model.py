@@ -165,7 +165,9 @@ class Entry(db.Model):
 	# 	db.Model.put(self)
 		# self.appuser.status_updated_date = datetime.datetime.now()
 		# self.appuser.put()
-	
+	def rss_content(self):
+		result = self.full_content
+		return result.replace(u"<","&lt;").replace(u">","&gt;")
 	def show_date(self):
 		date = self.create_at
 		date = date + datetime.timedelta(hours=9)
@@ -174,7 +176,11 @@ class Entry(db.Model):
 		date = self.create_at
 		date = date + datetime.timedelta(hours=9)
 		return date.strftime("%Y/%m/%d")
-
+	def show_pub_date(self):
+		date = self.create_at
+		date = date + datetime.timedelta(hours=9)
+		return date.strftime("%a, %d %b %Y %H:%M:%S +0900")
+	
 	def add_tags(self,tags):
 		if tags:
 			for name in tags:

@@ -168,33 +168,6 @@ class PortfolioPage(NormalRequestHandler):
 		else:
 			self.redirect('/initialize')
 
-class FacebookAuthPage(NormalRequestHandler):
-	def _post(self):
-		self._get()
-	def _get(self):
-		template_values = None
-		if self.application:
-			import facebook
-			# fb = facebook.Facebook("7a493bd9213ddc2becce98930f6929ce", "8ea45010257e0002b00e420880ab984d")
-			# fb_token = fb.auth.createToken()
-			# printfb.login()
-			## instantiate the Facebook API wrapper with your FB App's keys
-			fb = facebook.Facebook(FB_API_KEY, FB_SECRET)
-			fbt = fb.auth.createToken()
-			fb_url = fb.get_add_url()
-			template_values = {
-					'user':self.user,
-					'appuser':self.appuser,
-					'application':self.application,
-					'url': self.url,
-					'fb_url': fb_url,
-					'fbt': fbt,
-				}
-			path = os.path.join(os.path.dirname(__file__), './templates/base/entries.html')
-			self.response.out.write(template.render(path, template_values))
-		else:
-			self.redirect('/initialize')
-
 class EntriesPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
@@ -233,6 +206,30 @@ class EntriesPage(NormalRequestHandler):
 				error_status(self,404,template_values)
 		else:
 			self.redirect('/initialize')
+
+class RssPage(webapp.RequestHandler):
+	def get(self):
+		template_values = None
+		page = 0
+		span = 10
+		self.application = Application.get_app()
+		if self.application:
+			entries,entry_count = Entry.get_entries(span,page,is_draft=False)
+			if entries:
+				page_list,pages = get_page_list(page, entry_count, span)
+				template_values = {
+					'show_latest':Entry.get_recent(1)[0].show_pub_date(),
+					'application':self.application,
+					'items':entries,
+					}
+				path = os.path.join(os.path.dirname(__file__), './templates/base/rss.xml')
+				self.response.out.write(template.render(path, template_values))
+			else:
+				template_values = {}
+				error_status(self,404,template_values)
+		else:
+			template_values = {}
+			error_status(self,404,template_values)
 	
 application = webapp.WSGIApplication(
 	[
@@ -245,10 +242,10 @@ application = webapp.WSGIApplication(
 	('/portfolio/(.*)', PortfolioPage),
 	('/entry/(.*)', EntryPage),
 	('/entries', EntriesPage),
-	('/fb_auth/', FacebookAuthPage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),
 	('/initialize_app', admin.CreateAppPage),
+	('/rss.xml', RssPage),
 	],debug=True)
 
 def main():
