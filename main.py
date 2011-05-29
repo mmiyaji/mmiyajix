@@ -226,11 +226,9 @@ class RssPage(webapp.RequestHandler):
 				self.response.headers['Content-Type'] = "text/xml; charset=utf-8"
 				self.response.out.write(template.render(path, template_values))
 			else:
-				template_values = {}
-				error_status(self,404,template_values)
+				error_status(self,404)
 		else:
-			template_values = {}
-			error_status(self,404,template_values)
+			error_status(self,404)
 	
 application = webapp.WSGIApplication(
 	[
