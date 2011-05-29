@@ -165,9 +165,15 @@ class Entry(db.Model):
 	# 	db.Model.put(self)
 		# self.appuser.status_updated_date = datetime.datetime.now()
 		# self.appuser.put()
+	def set_rss(self):
+		result = self.full_content.replace(u"<","&lt;").replace(u">","&gt;").replace(u"&nbsp;","&#160;")
+		memcache.set("entry_"+str(self.key()), result)
+		return result
 	def rss_content(self):
-		result = self.full_content
-		return result.replace(u"<","&lt;").replace(u">","&gt;")
+		result = memcache.get("entry_"+str(self.key()))
+		if not result:
+			result = self.set_rss()
+		return result
 	def show_date(self):
 		date = self.create_at
 		date = date + datetime.timedelta(hours=9)

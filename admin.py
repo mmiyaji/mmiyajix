@@ -87,6 +87,8 @@ class EditPage(ModifyRequestHandler):
 				entry.content = content
 			entry.full_content = self.request.get("full_content")
 			entry.save()
+			if not self.request.get("draft"):
+				entry.set_rss()
 			entry.remove_tags()
 			if self.request.get("tags"):
 				tag_request = self.request.get("tags")

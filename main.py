@@ -21,6 +21,7 @@ from utility import *
 from app_settings import *
 from url_handler import *
 import admin
+
 logging.basicConfig(level=logging.DEBUG)
 class MainPage(NormalRequestHandler):
 	def _get(self):
