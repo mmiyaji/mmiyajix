@@ -399,7 +399,7 @@ form.search_box input[type="image"]{
 	padding: 0px;
 	border:none;
 }
-.center_content form input[type="text"],.center_content form input[type="password"],.center_content form textarea,.center_content form select,.center_content div.editor_utility{
+.center_content form input[type="file"],.center_content form input[type="text"],.center_content form input[type="password"],.center_content form textarea,.center_content form select,.center_content div.editor_utility{
 	margin-left:30px;
 	margin-bottom:20px;
 	line-height:20px;

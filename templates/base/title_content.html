@@ -7,6 +7,7 @@
 				{# <li><a>Contact</a></li> #}
 				<li><a href="/rss.xml">RSS</a></li>
 				{% if user %}{% if appuser %}
+				<li><a href="/upload">Upload</a></li>
 				<li><a href="/manage">Manage</a></li>
 				<li><a href="{{url}}">Logout【{{appuser.nickname}}】</a></li>
 				{% else %}

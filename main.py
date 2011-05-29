@@ -21,6 +21,7 @@ from utility import *
 from app_settings import *
 from url_handler import *
 import admin
+from filer import *
 
 logging.basicConfig(level=logging.DEBUG)
 class MainPage(NormalRequestHandler):
@@ -208,26 +209,28 @@ class EntriesPage(NormalRequestHandler):
 		else:
 			self.redirect('/initialize')
 
+class DownloadPage(NormalRequestHandler):
+	def _get(self,ids=""):
+		keys = ids.split("/")
+		if keys:
+			blobs,filemine = PostData.download_data(keys[0])
+			self.response.headers['Content-Type'] = filemine
+			self.response.out.write(blobs)
+
 class RssPage(webapp.RequestHandler):
 	def get(self):
 		template_values = None
 		page = 0
 		span = 10
+		entries = None
 		self.application = Application.get_app()
 		if self.application:
-			entries,entry_count = Entry.get_entries(span,page,is_draft=False)
-			if entries:
-				page_list,pages = get_page_list(page, entry_count, span)
-				template_values = {
-					'show_latest':Entry.get_recent(1)[0].show_pub_date(),
-					'application':self.application,
-					'items':entries,
-					}
-				path = os.path.join(os.path.dirname(__file__), './templates/base/rss.xml')
-				self.response.headers['Content-Type'] = "text/xml; charset=utf-8"
-				self.response.out.write(template.render(path, template_values))
-			else:
-				error_status(self,404)
+			template_values = memcache.get("rss_entry")
+			if not template_values:
+				template_values = Entry.set_rss_temp()
+			path = os.path.join(os.path.dirname(__file__), './templates/base/rss.xml')
+			self.response.headers['Content-Type'] = "text/xml; charset=utf-8"
+			self.response.out.write(template.render(path, template_values))
 		else:
 			error_status(self,404)
 	
@@ -239,6 +242,8 @@ application = webapp.WSGIApplication(
 	('/edit/(.*)', admin.EditPage),
 	('/editor/(.*)', admin.EditorPage),
 	('/ajax_post/(.*)', admin.AjaxPostPage),
+	('/upload/(.*)', admin.UploadPage),
+	('/download/(.*)', DownloadPage),
 	('/portfolio/(.*)', PortfolioPage),
 	('/entry/(.*)', EntryPage),
 	('/entries', EntriesPage),

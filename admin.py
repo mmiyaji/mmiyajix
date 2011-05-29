@@ -9,6 +9,7 @@ Copyright (c) 2011 ISDL. All rights reserved.
 from model import *
 from app_settings import *
 from url_handler import *
+from filer import *
 
 class ManagePage(ModifyRequestHandler):
 	def _get(self):
@@ -88,6 +89,7 @@ class EditPage(ModifyRequestHandler):
 			entry.full_content = self.request.get("full_content")
 			entry.save()
 			if not self.request.get("draft"):
+				Entry.set_rss_temp()
 				entry.set_rss()
 			entry.remove_tags()
 			if self.request.get("tags"):
@@ -195,3 +197,29 @@ class CreateAppPage(BasicAuthentication):
 			# else:
 			# 	application.put()
 		self.redirect("/")
+
+class UploadPage(ModifyRequestHandler):
+	def _post(self):
+		data = PostData.upload_data(
+			filedata=self.request.get("filedata"),appuser=self.appuser,
+			comment=self.request.get("comment"),filename=self.request.body_file.vars['filedata'].filename.decode("utf8"),
+			filemimetype=self.request.body_file.vars['filedata'].headers['content-type']
+			)
+		blobs,filemine = PostData.download_data(data.key())
+		self.response.headers['Content-Type'] = filemine
+		self.response.out.write(blobs)
+	def _get(self,ids=""):
+		keys = ids.split("/")
+		files = None
+		if keys:
+			files = PostData.get(keys[0])
+		template_values = {
+				'now':self.now,
+				'user':self.user,
+				'appuser':self.appuser,
+				'application':self.application,
+				'url': self.url,
+				'files': files,
+				}
+		path = os.path.join(os.path.dirname(__file__), './templates/base/upload.html')
+		self.response.out.write(template.render(path, template_values))	

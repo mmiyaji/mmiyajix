@@ -2,11 +2,11 @@
 <?xml-stylesheet href="http://www.w3.org/2000/08/w3c-synd/style.css" type="text/css"?>
 <rss version="2.0">
 <channel>
-<title>{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
+<title>{{application.title}}</title>
 <link>http://mmiyajix.appspot.com</link>
 <copyright>Copyright (C) {% now "Y" %} {{application.create_appuser.nickname}} All rights reserved.</copyright>
 <webMaster>{{application.create_appuser.user.email}}</webMaster>
-<description>Information about {% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</description>
+<description>Information about {{application.title}}</description>
 <lastBuildDate>{{show_latest}}</lastBuildDate>
 <language>ja</language>
 	{% for item in items %}<item>

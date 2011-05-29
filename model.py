@@ -3,7 +3,7 @@ from google.appengine.ext import db
 from utility import *
 from time import gmtime, strftime
 from app_settings import *
-
+# from filer import *
 def to_dict(model_obj, attr_list, init_dict_func=None):
 	values = {}
 	init_dict_func(values)
@@ -232,6 +232,20 @@ class Entry(db.Model):
 		# 	result.append(tmp)
 		# return tags
 		# return Tags.all().filter('tags = ',self.key()).fetch(1000)
+	@staticmethod
+	def set_rss_temp():
+		template_values = None
+		span = 10
+		page = 0
+		entries,entry_count = Entry.get_entries(span,page,is_draft=False)
+		if entries:
+			template_values = {
+				'show_latest':Entry.get_recent(1)[0].show_pub_date(),
+				'application':Application.get_app(),
+				'items':entries,
+				}
+			memcache.set("rss_entry", template_values)
+		return template_values
 	@staticmethod
 	def get_recent(span=3,get_all=False,is_draft=False):
 		query = Entry.all().order('-create_at')

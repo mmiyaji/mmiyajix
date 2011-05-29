@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block main %}
+{% include "../content_left/index.html" %}
+<div class="section">
+	<h3>アップロード</h3>
+   	<div class="section_content">
+		<div class="center_content padder">
+		<form action="/upload" enctype="multipart/form-data" method="post">
+		<label><h3>ファイル</h3>
+			<input type="file" name="filedata" id="file" value="" /> 
+		</label> 
+		<label><h3>ダウンロード時にパスワード入力を要求する</h3>
+			<input type="text" value="" name="pass" id="pass" value="" />
+		</label>
+		<p><input name="submit" type="submit" id="submit" value="Upload" /></p>
+		</form>
+		</div>
+	</div>
+	{% if files %}
+	<div class="section_content">
+		<h3>ファイル名</h3><p>{{files.filename}}</p>
+		<h3>ファイルURL</h3><p><a href="/download/{{files.key}}/{{files.en_filename}}" target="_blank">http://mmiyajix.appspot.com/download/{{files.key}}/{{files.en_filename}}</a></p>
+		{% if files.is_image %}<h3>画像</h3><img src="/download/{{files.key}}/{{files.en_filename}}" />{% endif %}
+	</div>
+	{% endif %}
+</div>
+{% endblock main %}
