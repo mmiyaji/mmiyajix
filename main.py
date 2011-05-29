@@ -34,7 +34,7 @@ class MainPage(NormalRequestHandler):
 					'user':self.user,
 					'appuser':self.appuser,
 					'application':self.application,
-					'recents':Entry.get_recent(span,is_draft=False),
+					'recents':Entry.get_recent(span,is_draft=False,igtype="file"),
 					'url': self.url,
 					'all_tags':Tags.tag_pool(),
 					'all_contents':Entry.get_recent(span=100),

@@ -249,14 +249,16 @@ class Entry(db.Model):
 			memcache.set("rss_entry", template_values)
 		return template_values
 	@staticmethod
-	def get_recent(span=3,get_all=False,is_draft=False,types=""):
-		query = Entry.all().order('-create_at')
+	def get_recent(span=3,get_all=False,is_draft=False,types="",igtype="file"):
+		query = Entry.all().order('-types')
 		if not get_all:
 			query.filter('is_draft = ',is_draft)
-		else:
+			if igtype:
+				query.filter('types != ',igtype)
 			if types:
 				query.filter('types = ',types)
-		return query.fetch(span)
+			
+		return query.order('-create_at').fetch(span)
 	@staticmethod
 	def get_entries(span=5,page=0,get_all=False,is_draft=False):
 		query = Entry.all().order('-create_at')

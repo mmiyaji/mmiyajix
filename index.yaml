@@ -22,6 +22,20 @@ indexes:
   - name: create_at
     direction: desc
 
+- kind: Entry
+  properties:
+  - name: is_draft
+  - name: types
+    direction: desc
+
+- kind: Entry
+  properties:
+  - name: is_draft
+  - name: types
+    direction: desc
+  - name: create_at
+    direction: desc
+
 - kind: PostDataChunk
   properties:
   - name: master

@@ -3,7 +3,7 @@
    	<div class="section_content" style="margin-left:30px">
 	<ul>
 		{% for content_pool in all_contents %}
-			<li><a href="/entry/{{content_pool.key.id}}">{% if content_pool.all_tag %}{% for tag in content_pool.all_tag %}[{{tag.title}}]{% endfor %}{% endif %}{{content_pool.title}}</a> [{{content_pool.show_day}}]</li>
+			<li><a href="{% ifequal content_pool.types 'file' %}/upload/{{content_pool.relations.key}}/{{content_pool.relations.filename}}{%else%}/entry/{{content_pool.key.id}}{%endifequal%}">{% if content_pool.all_tag %}{% for tag in content_pool.all_tag %}[{{tag.title}}]{% endfor %}{% endif %}{{content_pool.title}}</a> [{{content_pool.show_day}}]</li>
 		{% endfor %}
 	</ul>
 	</div>
