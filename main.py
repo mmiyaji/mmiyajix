@@ -223,6 +223,7 @@ class RssPage(webapp.RequestHandler):
 					'items':entries,
 					}
 				path = os.path.join(os.path.dirname(__file__), './templates/base/rss.xml')
+				self.response.headers['Content-Type'] = "text/xml; charset=utf-8"
 				self.response.out.write(template.render(path, template_values))
 			else:
 				template_values = {}
