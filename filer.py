@@ -69,7 +69,7 @@ class PostData(db.Model):
 				postdata.down_lock = True
 				postdata.down_pass = passwd
 			postdata.put()
-			for i in range( len(filedata) / 500000 + 1):
+			for i in xrange( len(filedata) / 500000 + 1):
 				chunk = PostDataChunk()
 				chunk.master = postdata.key()
 				chunk.seq = i

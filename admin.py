@@ -13,7 +13,7 @@ from filer import *
 
 class ManagePage(ModifyRequestHandler):
 	def _get(self):
-		span=10
+		span=20
 		page = 1
 		if self.request.get("page"):
 			try:
