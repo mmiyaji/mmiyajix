@@ -250,20 +250,24 @@ class Entry(db.Model):
 		return template_values
 	@staticmethod
 	def get_recent(span=3,get_all=False,is_draft=False,types="",igtype="file"):
-		query = Entry.all().order('-types')
+		query = Entry.all().order('types')
 		if not get_all:
 			query.filter('is_draft = ',is_draft)
 			if igtype:
 				query.filter('types != ',igtype)
 			if types:
 				query.filter('types = ',types)
-			
 		return query.order('-create_at').fetch(span)
 	@staticmethod
-	def get_entries(span=5,page=0,get_all=False,is_draft=False):
-		query = Entry.all().order('-create_at')
+	def get_entries(span=5,page=0,get_all=False,is_draft=False,types="",igtype="file"):
+		query = Entry.all().order('types')
 		if not get_all:
 			query.filter('is_draft = ',is_draft)
+			if igtype:
+				query.filter('types != ',igtype)
+			if types:
+				query.filter('types = ',types)
+		query = query.order('-create_at')
 		if page!=0:
 			page = page*span - span
 		return query.fetch(span,page),query.count()

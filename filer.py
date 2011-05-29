@@ -69,7 +69,7 @@ class PostData(db.Model):
 				postdata.down_lock = True
 				postdata.down_pass = passwd
 			postdata.put()
-			for i in xrange( len(filedata) / 500000 + 1):
+			for i in range( len(filedata) / 500000 + 1):
 				chunk = PostDataChunk()
 				chunk.master = postdata.key()
 				chunk.seq = i
@@ -95,7 +95,7 @@ class PostDataChunk(db.Model):
 	def get_by_master(master=None):
 		result = ""
 		if master:
-			query = PostDataChunk.all().order('-seq').filter('master = ',master)
+			query = PostDataChunk.all().order('seq').filter('master = ',master)
 			for i in query:
 				result += i.chunk
 		return result

@@ -2,28 +2,15 @@
 	<div id="header_content">
 		<div id="title_bar">
 			<ul>
-				<li><a href="/">Home</a></li>
-				{# <li><a>Search</a></li> #}
-				{# <li><a>Contact</a></li> #}
-				<li><a href="/rss.xml">RSS</a></li>
-				{% if user %}{% if appuser %}
+				<li><a href="/">Home</a></li>{# <li><a>Search</a></li> #}{# <li><a>Contact</a></li> #}
+				<li><a href="/rss.xml">RSS</a></li>{% if user %}{% if appuser %}
 				<li><a href="/upload">Upload</a></li>
 				<li><a href="/manage">Manage</a></li>
-				<li><a href="{{url}}">Logout【{{appuser.nickname}}】</a></li>
-				{% else %}
-				<li><a href="{{url}}">Logout【{{user.nickname}}】</a></li>
-				{% endif %}{% else %}
-				<li><a href="{{url}}">Login</a></li>
-				{% endif %}
-				{# <li> #}
-				{# 	<form class="search_box" action="search" method="get" accept-charset="utf-8" > #}
-				{# 		<input type="text" name="search_key" value=""> #}
-				{# 		<input type="image" src="/img/search_btn.gif" alt="Search" name="search" id="searchBtn"> #}
-				{# 	</form> #}
-				{# </li> #}
+				<li><a href="{{url}}">Logout【{{appuser.nickname}}】</a></li>{% else %}
+				<li><a href="{{url}}">Logout【{{user.nickname}}】</a></li>{% endif %}{% else %}
+				<li><a href="{{url}}">Login</a></li>{% endif %}
 			</ul>
 		</div>
 		<h1><a href="/">{{application.title}}</a></h1>
-		{# <h2 class="pankuzu">pankuzu > hoge</h2> #}
 	</div>
 </div>

@@ -36,6 +36,18 @@ indexes:
   - name: create_at
     direction: desc
 
+- kind: Entry
+  properties:
+  - name: types
+    direction: desc
+  - name: create_at
+    direction: desc
+
+- kind: PostDataChunk
+  properties:
+  - name: master
+  - name: seq
+
 - kind: PostDataChunk
   properties:
   - name: master

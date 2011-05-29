@@ -60,9 +60,9 @@
 					<label><h3>カテゴリー</h3>
 						<select name="types">
 							<option value="entry" {% ifequal entry.types 'entry' %}selected="selected"{% endifequal %}>Entry</option>
-							{# <option value="diary" {% ifequal entry.types 'diary' %}selected="selected"{% endifequal %}>Diary</option> #}
+							<option value="diary" {% ifequal entry.types 'diary' %}selected="selected"{% endifequal %}>Diary</option>
 							<option value="memo" {% ifequal entry.types 'memo' %}selected="selected"{% endifequal %}>Memorandum</option>
-							{# <option value="file" {% ifequal entry.types 'file' %}selected="selected"{% endifequal %}>Files</option> #}
+							<option value="file" {% ifequal entry.types 'file' %}selected="selected"{% endifequal %}>Files</option>
 						</select>
 					</label>
 					<label><h3>タグ</h3><input type="text" name="tags" value="{% if entry %}{% for tag in entry.all_tag %}{{tag.title}},{% endfor %}{% endif %}" /></label>
