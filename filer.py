@@ -75,6 +75,16 @@ class PostData(db.Model):
 				chunk.seq = i
 				chunk.chunk = db.Blob(filedata[i*500000:(i+1)*500000 ])
 				chunk.put()
+				
+			entry = Entry()
+			entry.title = filename
+			entry.types = "file"
+			entry.is_draft = False
+			entry.content = comment
+			entry.full_content = comment
+			entry.save()
+			entry.relation.append(postdata.key())
+			entry.save()
 			return postdata
 			
 class PostDataChunk(db.Model):

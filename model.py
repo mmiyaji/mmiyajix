@@ -27,6 +27,7 @@ class ApplicationUser(db.Model):
 	description = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now=True)
+	portfolio = db.TextProperty(default="")
 	
 	def admin_auth(self):
 		if self.role == "admin":
@@ -83,7 +84,6 @@ class Application(db.Model):
 	islock = db.BooleanProperty(default=True)
 	super_user = db.StringProperty(default="")
 	super_pass = db.StringProperty(default="")
-	
 	def create_app(self,title="",rev=0,description="",appuser=None,img_url="",user="",passwd="",islock=True):
 		app = None
 		if Application.all().filter("rev = ",rev).count() < 1:
@@ -160,11 +160,15 @@ class Entry(db.Model):
 	updated_at = db.DateTimeProperty(auto_now=True)
 	is_draft = db.BooleanProperty(default=True)
 	tags = db.ListProperty(db.Key)
+	relation = db.ListProperty(db.Key)
 	types = db.StringProperty(choices=set(["entry","diary","memo","file"]))
 	# def put(self):
 	# 	db.Model.put(self)
 		# self.appuser.status_updated_date = datetime.datetime.now()
 		# self.appuser.put()
+	def relations(self):
+		# print self.relation[0]
+		return db.get(self.relation[0])
 	def set_rss(self):
 		result = self.full_content.replace(u"<","&lt;").replace(u">","&gt;").replace(u"&nbsp;","&#160;")
 		memcache.set("entry_"+str(self.key()), result)
@@ -212,8 +216,6 @@ class Entry(db.Model):
 		# 	pass
 		self.tags = []
 		self.save()
-
-
 	def all_tag(self):
 		tags = self.tags
 		result = []
@@ -247,10 +249,13 @@ class Entry(db.Model):
 			memcache.set("rss_entry", template_values)
 		return template_values
 	@staticmethod
-	def get_recent(span=3,get_all=False,is_draft=False):
+	def get_recent(span=3,get_all=False,is_draft=False,types=""):
 		query = Entry.all().order('-create_at')
 		if not get_all:
 			query.filter('is_draft = ',is_draft)
+		else:
+			if types:
+				query.filter('types = ',types)
 		return query.fetch(span)
 	@staticmethod
 	def get_entries(span=5,page=0,get_all=False,is_draft=False):

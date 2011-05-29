@@ -12,6 +12,9 @@
 		<label><h3>ダウンロード時にパスワード入力を要求する</h3>
 			<input type="text" value="" name="pass" id="pass" value="" />
 		</label>
+		<label><h3>コメント</h3>
+			<input type="text" value="" name="comment" id="comment" value="" />
+		</label>
 		<p><input name="submit" type="submit" id="submit" value="Upload" /></p>
 		</form>
 		</div>
@@ -19,8 +22,11 @@
 	{% if files %}
 	<div class="section_content">
 		<h3>ファイル名</h3><p>{{files.filename}}</p>
+		<h3>コメント</h3><p>{{files.comment|default:"N/A"}}</p>
+		<h3>アップロード者</h3><p>{{files.appuser.nickname}}</p>
+		<h3>ダウンロードカウント</h3><p>{{files.downcount}}</p>
 		<h3>ファイルURL</h3><p><a href="/download/{{files.key}}/{{files.en_filename}}" target="_blank">http://mmiyajix.appspot.com/download/{{files.key}}/{{files.en_filename}}</a></p>
-		{% if files.is_image %}<h3>画像</h3><img src="/download/{{files.key}}/{{files.en_filename}}" />{% endif %}
+		{% if files.is_image %}<h3>画像</h3><a href="/download/{{files.key}}/{{files.en_filename}}" target="_blank"><img src="/download/{{files.key}}/{{files.en_filename}}" /></a>{% endif %}
 	</div>
 	{% endif %}
 </div>

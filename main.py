@@ -90,13 +90,14 @@ class RegistrationPage(BasicAuthentication):
 			else:
 				appuser = ApplicationUser()
 			appuser.user = self.user
+			appuser.portfolio = self.request.get("portfolio")
 			appuser.nickname = self.request.get("nickname")
 			appuser.role = self.request.get("group")
 			appuser.img_url = self.request.get("img_url")
 			appuser.description = self.request.get("description")
 			appuser.fullname = self.request.get("fullname")
 			appuser.email_addr = self.request.get("email_addr")
-			appuser.put()
+			appuser.save()
 		if self.application:
 			self.redirect("/")
 		else:
@@ -147,17 +148,18 @@ class PortfolioPage(NormalRequestHandler):
 			if name:
 				owner = ApplicationUser.get_by_nickname(name)
 			if owner:
-				template_values = {
-					'title':owner.fullname+"'s portfolio",
-					'now':self.now,
-					'owner':owner,
-					'user':self.user,
-					'appuser':self.appuser,
-					'application':self.application,
-					'url': self.url,
-				}
-				path = os.path.join(os.path.dirname(__file__), './templates/base/portfolio.html')
-				self.response.out.write(template.render(path, template_values))
+				htmls = owner.portfolio
+				# template_values = {
+				# 	'title':owner.fullname+"'s portfolio",
+				# 	'now':self.now,
+				# 	'owner':owner,
+				# 	'user':self.user,
+				# 	'appuser':self.appuser,
+				# 	'application':self.application,
+				# 	'url': self.url,
+				# }
+				# path = os.path.join(os.path.dirname(__file__), './templates/base/portfolio.html')
+				self.response.out.write(htmls)
 			else:
 				template_values = {
 					'now':self.now,
@@ -242,7 +244,7 @@ application = webapp.WSGIApplication(
 	('/edit/(.*)', admin.EditPage),
 	('/editor/(.*)', admin.EditorPage),
 	('/ajax_post/(.*)', admin.AjaxPostPage),
-	('/upload/(.*)', admin.UploadPage),
+	('/upload/?(.*)', admin.UploadPage),
 	('/download/(.*)', DownloadPage),
 	('/portfolio/(.*)', PortfolioPage),
 	('/entry/(.*)', EntryPage),

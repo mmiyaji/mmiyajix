@@ -187,15 +187,6 @@ class CreateAppPage(BasicAuthentication):
 			application.create_app(title=self.request.get("title"),rev=int(self.request.get("revision")),
 					description=self.request.get("description"),appuser=self.appuser,img_url=self.request.get("img_url"),
 					user=self.request.get("user"),passwd=self.request.get("passwd"),islock=islock)
-			# application.create_appuser = self.appuser
-			# application.title = self.request.get("title")
-			# application.revision = int(self.request.get("revision"))
-			# application.img_url = self.request.get("img_url")
-			# application.description = self.request.get("description")
-			# if self.request.get("application"):
-			# 	application.save()
-			# else:
-			# 	application.put()
 		self.redirect("/")
 
 class UploadPage(ModifyRequestHandler):
@@ -205,14 +196,13 @@ class UploadPage(ModifyRequestHandler):
 			comment=self.request.get("comment"),filename=self.request.body_file.vars['filedata'].filename.decode("utf8"),
 			filemimetype=self.request.body_file.vars['filedata'].headers['content-type']
 			)
-		blobs,filemine = PostData.download_data(data.key())
-		self.response.headers['Content-Type'] = filemine
-		self.response.out.write(blobs)
+		self.redirect("/upload/"+str(data.key())+"/")
 	def _get(self,ids=""):
-		keys = ids.split("/")
 		files = None
-		if keys:
-			files = PostData.get(keys[0])
+		if ids:
+			keys = ids.split("/")
+			if keys:
+				files = PostData.get(keys[0])
 		template_values = {
 				'now':self.now,
 				'user':self.user,
