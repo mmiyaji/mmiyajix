@@ -43,6 +43,12 @@
 				<label><h3>ID</h3><input name="user" type="text" value="{{application.user}}" /></label>
 				<label><h3>Password</h3><input name="passwd" type="password" value="{{application.passwd}}" /></label>
 				</div>
+				<div class="borders">
+				<label><h3>Facebookと連携する</h3></label>
+				<label><h3>Facebook APP ID</h3><input name="fb_app_id" type="text" value="{{application.fb_app_id}}" /></label>
+				<label><h3>Facebook API Key</h3><input name="fb_api_key" type="text" value="{{application.fb_api_key}}" /></label>
+				<label><h3>Facebook Secret</h3><input name="fb_secret" type="text" value="{{application.fb_secret}}" /></label>
+				</div>
 				<label><h3>アイコンURL</h3><input name="img_url" type="text" value="{{application.img_url}}" /></label>
 				<label><h3>サイト紹介</h3><textarea name="description">{{application.description}}</textarea></label>
 				{% if application %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block main %}
+{% include "../content_left/index.html" %}
+<div class="section">
+	<h3>Facebook認証</h3>
+   	<div class="section_content">
+		<div class="center_content padder">
+			<p>
+				下記のアドレスから認証を行って下さい
+			</p>
+			<a href="{{fb_url}}">{{fb_url}}</a>
+		</div>
+	</div>
+</div>
+{% endblock main %}

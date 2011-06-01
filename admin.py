@@ -186,7 +186,8 @@ class CreateAppPage(BasicAuthentication):
 				islock = False
 			application.create_app(title=self.request.get("title"),rev=int(self.request.get("revision")),
 					description=self.request.get("description"),appuser=self.appuser,img_url=self.request.get("img_url"),
-					user=self.request.get("user"),passwd=self.request.get("passwd"),islock=islock)
+					user=self.request.get("user"),passwd=self.request.get("passwd"),islock=islock,
+					fb_app_id=self.request.get("fb_app_id"),fb_api_key=self.request.get("fb_api_key"),fb_secret=self.request.get("fb_secret"))
 		self.redirect("/")
 
 class UploadPage(ModifyRequestHandler):
@@ -213,3 +214,40 @@ class UploadPage(ModifyRequestHandler):
 				}
 		path = os.path.join(os.path.dirname(__file__), './templates/base/upload.html')
 		self.response.out.write(template.render(path, template_values))	
+
+class FacebookAuthPage(ModifyRequestHandler):
+	def _post(self):
+		self._get()
+	def _get(self):
+		DOMAIN = "localhost:9000"
+		if self.request.get('code')=="":
+			fb_url = "https://graph.facebook.com/oauth/authorize?client_id="+self.application.fb_app_id+"&redirect_uri=http://"+DOMAIN+"/fb_auth/&scope=offline_access,publish_stream"
+			template_values = {
+				'user':self.user,
+				'appuser':self.appuser,
+				'application':self.application,
+				'fb_url': fb_url,
+			}
+			path = os.path.join(os.path.dirname(__file__), './templates/base/facebook_oauth.html')
+			self.response.out.write(template.render(path, template_values))
+		else:
+			import simplejson
+			code = self.request.get('code')
+			post_data = {}
+			post_data['client_id'] = self.application.fb_app_id
+			post_data['redirect_uri'] = "http://"+DOMAIN+"/fb_auth/"
+			post_data['client_secret'] = self.application.fb_secret
+			post_data['code'] = code
+			en_post_data = urllib.urlencode(post_data)
+			r1 = urllib2.urlopen('https://graph.facebook.com/oauth/access_token',en_post_data)
+			read = r1.read()
+			access_token= read.split("=")[1]
+			r2 = urllib2.urlopen('https://graph.facebook.com/me?'+read)
+			appuser_data = r2.read()
+			uid = simplejson.loads(appuser_data)['id']
+			name = simplejson.loads(appuser_data)['name']
+			self.appuser.fb_oauth_token = access_token
+			self.appuser.fb_oauth_uid = str(uid)
+			self.appuser.fb_nickname = name
+			self.appuser.save()
+			self.redirect('/manage')

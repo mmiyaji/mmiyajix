@@ -252,6 +252,7 @@ application = webapp.WSGIApplication(
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),
 	('/initialize_app', admin.CreateAppPage),
+	('/fb_auth/', admin.FacebookAuthPage),
 	('/rss.xml', RssPage),
 	],debug=True)
 
