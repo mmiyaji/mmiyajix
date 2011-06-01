@@ -37,9 +37,18 @@
 				</select></label>
 				<label><h3>アイコンURL</h3><input name="img_url" type="text" value="{{appuser.img_url}}" /></label>
 				{% if application.is_facebook %}
-				<label><h3>Facebookアカウントと連携</h3><p><a href="/fb_auth/" target="_blank">
-					Facebook認証ページ
-				</a></p></label>
+				<div class="borders">
+				<label><h3>Facebookアカウントと連携</h3>
+					<p>連携することでサイトの更新を通知することが出来ます。</p>
+					{%if appuser.is_facebook%}
+					<ul>
+						<li>Nickname:{{appuser.fb_nickname}} で認証されています</li>
+					</ul>
+					<p><a href="http://www.facebook.com/settings/?tab=applications" target="_blank">Facebooアカウント設定</a></p>
+					{%endif%}
+					<p><a href="/fb_auth/" target="_blank">Facebook認証ページ</a></p>
+				</label>
+				</div>
 				{% endif %}
 				<label><h3>自己紹介</h3><textarea name="description">{{appuser.description}}</textarea></label>
 				<label><h3>ポートフォリオページ</h3><textarea name="portfolio">{{appuser.portfolio}}</textarea></label>

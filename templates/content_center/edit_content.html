@@ -68,6 +68,10 @@
 					<label><h3>タグ</h3><input type="text" name="tags" value="{% if entry %}{% for tag in entry.all_tag %}{{tag.title}},{% endfor %}{% endif %}" /></label>
 					<input type="hidden" id="editable_frame_input" name="full_content" value="" />
 					<input type="hidden" id="draft" name="draft" value="">
+					<label>
+						<h3><input type="checkbox" value="on" name="is_fbpost" /> 更新をFacebookに投稿する</h3>
+					<textarea name="fb_content">{{appuser.nickname}} update blog article - {% if entry %}{{entry.title|default:""}} http://mmiyajix.appspot.com/entry/{{entry.key.id}}{% endif %}</textarea></p>
+					</label>
 					<p><input type="submit" value="公開" /><input type="submit" value="下書き保存" onClick="setdraft()" /></p>
 				</form>
 			</div>

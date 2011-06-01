@@ -28,7 +28,7 @@ class ApplicationUser(db.Model):
 	create_at = db.DateTimeProperty(auto_now_add=True)
 	updated_at = db.DateTimeProperty(auto_now=True)
 	portfolio = db.TextProperty(default="")
-	fb_default_post_flg = db.BooleanProperty(default=False)
+	# fb_default_post_flg = db.BooleanProperty(default=False)
 	fb_nickname = db.StringProperty(default="")
 	fb_oauth_token = db.StringProperty(default="")
 	fb_oauth_token_secret = db.StringProperty(default="")
@@ -92,17 +92,17 @@ class Application(db.Model):
 	islock = db.BooleanProperty(default=True)
 	super_user = db.StringProperty(default="")
 	super_pass = db.StringProperty(default="")
-	# fb_flag = db.BooleanProperty(default=False)
+	fb_flag = db.BooleanProperty(default=False)
 	fb_app_id = db.StringProperty(default="")
 	fb_api_key = db.StringProperty(default="")
 	fb_secret = db.StringProperty(default="")
 	def is_facebook(self):
-		if self.fb_app_id and self.fb_api_key and self.fb_secret:
+		if self.fb_flag and self.fb_app_id and self.fb_api_key and self.fb_secret:
 			return True
 		else:
 			return False
 	def create_app(self,title="",rev=0,description="",appuser=None,img_url="",user="",passwd="",islock=True,
-					fb_app_id="",fb_api_key="",fb_secret=""):
+					fb_flag="",fb_app_id="",fb_api_key="",fb_secret=""):
 		app = None
 		if Application.all().filter("rev = ",rev).count() < 1:
 			app = self
@@ -114,8 +114,10 @@ class Application(db.Model):
 			app.super_user = user
 			app.super_pass = create_hash(passwd)
 			app.islock = islock
-			# if fb_flag:
-			# 	app.fb_flag = True
+			if fb_flag:
+				app.fb_flag = True
+			else:
+				app.fb_flag = False
 			app.fb_app_id = fb_app_id
 			app.fb_api_key = fb_api_key
 			app.fb_secret = fb_secret

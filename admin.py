@@ -91,6 +91,16 @@ class EditPage(ModifyRequestHandler):
 			if not self.request.get("draft"):
 				Entry.set_rss_temp()
 				entry.set_rss()
+				if self.request.get("is_fbpost"):
+					fb_content = self.request.get("fb_content")
+					if fb_content:
+						if self.application.is_facebook:
+							if self.appuser.fb_oauth_token:
+								post_data3 = {}
+								post_data3['access_token'] = self.appuser.fb_oauth_token
+								post_data3['message'] = unicode(fb_content).encode('utf8')
+								en_post_data3 = urllib.urlencode(post_data3)
+								r3 = urllib2.urlopen('https://graph.facebook.com/me/feed',en_post_data3)
 			entry.remove_tags()
 			if self.request.get("tags"):
 				tag_request = self.request.get("tags")
@@ -187,7 +197,8 @@ class CreateAppPage(BasicAuthentication):
 			application.create_app(title=self.request.get("title"),rev=int(self.request.get("revision")),
 					description=self.request.get("description"),appuser=self.appuser,img_url=self.request.get("img_url"),
 					user=self.request.get("user"),passwd=self.request.get("passwd"),islock=islock,
-					fb_app_id=self.request.get("fb_app_id"),fb_api_key=self.request.get("fb_api_key"),fb_secret=self.request.get("fb_secret"))
+					fb_flag=self.request.get("fb_flag"),fb_app_id=self.request.get("fb_app_id"),
+					fb_api_key=self.request.get("fb_api_key"),fb_secret=self.request.get("fb_secret"))
 		self.redirect("/")
 
 class UploadPage(ModifyRequestHandler):
@@ -219,7 +230,7 @@ class FacebookAuthPage(ModifyRequestHandler):
 	def _post(self):
 		self._get()
 	def _get(self):
-		DOMAIN = "localhost:9000"
+		DOMAIN = "mmiyajix.appspot.com"
 		if self.request.get('code')=="":
 			fb_url = "https://graph.facebook.com/oauth/authorize?client_id="+self.application.fb_app_id+"&redirect_uri=http://"+DOMAIN+"/fb_auth/&scope=offline_access,publish_stream"
 			template_values = {
