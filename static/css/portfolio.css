@@ -23,33 +23,41 @@ ul{
 	min-width:880px;
 }
 #portfolio_wrapper{
-/*	width:600px;*/
 	position:absolute;
 	top:300px;
-/*	margin:300px 20px;*/
 }
 
 .portfolio{
 	margin:300px auto;
 	width:800px;
 }
-.profile{
+.profile_box{
 	background-color: transparent;
 	-webkit-border-radius: 10px;/* Safari、Google Chrome */
 	-moz-border-radius: 10px;/* Firefox */
 	border: 1px solid transparent;
-}
-#profile_box{
 	margin:40px;
 	padding:50px;
 	background:rgba(0, 0, 0, 0.7);
 }
-#profile_box h1.name{
+.profile_box h1.name{
 	font-size: 70px;
 }
-#profile_box h2.nickname{
+.profile_box h2.nickname{
 	margin:10px;
 	font-size: 30px;
+}
+#navigation{
+	margin:0;
+	padding:40px;
+	width:160px;
+}
+#navigation div{
+	margin:0;
+	padding:20px;
+}
+#navigation a{
+	color:white;
 }
 .section{
 	padding:20px;

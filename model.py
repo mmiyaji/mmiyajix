@@ -179,6 +179,7 @@ class Entry(db.Model):
 	appuser =  db.ReferenceProperty(ApplicationUser,
 									collection_name='create_by')
 	title = db.StringProperty(default="")
+	img_url = db.StringProperty(default="", multiline=False)
 	content = db.StringProperty(multiline=True)
 	full_content = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)

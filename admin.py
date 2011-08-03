@@ -71,6 +71,8 @@ class EditPage(ModifyRequestHandler):
 			if self.request.get("title"):
 				entry.title = self.request.get("title")
 			content = self.request.get("content")
+			if self.request.get("img_url"):
+				entry.img_url = self.request.get("img_url")
 			if self.request.get("types"):
 				types = self.request.get("types")
 				entry.types = types

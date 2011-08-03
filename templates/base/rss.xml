@@ -11,7 +11,11 @@
 <language>ja</language>
 	{% for item in items %}<item>
 		<title>{{item.title}}</title>	
-		<description type="html">{{ item.rss_content }}</description>
+		<description type="html">{%if item.img_url%}<img src="{{item.img_url}}" alt="{{item.title}}" /> {%endif%}{{ item.rss_content }}</description>{%if item.img_url%}
+		<image>
+		    <url></url>
+		    <link>http://mmiyajix.appspot.com/entry/{{ item.key.id }}</link>
+		  </image>{%endif%}
 		<link>http://mmiyajix.appspot.com/entry/{{ item.key.id }}</link>
 		<guid isPermaLink="true">http://mmiyajix.appspot.com/entry/{{ item.key.id }}</guid>
 		<pubDate>{{ item.show_pub_date }}</pubDate>

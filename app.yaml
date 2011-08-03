@@ -18,5 +18,9 @@ handlers:
 - url: /tmp
   static_dir: static/html
 
+- url: /google27e9af06cf9dd9cf.html
+  static_files: static/html/google27e9af06cf9dd9cf.html
+  upload: static/html/google27e9af06cf9dd9cf.html
+
 - url: .*
   script: main.py

@@ -10,6 +10,7 @@
 						<h3>要約 (*最大500文字)</h3>
 						<textarea name="content" class="abstract">{% if entry %}{{entry.content|default:""}}{% endif %}</textarea>
 					</label>
+					<label><h3>画像</h3><input name="img_url" type="text" id="entry_img" value="{% if entry %}{{entry.img_url|default:""}}{% endif %}" /></label>
 					<label>
 						<h3>本文</h3>
 						<div class="editor_utility" id="edits">
@@ -70,7 +71,7 @@
 					<input type="hidden" id="draft" name="draft" value="">
 					<label>
 						<h3><input type="checkbox" value="on" name="is_fbpost" /> 更新をFacebookに投稿する</h3>
-					<textarea name="fb_content">{{appuser.nickname}} update blog article - {% if entry %}{{entry.title|default:""}} http://mmiyajix.appspot.com/entry/{{entry.key.id}}{% endif %}</textarea></p>
+					<textarea name="fb_content">{{appuser.nickname}} update blog article - {% if entry %}{{entry.title|default:""}} http://mmiyajix.appspot.com/entry/{{entry.key.id}}{% endif %} via mmiyajix</textarea></p>
 					</label>
 					<p><input type="submit" value="公開" /><input type="submit" value="下書き保存" onClick="setdraft()" /></p>
 				</form>

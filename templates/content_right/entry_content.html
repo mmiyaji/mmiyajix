@@ -4,6 +4,7 @@
    	<div class="section_content">
 		<div class="recent_content">
 			<div class="padder5">
+			{%if entry.img_url%}<div class="entry_img"><a href="/entry/{{entry.key.id}}"><img src="{{entry.img_url}}" alt="{{entry.title}}" /></a></div>{%endif%}
 			{{entry.full_content}}
 			<br style="clear:both" />
 			</div>

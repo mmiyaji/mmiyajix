@@ -150,7 +150,7 @@ class PortfolioPage(NormalRequestHandler):
 			if owner:
 				htmls = owner.portfolio
 				# template_values = {
-				# 	'title':owner.fullname+"'s portfolio",
+		 		# 	'title':owner.fullname+"'s portfolio",
 				# 	'now':self.now,
 				# 	'owner':owner,
 				# 	'user':self.user,
@@ -159,6 +159,7 @@ class PortfolioPage(NormalRequestHandler):
 				# 	'url': self.url,
 				# }
 				# path = os.path.join(os.path.dirname(__file__), './templates/base/portfolio.html')
+				# self.response.out.write(template.render(path, template_values))
 				self.response.out.write(htmls)
 			else:
 				template_values = {

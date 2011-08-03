@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="/css/base.css">
+<link rel="stylesheet" type="text/css" href="/css/base.css?12">
 <title>{% if title %}{{title}} - {% endif %}{% if application %}mmiyajix{% else %}{{application.title}}{% endif %}</title>
 <link rel="alternate" type="application/rss+xml" title="{% if application %}mmiyajix{% else %}{{application.title}}{% endif %} RSS Feed" href="http://mmiyajix.appspot.com/rss.xml" />
 <link type="text/css" rel="stylesheet" href="/css/syntax/shCore.css"/> 
@@ -21,6 +21,22 @@
 </head>
 <body>
 <div id="wrapper">{% include "title_content.html" %}
+	<div id="topicpath">
+	<div id="social_button">
+		<div id="tw-root" style="width:95px;"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div>
+		<div id="gl-root" style="width:60px;"><!-- Place this tag in your head or just before your close body tag -->
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		<!-- Place this tag where you want the +1 button to render -->
+		<g:plusone size="medium"></g:plusone></div>
+		<div id="dl-root">
+			<a href="http://www.delicious.com/save" onclick="window.open('http://www.delicious.com/save?v=5&noui&jump=close&url='+encodeURIComponent(location.href)+'&title='+encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550'); return false;">
+				<img src="http://l.yimg.com/hr/img/delicious.small.gif" height="20" alt="Delicious" />
+			</a>
+		</div>
+		<div id="hb-root"><a id="hb_like" href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="standard" title="このエントリーをはてなブックマークに追加"><img src="http://b.st-hatena.com/images/entry-button/button-only.gif" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script><script type="text/javascript">document.getElementById("hb_like").href="http://b.hatena.ne.jp/entry/"+location.href</script></div>
+		<div id="fb-root1"><iframe id="fb_like" src="" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100px; height:21px;" allowtransparency="true"></iframe><script type="text/javascript">document.getElementById("fb_like").src="http://www.facebook.com/plugins/like.php?href="+location.href+"&layout=button_count&show_faces=false&width=100&action=like&colorscheme=light&width=120"</script></div>
+		</div>
+	</div>　
 	<div id="content_wrapper">{% if pankuzu %}
 		<div id="topicpath">
 			<ol>
@@ -29,6 +45,10 @@
 			</ol>
 		</div>{% endif %}
 		{% block main %}{% endblock main %}
+		<div id="smooch">
+			<h2>Facebook Comments:</h2>
+			<div id="fb-root2"><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script></div>
+		</div>
 	</div>
 	<p id="footer" class="clearfix">{{now.year}} Copyright &copy; {% if application %}mmiyajix{% else %}{{application.title}}{% endif %} All rights reserved.<br /><img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Powered by Google App Engine" /></p>
 </div>
@@ -38,6 +58,9 @@
 <script type="text/javascript" src="/js/syntax/shCore.js"></script> 
 <script type="text/javascript" src="/js/syntax/shBrushXml.js"></script> 
 <script type="text/javascript" src="/js/syntax/shAutoloader.js"></script>
+<script type="text/javascript">
+	$("#fb-root2").after('<fb:comments id="fb_comment" href="'+location.href+'" width="600"></fb:comments>');
+</script>
 <script type="text/javascript">
 SyntaxHighlighter.autoloader(
 	"actionscript3 as3 /js/syntax/shBrushAS3.js",
