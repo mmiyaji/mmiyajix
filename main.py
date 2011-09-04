@@ -140,6 +140,42 @@ class EntryPage(NormalRequestHandler):
 		else:
 			self.redirect('/initialize')
 
+class AppPage(NormalRequestHandler):
+	def _get(self,ids):
+		template_values = None
+		entry = None
+		view = False
+		if self.application:
+			if ids:
+				entry = Entry.get_by_title(ids,types="app")
+			if self.request.get("view"):
+				view = True
+			if entry:
+				template_values = {
+					'title':entry.title,
+					'view':view,
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'entry':entry,
+					'url': self.url,
+					'all_tags':Tags.tag_pool(span=1000),
+					'all_contents':Entry.get_recent(span=100),
+				}
+				path = os.path.join(os.path.dirname(__file__), './templates/base/entry.html')
+				self.response.out.write(template.render(path, template_values))
+			else:
+				template_values = {
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'url': self.url,
+					}
+				error_status(self,404,template_values)
+		else:
+			self.redirect('/initialize')
 class PortfolioPage(NormalRequestHandler):
 	def _get(self,name):
 		template_values = None
@@ -173,6 +209,32 @@ class PortfolioPage(NormalRequestHandler):
 		else:
 			self.redirect('/initialize')
 
+class UniquePage(NormalRequestHandler):
+	def _get(self,ids):
+		template_values = None
+		entry = None
+		view = False
+		if self.application:
+			if ids:
+				entry = Entry.get_by_title(ids,types="unique")
+			# if self.request.get("view"):
+			# 	view = True
+			if entry:
+				htmls = entry.content
+				if entry.content_type:
+					self.response.headers['Content-Type'] = entry.content_type
+				self.response.out.write(htmls)
+			else:
+				template_values = {
+					'now':self.now,
+					'user':self.user,
+					'appuser':self.appuser,
+					'application':self.application,
+					'url': self.url,
+					}
+				error_status(self,404,template_values)
+		else:
+			self.redirect('/initialize')
 class EntriesPage(NormalRequestHandler):
 	def _get(self):
 		template_values = None
@@ -249,6 +311,8 @@ application = webapp.WSGIApplication(
 	('/download/(.*)', DownloadPage),
 	('/portfolio/(.*)', PortfolioPage),
 	('/entry/(.*)', EntryPage),
+	('/app/(.*)', AppPage),
+	('/unique/(.*)', UniquePage),
 	('/entries', EntriesPage),
 	('/registration', RegistrationPage),
 	('/initialize', InitPage),

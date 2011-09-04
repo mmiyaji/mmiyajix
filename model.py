@@ -136,6 +136,9 @@ class Application(db.Model):
 	@staticmethod
 	def get_apps():
 		return Application.all().order('-revision')
+	def get_toybox(self):
+		return Entry.get_recent(span=100,types="app")
+	
 	
 class Tags(db.Model):
 	appuser =  db.ReferenceProperty(ApplicationUser,
@@ -180,6 +183,7 @@ class Entry(db.Model):
 									collection_name='create_by')
 	title = db.StringProperty(default="")
 	img_url = db.StringProperty(default="", multiline=False)
+	content_type = db.StringProperty(default="", multiline=False)
 	content = db.StringProperty(multiline=True)
 	full_content = db.TextProperty(default="")
 	create_at = db.DateTimeProperty(auto_now_add=True)
@@ -187,14 +191,17 @@ class Entry(db.Model):
 	is_draft = db.BooleanProperty(default=True)
 	tags = db.ListProperty(db.Key)
 	relation = db.ListProperty(db.Key)
-	types = db.StringProperty(choices=set(["entry","diary","memo","file"]))
+	types = db.StringProperty(choices=set(["entry","diary","memo","file","app","unique"]))
 	# def put(self):
 	# 	db.Model.put(self)
 		# self.appuser.status_updated_date = datetime.datetime.now()
 		# self.appuser.put()
 	def relations(self):
 		# print self.relation[0]
-		return db.get(self.relation[0])
+		try:
+			return db.get(self.relation[0])
+		except:
+			return None
 	def set_rss(self):
 		result = self.full_content.replace(u"<","&lt;").replace(u">","&gt;").replace(u"&nbsp;","&#160;")
 		memcache.set("entry_"+str(self.key()), result)
@@ -274,27 +281,45 @@ class Entry(db.Model):
 				}
 			memcache.set("rss_entry", template_values)
 		return template_values
+
 	@staticmethod
-	def get_recent(span=3,get_all=False,is_draft=False,types="",igtype="file"):
+	def get_by_title(name,types=""):
+		query = Entry.all()
+		if types:
+			query.filter('types = ',types)
+		return query.filter('title = ',name).get()
+
+	@staticmethod
+	def get_recent(span=3,get_all=False,is_draft=False,types="",
+				igtype="file",igtypes=["file","app","unique"]):
 		query = Entry.all().order('types')
 		if not get_all:
 			query.filter('is_draft = ',is_draft)
-			if igtype:
-				query.filter('types != ',igtype)
 			if types:
 				query.filter('types = ',types)
-		return query.order('-create_at').fetch(span)
+			elif igtypes:
+				for i in igtypes:
+					query.filter('types != ',i)
+			elif igtype:
+				query.filter('types != ',igtype)
+		return query.fetch(span)
 	@staticmethod
-	def get_entries(span=5,page=0,get_all=False,is_draft=False,types="",igtype="file"):
+	def get_entries(span=5,page=0,get_all=False,is_draft=False,
+				types="",igtype="file",igtypes=["file","app","unique"]):
 		query = Entry.all().order('types')
 		if not get_all:
 			query.filter('is_draft = ',is_draft)
-			if igtype:
-				query.filter('types != ',igtype)
 			if types:
 				query.filter('types = ',types)
+			elif igtypes:
+				for i in igtypes:
+					query.filter('types != ',i)
+			elif igtype:
+				query.filter('types != ',igtype)
 		query = query.order('-create_at')
+		# items.sort(key=operator.itemgetter(1), reverse=True)
+		ss = sorted(query,key=lambda x: x.create_at,reverse=True)
 		if page!=0:
 			page = page*span - span
-		return query.fetch(span,page),query.count()
+		return ss[page:page+span],query.count()
 		# return Entry.all().order('-create_at').fetch(span)

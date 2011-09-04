@@ -7,7 +7,7 @@
 			<table class="manage_table" border="0" cellspacing="0" cellpadding="0"　align="left">
 				<tr><th>操作</th><th>タイプ</th><th>タイトル</th><th>タグ</th><th>作成日時</th><th>作成者</th></tr>
 				{% for entry in entries %}
-				<tr><td><a href="/edit/{{entry.key.id}}" >編集</a>　<a href="{% ifequal entry.types 'file' %}/upload/{{entry.relations.key}}/{{entry.relations.filename}}{%else%}/entry/{{entry.key.id}}{%endifequal%}" target="_blank">表示</a>{%if entry.is_draft%}　<span class="red">[下書き]</span>{%endif%}</td><td>{% ifequal entry.types 'file' %}{{entry.types}}/{{entry.relations.filemimetype}}{%else%}{{entry.types}}{%endifequal%}</td><td>{{entry.title}}</td><td><span class="green">{% for tag in entry.all_tag %}{{tag.title}} {%endfor%}</span></td><td>{{entry.show_date}}</td><td>{{entry.appuser.nickname}}</td></tr>
+				<tr><td><a href="/edit/{{entry.key.id}}" >編集</a>　<a href="{% ifequal entry.types 'file' %}/upload/{{entry.relations.key}}/{{entry.relations.filename}}{%else%}{% ifequal entry.types 'app' %}/app/{{entry.title}}{%else%}{% ifequal entry.types 'unique' %}/unique/{{entry.title}}{%else%}/entry/{{entry.key.id}}{%endifequal%}{%endifequal%}{%endifequal%}" target="_blank">表示</a>{%if entry.is_draft%}　<span class="red">[下書き]</span>{%endif%}</td><td>{% ifequal entry.types 'file' %}{{entry.types}}/{{entry.relations.filemimetype}}{%else%}{{entry.types}}{%endifequal%}</td><td>{{entry.title}}</td><td><span class="green">{% for tag in entry.all_tag %}{{tag.title}} {%endfor%}</span></td><td>{{entry.show_date}}</td><td>{{entry.appuser.nickname}}</td></tr>
 				{% endfor %}
 			</table>
 				{# <ol> #}

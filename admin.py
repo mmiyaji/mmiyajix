@@ -76,16 +76,21 @@ class EditPage(ModifyRequestHandler):
 			if self.request.get("types"):
 				types = self.request.get("types")
 				entry.types = types
+			if self.request.get("content_type"):
+				entry.content_type = self.request.get("content_type")
 			if self.request.get("draft"):
 				entry.is_draft = True
 			else:
 				entry.is_draft = False
-			p = re.compile(r'<.*?>')
-			content = p.sub('', content)
-			if len(content)>500:
-				content = content[0:500]
-			n = re.compile(r'\n')
-			content = n.sub('<br />', content)
+			if types == "unique":
+				pass
+			else:
+				p = re.compile(r'<.*?>')
+				content = p.sub('', content)
+				if len(content)>500:
+					content = content[0:500]
+				n = re.compile(r'\n')
+				content = n.sub('<br />', content)
 			if content:
 				entry.content = content
 			entry.full_content = self.request.get("full_content")

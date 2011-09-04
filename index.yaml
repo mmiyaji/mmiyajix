@@ -26,6 +26,19 @@ indexes:
   properties:
   - name: is_draft
   - name: types
+
+- kind: Entry
+  properties:
+  - name: is_draft
+  - name: types
+  - name: create_at
+    direction: desc
+
+- kind: Entry
+  properties:
+  - name: is_draft
+  - name: types
+  - name: types
   - name: create_at
     direction: desc
 

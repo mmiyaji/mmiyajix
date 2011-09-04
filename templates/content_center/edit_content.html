@@ -64,9 +64,12 @@
 							<option value="diary" {% ifequal entry.types 'diary' %}selected="selected"{% endifequal %}>Diary</option>
 							<option value="memo" {% ifequal entry.types 'memo' %}selected="selected"{% endifequal %}>Memorandum</option>
 							<option value="file" {% ifequal entry.types 'file' %}selected="selected"{% endifequal %}>Files</option>
+							<option value="app" {% ifequal entry.types 'app' %}selected="selected"{% endifequal %}>App</option>
+							<option value="unique" {% ifequal entry.types 'unique' %}selected="selected"{% endifequal %}>Unique</option>
 						</select>
 					</label>
 					<label><h3>タグ</h3><input type="text" name="tags" value="{% if entry %}{% for tag in entry.all_tag %}{{tag.title}},{% endfor %}{% endif %}" /></label>
+					<label><h3>content type</h3><input type="text" name="content_type" value="{{entry.content_type}}" /></label>
 					<input type="hidden" id="editable_frame_input" name="full_content" value="" />
 					<input type="hidden" id="draft" name="draft" value="">
 					<label>

@@ -5,6 +5,9 @@
 			<li>Toybox - 作成物など</li>
 			<li>
 				<ul>
+					{% for toy in application.get_toybox %}
+					<li><a href="/app/{{toy.title}}" target="_blank">{{toy.title}}</a> - {{yot.content}}</li>
+					{% endfor %}
 					<li><a href="http://m-server.appspot.com/" target="_blank">M-Server</a> - 自作アップローダ</li>
 					<li><a href="http://zoomtodo.appspot.com/" target="_blank">ZoomToDo</a> - ToDo管理サイト</li>
 					<li><a href="http://is.doshisha.ac.jp/isreport/" target="_blank">IS Report System</a><br /> - 研究報告レポートCMS</li>
