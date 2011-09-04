@@ -134,7 +134,6 @@ class AjaxPostPage(AjaxRequestHandler):
 			code = 401
 			self.error(code)
 			self.response.out.write(self.response.http_status_message(code))
-
 		# if True:
 		# 	entry = None
 		# 	if self.request.get("entry_id"):
