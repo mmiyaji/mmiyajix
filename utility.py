@@ -10,13 +10,6 @@ from google.appengine.ext.webapp import template
 from app_settings import *
 from google.appengine.api import memcache
 
-# FB_APP_ID="201904279853678"
-# FB_API_KEY="7a493bd9213ddc2becce98930f6929ce"
-# FB_SECRET="8ea45010257e0002b00e420880ab984d"
-FB_APP_ID="214530545248578"
-FB_API_KEY="ec49a0a98bb139153a6b8c15fd49c777"
-FB_SECRET="b745e6a3d788add18779c467e587aa48"
-
 # class Googl():
 # 	def shorten(slef,longUrl):
 # 		if isinstance(longUrl, unicode):
