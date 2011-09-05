@@ -302,7 +302,9 @@ class Entry(db.Model):
 					query.filter('types != ',i)
 			elif igtype:
 				query.filter('types != ',igtype)
-		return query.fetch(span)
+		ss = sorted(query,key=lambda x: x.create_at,reverse=True)
+		# return query.order('-create_at').fetch(span)
+		return ss[:span]
 	@staticmethod
 	def get_entries(span=5,page=0,get_all=False,is_draft=False,
 				types="",igtype="file",igtypes=["file","app","unique"]):
