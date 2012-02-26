@@ -93,6 +93,11 @@ function set_code(id){
 	setfunc('editable_frame','inserthtml',false,'<br /><pre class="code brush:'+types+';" '+target+'>code</pre><br />');
 	hide_curtain();
 }
+function set_plain(id){
+	var plain = $("#"+id+"_code").val();
+	setfunc('editable_frame','inserthtml',false,plain);
+	hide_curtain();
+}
 function getElemPos(elem){
 var elemPos = new Object();
 elemPos.x = 0;
